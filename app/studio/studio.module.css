@@ -1,0 +1,167 @@
+.studio {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--rg-bg);
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 50px;
+  flex-shrink: 0;
+  background: rgba(255, 240, 245, 0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 83, 126, 0.15);
+  z-index: 30;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--rg-accent);
+  font-weight: 800;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.backLink:hover { opacity: 0.7; }
+
+.headerCenter { display: flex; align-items: center; }
+
+.modePill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 50px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.shootMode { background: var(--rg-card); color: var(--rg-dark); }
+.reviewMode { background: var(--rg-accent); color: white; }
+
+.headerRight {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.camStatus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--rg-muted);
+}
+.camDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rg-muted);
+  flex-shrink: 0;
+}
+.camOk .camDot { background: #4caf50; }
+.camErr .camDot { background: #f44336; }
+
+/* Hide text labels on small phones */
+.backLinkText { }
+.camStatusText { }
+
+@media (max-width: 400px) {
+  .backLinkText { display: none; }
+  .camStatusText { display: none; }
+}
+
+/* ── Body ─────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Desktop: main | sidebar */
+@media (min-width: 769px) {
+  .body { flex-direction: row; }
+}
+
+/* Mobile: main / sidebar */
+@media (max-width: 768px) {
+  .body {
+    flex-direction: column;
+    overflow: hidden;
+  }
+}
+
+/* ── Main Content ─────────────────────────────────────── */
+.main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 769px) {
+  .main { padding: 16px 20px; gap: 14px; }
+}
+@media (max-width: 768px) {
+  .main { padding: 10px 12px; gap: 10px; }
+}
+
+/* ── Review Mode ──────────────────────────────────────── */
+.reviewArea {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeInUp 0.25s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reviewTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--rg-dark);
+}
+
+.backToShootBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 2px solid var(--rg-card);
+  background: var(--rg-surface);
+  color: var(--rg-muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.backToShootBtn:hover {
+  border-color: var(--rg-accent);
+  color: var(--rg-accent);
+}

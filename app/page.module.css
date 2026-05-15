@@ -1,0 +1,238 @@
+.main {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* ─── Header ─────────────────────────────── */
+.header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  background: rgba(255, 240, 245, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(244, 192, 209, 0.4);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--rg-accent);
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--rg-accent), var(--rg-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ─── Hero ────────────────────────────────── */
+.hero {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  padding: 80px 60px;
+  min-height: calc(100vh - 80px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroText {
+  flex: 1;
+  max-width: 560px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--rg-card);
+  color: var(--rg-dark);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--rg-text);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  background: linear-gradient(135deg, var(--rg-accent) 0%, var(--rg-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroDesc {
+  font-size: 1.1rem;
+  color: var(--rg-muted);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.heroCta {
+  font-size: 0.85rem;
+  color: var(--rg-muted);
+  font-weight: 600;
+}
+
+.heroIllustration {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Features ────────────────────────────── */
+.features {
+  position: relative;
+  z-index: 5;
+  padding: 80px 60px;
+  background: var(--rg-surface);
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  color: var(--rg-text);
+  margin-bottom: 48px;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ─── CTA Banner ──────────────────────────── */
+.ctaBanner {
+  position: relative;
+  z-index: 5;
+  padding: 80px 60px;
+  background: linear-gradient(135deg, var(--rg-accent) 0%, var(--rg-dark) 100%);
+  text-align: center;
+  overflow: hidden;
+}
+
+.ctaBanner::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: -100px;
+  left: -80px;
+}
+
+.ctaBanner::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  bottom: -60px;
+  right: -40px;
+}
+
+.ctaBannerContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ctaBannerContent h2 {
+  font-size: 2.2rem;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.ctaBannerContent p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.ctaBannerContent .btn-primary {
+  background: white;
+  color: var(--rg-accent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.ctaBannerContent .btn-primary:hover {
+  background: var(--rg-bg);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Footer ──────────────────────────────── */
+.footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 60px;
+  background: var(--rg-surface);
+  border-top: 1px solid rgba(244, 192, 209, 0.5);
+}
+
+.footerLogo {
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--rg-accent);
+}
+
+.footerDivider {
+  color: var(--rg-muted);
+}
+
+.footerCredit {
+  font-size: 0.85rem;
+  color: var(--rg-muted);
+  font-weight: 600;
+}
+
+/* ─── Responsive ──────────────────────────── */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 48px 24px;
+    min-height: auto;
+  }
+  .heroText { max-width: 100%; }
+  .heroTitle { font-size: 2.2rem; }
+  .heroActions { align-items: center; }
+  .header { padding: 16px 24px; }
+  .featureGrid { grid-template-columns: 1fr; max-width: 420px; }
+  .features, .ctaBanner { padding: 48px 24px; }
+  .footer { flex-direction: column; text-align: center; }
+}

@@ -1,0 +1,122 @@
+.controls {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btnRow {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .controls { gap: 6px; }
+  .btnRow { gap: 6px; }
+}
+
+/* Primary capture */
+.captureBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, var(--rg-accent), var(--rg-dark));
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(212, 83, 126, 0.35);
+}
+.captureBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(212, 83, 126, 0.45);
+}
+.captureBtn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Timer capture */
+.timerCaptureBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 13px 18px;
+  background: var(--rg-surface);
+  color: var(--rg-accent);
+  border: 2px solid var(--rg-card);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.timerCaptureBtn:hover:not(:disabled) {
+  border-color: var(--rg-accent);
+  background: #fff0f5;
+}
+.timerCaptureBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Auto shoot */
+.autoBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 13px 16px;
+  background: var(--rg-surface);
+  color: var(--rg-muted);
+  border: 2px solid var(--rg-card);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.autoBtn:hover:not(:disabled) {
+  border-color: var(--rg-dark);
+  color: var(--rg-dark);
+}
+.autoBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Cancel */
+.cancelBtn {
+  width: 100%;
+  padding: 13px;
+  background: var(--rg-surface);
+  color: var(--rg-dark);
+  border: 2px solid var(--rg-dark);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cancelBtn:hover { background: var(--rg-card); }
+
+.statusText {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--rg-muted);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .captureBtn { padding: 10px 16px; font-size: 0.88rem; }
+  .timerCaptureBtn { padding: 10px 12px; font-size: 0.82rem; }
+  .autoBtn { padding: 10px 12px; font-size: 0.78rem; }
+  .statusText { font-size: 0.7rem; }
+}

@@ -1,0 +1,80 @@
+.previewContainer {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  user-select: none;
+  container-type: inline-size;
+  /* background set via inline style (frame.bgColor) */
+}
+
+.contentArea {
+  position: relative;
+  width: 100%;
+}
+
+.photoGrid {
+  display: grid;
+  gap: 10px;
+  padding: 24px;
+}
+
+.photoCell {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scaleX(-1);
+  border-radius: 6px;
+}
+
+.emptyCell {
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  border: 2px dashed; /* borderColor set via inline */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.emptyCellNum {
+  font-size: 1.5rem;
+  font-weight: 900;
+  /* color set via inline */
+}
+
+/* Strip Text Footer */
+.stripTextFooter {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  padding: 0 16px 16px 16px;
+  position: relative;
+  z-index: 20;
+}
+
+/* Frame overlay PNG — Photoshop transparent overlay, sits above photos */
+.frameOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Stop before the strip text footer — height calculated to match photo grid area */
+  height: 100%; /* Now matches contentArea height exactly */
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 5;
+  /* If PNG has transparent areas, photos show through */
+}
