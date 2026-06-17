@@ -3,9 +3,11 @@ import { FilterType, FILTER_CSS, Frame, TemplateId } from './config';
 /**
  * Capture raw frame (no filter) — mirrored horizontally.
  * Filter applied later at export time.
+ * @param filterCanvas  Optional face-filter overlay canvas (display-size, mirror-flipped).
  */
 export function captureRawFrame(
   video: HTMLVideoElement,
+  filterCanvas?: HTMLCanvasElement,
   width = 1200, // Higher resolution for crisper output
   height = 900  // 4:3 ratio matches our slots
 ): string {
@@ -36,6 +38,17 @@ export function captureRawFrame(
   ctx.scale(-1, 1);
   ctx.drawImage(video, sx, sy, sw, sh, 0, 0, width, height);
 
+  // Composite face-filter overlay on top (already in display/mirror space)
+  if (filterCanvas && filterCanvas.width > 0 && filterCanvas.height > 0) {
+    // The filter canvas was drawn in camera-space and CSS-mirrored for display.
+    // We need to draw it in mirror-space too, so reset transform then flip+scale.
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // reset
+    ctx.translate(width, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(filterCanvas, 0, 0, filterCanvas.width, filterCanvas.height, 0, 0, width, height);
+  }
+
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // reset for safety
   return canvas.toDataURL('image/jpeg', 0.95);
 }
 
@@ -51,6 +64,9 @@ interface BuildStripOptions {
   padding?: number;
   stripText?: string;
   stripTextColor?: string;
+  stripTextFont?: string;   // CSS font-family string
+  stripTextSize?: number;   // font size in px (canvas coords)
+  stripTextPosition?: 'top' | 'bottom';
   filter?: FilterType;
   stickers?: import('./config').StickerItem[];
   domWidth?: number;
@@ -71,14 +87,18 @@ export async function buildStripCanvas({
   slotW = 400,
   slotH = 300,
   gap = 14,
-  padding = 24, // Reduced from 40 to make the frame thinner
+  padding = 24,
   stripText = '',
   stripTextColor = '#000000',
+  stripTextFont = "'Nunito', sans-serif",
+  stripTextSize = 22,
+  stripTextPosition = 'bottom',
   filter = 'Normal',
   ...options
 }: BuildStripOptions): Promise<HTMLCanvasElement> {
   const rows = Math.ceil(slots.length / cols);
-  const footerH = stripText.trim() ? 56 : 0;
+  const hasText = stripText.trim().length > 0;
+  const footerH = hasText ? Math.max(56, stripTextSize * 2.8) : 0;
   const totalW = padding * 2 + cols * slotW + (cols - 1) * gap;
   const photoAreaH = padding * 2 + rows * slotH + (rows - 1) * gap;
   const totalH = photoAreaH + footerH;
@@ -89,6 +109,8 @@ export async function buildStripCanvas({
   const ctx = canvas.getContext('2d')!;
 
   // ── 1. Frame background color (fallback, always rendered) ───────
+  // If text is at top, shift everything down by footerH
+  const photoOffsetY = stripTextPosition === 'top' && hasText ? footerH : 0;
   ctx.fillStyle = frame.bgColor;
   ctx.fillRect(0, 0, totalW, totalH);
 
@@ -124,7 +146,7 @@ export async function buildStripCanvas({
     const col = i % cols;
     const row = Math.floor(i / cols);
     const x = padding + col * (slotW + gap);
-    const y = padding + row * (slotH + gap);
+    const y = photoOffsetY + padding + row * (slotH + gap);
 
     if (loadedSlots[i]) {
       if (cssFilter !== 'none') ctx.filter = cssFilter;
@@ -187,15 +209,23 @@ export async function buildStripCanvas({
     }
   }
 
-  // ── 5. Strip text footer ────────────────────────────────────────
-  if (stripText.trim()) {
-    const fy = photoAreaH;
+  // ── 5. Strip text (top or bottom) ─────────────────────────────
+  if (hasText) {
+    // Pre-load font so it renders correctly in canvas
+    const fontDecl = `bold ${stripTextSize}px ${stripTextFont}`;
+    try {
+      await document.fonts.load(fontDecl);
+    } catch { /* fallback to system font */ }
+
+    const textY = stripTextPosition === 'top'
+      ? footerH / 2        // vertically centred in the top header band
+      : photoOffsetY + photoAreaH + footerH / 2 - 6; // bottom footer
+
     ctx.fillStyle = stripTextColor;
-    ctx.font = `bold 22px "Nunito", sans-serif`;
+    ctx.font = fontDecl;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Shift up slightly (-6px) so it doesn't look too low
-    ctx.fillText(stripText, totalW / 2, fy + footerH / 2 - 6);
+    ctx.fillText(stripText, totalW / 2, textY);
   }
 
   return canvas;

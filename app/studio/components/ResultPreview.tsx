@@ -13,6 +13,9 @@ interface ResultPreviewProps {
   frame: Frame;
   stripText: string;
   stripTextColor: string;
+  stripTextFont?: string;
+  stripTextSize?: number;
+  stripTextPosition?: 'top' | 'bottom';
   filter: FilterType;
   stickers: StickerItem[];
   updateSticker: (id: string, updates: Partial<StickerItem>) => void;
@@ -26,6 +29,9 @@ export default function ResultPreview({
   frame,
   stripText,
   stripTextColor,
+  stripTextFont = "'Nunito', sans-serif",
+  stripTextSize = 22,
+  stripTextPosition = 'bottom',
   filter,
   stickers,
   updateSticker,
@@ -33,6 +39,7 @@ export default function ResultPreview({
   onReset,
 }: ResultPreviewProps) {
   const [isBuilding, setIsBuilding] = useState(false);
+  const [isGifBuilding, setIsGifBuilding] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [qrModal, setQrModal] = useState<{ show: boolean; qrDataUrl: string; shareUrl: string; isGenerating: boolean }>({
     show: false, qrDataUrl: '', shareUrl: '', isGenerating: false,
@@ -54,16 +61,19 @@ export default function ResultPreview({
       frame,
       stripText,
       stripTextColor,
+      stripTextFont,
+      stripTextSize,
+      stripTextPosition,
       filter,
       stickers,
       domWidth,
     });
     canvasRef.current = canvas;
     return canvas;
-  }, [slots, template, frame, stripText, stripTextColor, filter, stickers]);
+  }, [slots, template, frame, stripText, stripTextColor, stripTextFont, stripTextSize, stripTextPosition, filter, stickers]);
 
   // Invalidate cache when dependencies change
-  useEffect(() => { canvasRef.current = null; }, [slots, template, frame, stripText, stripTextColor, filter, stickers]);
+  useEffect(() => { canvasRef.current = null; }, [slots, template, frame, stripText, stripTextColor, stripTextFont, stripTextSize, stripTextPosition, filter, stickers]);
 
   /** Direct download */
   const handleDownload = useCallback(async () => {
@@ -117,6 +127,69 @@ export default function ResultPreview({
 
   const closeModal = () => setQrModal({ show: false, qrDataUrl: '', shareUrl: '', isGenerating: false });
 
+  /** GIF export — each slot as one frame, applies the selected filter */
+  const handleDownloadGIF = useCallback(async () => {
+    if (isGifBuilding) return;
+    setIsGifBuilding(true);
+    try {
+      const { FILTER_CSS } = await import('@/lib/config');
+      const cssFilter = FILTER_CSS[filter];
+
+      // Build one canvas per slot at a smaller size for fast GIF encoding
+      const frameW = 400;
+      const frameH = 300;
+      const frameDataUrls: string[] = [];
+
+      for (const src of slots) {
+        const canvas = document.createElement('canvas');
+        canvas.width = frameW;
+        canvas.height = frameH;
+        const ctx = canvas.getContext('2d')!;
+        const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+          const i = new Image();
+          i.onload = () => resolve(i);
+          i.onerror = reject;
+          i.src = src;
+        });
+        if (cssFilter !== 'none') ctx.filter = cssFilter;
+        ctx.drawImage(img, 0, 0, frameW, frameH);
+        ctx.filter = 'none';
+        frameDataUrls.push(canvas.toDataURL('image/jpeg', 0.85));
+      }
+
+      // Dynamic import of gifshot (client only)
+      const gifshot = (await import('gifshot')).default;
+      gifshot.createGIF(
+        {
+          images: frameDataUrls,
+          gifWidth: frameW,
+          gifHeight: frameH,
+          interval: 0.7,      // seconds per frame
+          numFrames: frameDataUrls.length,
+          frameDuration: 1,
+          sampleInterval: 10,
+          numWorkers: 2,
+        },
+        (obj: { error: boolean; image: string; errorCode?: string; errorMsg?: string }) => {
+          setIsGifBuilding(false);
+          if (!obj.error) {
+            const link = document.createElement('a');
+            link.download = `ruanggaya-${Date.now()}.gif`;
+            link.href = obj.image;
+            link.click();
+          } else {
+            console.error('GIF error:', obj.errorCode, obj.errorMsg);
+            alert('Gagal membuat GIF. Coba lagi.');
+          }
+        }
+      );
+    } catch (err) {
+      console.error('GIF gagal:', err);
+      setIsGifBuilding(false);
+      alert('Gagal membuat GIF. Coba lagi.');
+    }
+  }, [isGifBuilding, slots, filter]);
+
   return (
     <div className={styles.wrap} id="result-preview">
       {/* Preview column */}
@@ -129,6 +202,9 @@ export default function ResultPreview({
           filter={filter}
           stripText={stripText}
           stripTextColor={stripTextColor}
+          stripTextFont={stripTextFont}
+          stripTextSize={stripTextSize}
+          stripTextPosition={stripTextPosition}
           stickers={stickers}
           updateSticker={updateSticker}
           removeSticker={removeSticker}
@@ -156,6 +232,28 @@ export default function ResultPreview({
             </svg>
           )}
           {isBuilding ? 'Memproses...' : downloaded ? 'Unduh Lagi' : 'Unduh ke Perangkat'}
+        </button>
+
+        {/* GIF Download */}
+        <button
+          id="btn-gif-download"
+          className={styles.gifBtn}
+          onClick={handleDownloadGIF}
+          disabled={isGifBuilding}
+          title="Download animasi GIF dari semua foto"
+        >
+          {isGifBuilding ? (
+            <span className={styles.spinner} style={{ borderTopColor: '#9B59B6' }} />
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <rect x="3" y="3" width="5" height="5" rx="1"/>
+              <rect x="10" y="3" width="5" height="5" rx="1"/>
+              <rect x="3" y="10" width="5" height="5" rx="1"/>
+              <rect x="10" y="10" width="5" height="5" rx="1"/>
+              <path d="M17 16l2 2 4-4"/>
+            </svg>
+          )}
+          {isGifBuilding ? 'Membuat GIF...' : 'Unduh Animasi GIF'}
         </button>
 
         {/* QR Download */}

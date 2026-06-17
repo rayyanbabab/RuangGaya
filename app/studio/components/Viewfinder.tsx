@@ -1,6 +1,8 @@
 'use client';
 
-import { FilterType, FILTER_CSS } from '@/lib/config';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { FilterType, FILTER_CSS, type FaceFilterId } from '@/lib/config';
+import FaceFilterCanvas, { type FaceFilterCanvasHandle } from './FaceFilterCanvas';
 import styles from './Viewfinder.module.css';
 
 interface ViewfinderProps {
@@ -10,12 +12,26 @@ interface ViewfinderProps {
   filter: FilterType;
   isCountingDown: boolean;
   countdown: number;
+  isFlashing: boolean;
+  faceFilter: FaceFilterId;
 }
 
-export default function Viewfinder({
-  videoRef, isReady, error, filter, isCountingDown, countdown,
-}: ViewfinderProps) {
+export interface ViewfinderHandle {
+  getFaceFilterCanvas: () => HTMLCanvasElement | null;
+}
+
+const Viewfinder = forwardRef<ViewfinderHandle, ViewfinderProps>(function Viewfinder(
+  { videoRef, isReady, error, filter, isCountingDown, countdown, isFlashing, faceFilter },
+  ref
+) {
+  const faceCanvasRef = useRef<FaceFilterCanvasHandle>(null);
+
+  useImperativeHandle(ref, () => ({
+    getFaceFilterCanvas: () => faceCanvasRef.current?.getCanvas() ?? null,
+  }));
+
   const cssFilter = FILTER_CSS[filter];
+
   return (
     <div className={styles.wrap}>
       {error && (
@@ -46,6 +62,16 @@ export default function Viewfinder({
         autoPlay playsInline muted
       />
 
+      {/* AR face filter overlay */}
+      {isReady && (
+        <FaceFilterCanvas
+          ref={faceCanvasRef}
+          videoRef={videoRef}
+          isVideoReady={isReady}
+          filterId={faceFilter}
+        />
+      )}
+
       {isCountingDown && (
         <div className={styles.countdownOverlay}>
           <span key={countdown} className={styles.countdownNum}>{countdown}</span>
@@ -55,6 +81,11 @@ export default function Viewfinder({
       {isReady && filter !== 'Normal' && (
         <div className={styles.filterTag}>{filter}</div>
       )}
+
+      {/* Flash overlay — white flash on capture */}
+      {isFlashing && <div className={styles.flashOverlay} />}
     </div>
   );
-}
+});
+
+export default Viewfinder;

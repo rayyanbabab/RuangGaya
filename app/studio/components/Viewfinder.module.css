@@ -151,3 +151,20 @@
   margin-top: 4px;
   line-height: 1.5;
 }
+
+/* Flash overlay — white burst on photo capture */
+.flashOverlay {
+  position: absolute;
+  inset: 0;
+  background: white;
+  z-index: 20;
+  pointer-events: none;
+  animation: flashFade 0.35s ease-out forwards;
+  border-radius: inherit;
+}
+
+@keyframes flashFade {
+  0%   { opacity: 1; }
+  30%  { opacity: 0.8; }
+  100% { opacity: 0; }
+}

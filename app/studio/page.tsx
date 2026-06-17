@@ -1,9 +1,10 @@
 'use client';
 
+import { useRef } from 'react';
 import { usePhotobooth } from '@/hooks/usePhotobooth';
 import { useWebcam } from '@/hooks/useWebcam';
 import { TEMPLATES, FRAMES, FILTERS, TIMER_OPTIONS } from '@/lib/config';
-import Viewfinder from './components/Viewfinder';
+import Viewfinder, { type ViewfinderHandle } from './components/Viewfinder';
 import Sidebar from './components/Sidebar';
 import SlotStrip from './components/SlotStrip';
 import StudioControls from './components/StudioControls';
@@ -12,22 +13,28 @@ import styles from './studio.module.css';
 
 export default function StudioPage() {
   const webcam = useWebcam();
-  const booth = usePhotobooth();
+  const booth  = usePhotobooth();
+
+  // Ref to Viewfinder so we can grab the face-filter canvas at capture time
+  const viewfinderRef = useRef<ViewfinderHandle>(null);
 
   const allSlotsFilled = booth.slots.every((s) => s !== null);
-  const isReviewMode = allSlotsFilled && !booth.isCountingDown;
+  const isReviewMode   = allSlotsFilled && !booth.isCountingDown;
+
+  /** Get current face-filter canvas from the viewfinder overlay */
+  const getFaceCanvas = () => viewfinderRef.current?.getFaceFilterCanvas() ?? null;
 
   const handleCapture = () => {
     if (!webcam.videoRef.current || !webcam.isReady) return;
-    booth.capturePhoto(webcam.videoRef.current);
+    booth.capturePhoto(webcam.videoRef.current, getFaceCanvas());
   };
   const handleTimedCapture = () => {
     if (!webcam.videoRef.current || !webcam.isReady) return;
-    booth.startTimedCapture(webcam.videoRef.current);
+    booth.startTimedCapture(webcam.videoRef.current, getFaceCanvas());
   };
   const handleAutoShoot = () => {
     if (!webcam.videoRef.current || !webcam.isReady) return;
-    booth.startAutoShoot(webcam.videoRef.current);
+    booth.startAutoShoot(webcam.videoRef.current, getFaceCanvas());
   };
 
   return (
@@ -65,10 +72,6 @@ export default function StudioPage() {
             <div className={styles.reviewArea}>
               <div className={styles.reviewHeader}>
                 <span className={styles.reviewTitle}>Semua foto siap — edit sebelum download</span>
-                {/* <button className={styles.backToShootBtn} onClick={booth.resetAll}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
-                  Foto Ulang
-                </button> */}
               </div>
               <ResultPreview
                 slots={booth.slots as string[]}
@@ -76,6 +79,9 @@ export default function StudioPage() {
                 frame={booth.activeFrame}
                 stripText={booth.stripText}
                 stripTextColor={booth.stripTextColor}
+                stripTextFont={booth.stripTextFont.cssFamily}
+                stripTextSize={booth.stripTextSize}
+                stripTextPosition={booth.stripTextPosition}
                 filter={booth.filter}
                 stickers={booth.stickers}
                 updateSticker={booth.updateSticker}
@@ -87,12 +93,15 @@ export default function StudioPage() {
             /* ── Shoot Mode ── */
             <>
               <Viewfinder
+                ref={viewfinderRef}
                 videoRef={webcam.videoRef}
                 isReady={webcam.isReady}
                 error={webcam.error}
                 filter={booth.filter}
                 isCountingDown={booth.isCountingDown}
                 countdown={booth.countdown}
+                isFlashing={booth.isFlashing}
+                faceFilter={booth.faceFilter}
               />
 
               <SlotStrip
@@ -131,6 +140,10 @@ export default function StudioPage() {
           activeFilter={booth.filter}
           stripText={booth.stripText}
           stripTextColor={booth.stripTextColor}
+          stripTextFont={booth.stripTextFont}
+          stripTextSize={booth.stripTextSize}
+          stripTextPosition={booth.stripTextPosition}
+          faceFilter={booth.faceFilter}
           timer={booth.timer}
           timerOptions={[...TIMER_OPTIONS]}
           autoShoot={booth.autoShoot}
@@ -140,6 +153,10 @@ export default function StudioPage() {
           onFilterChange={booth.setFilter}
           onStripTextChange={booth.setStripText}
           onStripTextColorChange={booth.setStripTextColor}
+          onStripTextFontChange={booth.setStripTextFont}
+          onStripTextSizeChange={booth.setStripTextSize}
+          onStripTextPositionChange={booth.setStripTextPosition}
+          onFaceFilterChange={booth.setFaceFilter}
           onTimerChange={booth.setTimer}
           onAutoShootToggle={() => booth.setAutoShoot(!booth.autoShoot)}
           addSticker={booth.addSticker}

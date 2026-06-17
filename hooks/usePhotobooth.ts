@@ -4,8 +4,10 @@ import { useState, useCallback, useRef } from 'react';
 import {
   TEMPLATES, FRAMES, FILTERS, TIMER_OPTIONS,
   Template, Frame, FilterType, TimerOption, StickerItem,
+  FontOption, TextPosition, FONTS, FONT_SIZES, FaceFilterId, FACE_FILTERS,
 } from '@/lib/config';
 import { captureRawFrame } from '@/lib/capture';
+import { playShutterSound } from '@/lib/sound';
 
 interface PhotoboothState {
   activeTemplate: Template;
@@ -13,6 +15,10 @@ interface PhotoboothState {
   filter: FilterType;
   stripText: string;
   stripTextColor: string;
+  stripTextFont: FontOption;
+  stripTextSize: number;
+  stripTextPosition: TextPosition;
+  faceFilter: FaceFilterId;
   slots: (string | null)[];       // raw (unfiltered) captures
   activeSlot: number;
   timer: TimerOption;
@@ -20,6 +26,7 @@ interface PhotoboothState {
   isCountingDown: boolean;
   countdown: number;
   isComplete: boolean;
+  isFlashing: boolean;
   stickers: StickerItem[];
 }
 
@@ -29,12 +36,16 @@ interface PhotoboothActions {
   setFilter: (f: FilterType) => void;
   setStripText: (s: string) => void;
   setStripTextColor: (c: string) => void;
+  setStripTextFont: (f: FontOption) => void;
+  setStripTextSize: (s: number) => void;
+  setStripTextPosition: (p: TextPosition) => void;
+  setFaceFilter: (f: FaceFilterId) => void;
   setActiveSlot: (i: number) => void;
   setTimer: (t: TimerOption) => void;
   setAutoShoot: (v: boolean) => void;
-  capturePhoto: (video: HTMLVideoElement) => void;
-  startTimedCapture: (video: HTMLVideoElement) => void;
-  startAutoShoot: (video: HTMLVideoElement) => void;
+  capturePhoto: (video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => void;
+  startTimedCapture: (video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => void;
+  startAutoShoot: (video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => void;
   resetAll: () => void;
   cancelCountdown: () => void;
   addSticker: (src: string) => void;
@@ -50,6 +61,10 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
   const [filter, setFilter] = useState<FilterType>('Normal');
   const [stripText, setStripText] = useState('');
   const [stripTextColor, setStripTextColor] = useState('#000000');
+  const [stripTextFont, setStripTextFont] = useState<FontOption>(FONTS[0]);
+  const [stripTextSize, setStripTextSize] = useState<number>(FONT_SIZES[2]); // default 22
+  const [stripTextPosition, setStripTextPosition] = useState<TextPosition>('bottom');
+  const [faceFilter, setFaceFilter] = useState<FaceFilterId>('none');
   const [slots, setSlots] = useState<(string | null)[]>(Array(defaultTemplate.slots).fill(null));
   const [activeSlot, setActiveSlotState] = useState(0);
   const [timer, setTimer] = useState<TimerOption>(3);
@@ -57,6 +72,7 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
   const [isCountingDown, setIsCountingDown] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [isFlashing, setIsFlashing] = useState(false);
   const [stickers, setStickers] = useState<StickerItem[]>([]);
 
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -82,15 +98,23 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
     setIsComplete(false);
   }, []);
 
+  // Trigger flash + sound effect
+  const triggerFlash = useCallback(() => {
+    playShutterSound();
+    setIsFlashing(true);
+    setTimeout(() => setIsFlashing(false), 350);
+  }, []);
+
   // Raw capture — filter applied at render time
-  const doCapture = useCallback((video: HTMLVideoElement, slotIndex: number) => {
-    const dataURL = captureRawFrame(video);
+  const doCapture = useCallback((video: HTMLVideoElement, slotIndex: number, filterCanvas?: HTMLCanvasElement | null) => {
+    triggerFlash();
+    const dataURL = captureRawFrame(video, filterCanvas ?? undefined);
     setSlots((prev) => {
       const next = [...prev];
       next[slotIndex] = dataURL;
       return next;
     });
-  }, []);
+  }, [triggerFlash]);
 
   const advanceSlot = useCallback((currentSlot: number, currentSlots: (string | null)[]) => {
     const nextEmpty = currentSlots.findIndex((s, i) => i > currentSlot && s === null);
@@ -102,18 +126,19 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
     }
   }, []);
 
-  const capturePhoto = useCallback((video: HTMLVideoElement) => {
+  const capturePhoto = useCallback((video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => {
+    triggerFlash();
     // Capture exactly once — store in local var, then update state
-    const dataURL = captureRawFrame(video);
+    const dataURL = captureRawFrame(video, filterCanvas ?? undefined);
     setSlots((prev) => {
       const next = [...prev];
       next[activeSlot] = dataURL;
       advanceSlot(activeSlot, next);
       return next;
     });
-  }, [activeSlot, advanceSlot]);
+  }, [activeSlot, advanceSlot, triggerFlash]);
 
-  const startTimedCapture = useCallback((video: HTMLVideoElement) => {
+  const startTimedCapture = useCallback((video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => {
     if (isCountingDown) return;
     cancelCountdown();
     setIsCountingDown(true);
@@ -125,12 +150,12 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
       if (remaining <= 0) {
         clearInterval(countdownRef.current!);
         setIsCountingDown(false);
-        capturePhoto(video);
+        capturePhoto(video, filterCanvas);
       }
     }, 1000);
   }, [isCountingDown, timer, cancelCountdown, capturePhoto]);
 
-  const startAutoShoot = useCallback((video: HTMLVideoElement) => {
+  const startAutoShoot = useCallback((video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => {
     if (isCountingDown) { cancelCountdown(); return; }
     const emptyIndices = slots.map((s, i) => (s === null ? i : -1)).filter((i) => i !== -1);
     if (emptyIndices.length === 0) return;
@@ -148,7 +173,7 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
         if (remaining <= 0) {
           clearInterval(countdownRef.current!);
           setIsCountingDown(false);
-          doCapture(video, slotIdx);
+          doCapture(video, slotIdx, filterCanvas);
           idx += 1;
           if (idx < emptyIndices.length) {
             autoShootRef.current = setTimeout(shootNext, 800);
@@ -195,11 +220,15 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
   const clearStickers = useCallback(() => setStickers([]), []);
 
   return {
-    activeTemplate, activeFrame, filter, stripText, stripTextColor, slots, activeSlot,
-    timer, autoShoot, isCountingDown, countdown, isComplete,
+    activeTemplate, activeFrame, filter, stripText, stripTextColor,
+    stripTextFont, stripTextSize, stripTextPosition, faceFilter,
+    slots, activeSlot,
+    timer, autoShoot, isCountingDown, countdown, isComplete, isFlashing,
     stickers,
     setTemplate, setFrame, setFilter: (f: FilterType) => setFilter(f),
-    setStripText, setStripTextColor, setActiveSlot, setTimer, setAutoShoot,
+    setStripText, setStripTextColor,
+    setStripTextFont, setStripTextSize, setStripTextPosition, setFaceFilter,
+    setActiveSlot, setTimer, setAutoShoot,
     capturePhoto, startTimedCapture, startAutoShoot, resetAll, cancelCountdown,
     addSticker, updateSticker, removeSticker, clearStickers,
   };

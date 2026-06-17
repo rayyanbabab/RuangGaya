@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Template, Frame, FilterType, TimerOption } from '@/lib/config';
+import { Template, Frame, FilterType, TimerOption, FontOption, TextPosition, FONTS, FONT_SIZES, FACE_FILTERS, type FaceFilterId } from '@/lib/config';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
@@ -12,6 +12,9 @@ interface SidebarProps {
   activeFilter: FilterType;
   stripText: string;
   stripTextColor: string;
+  stripTextFont: FontOption;
+  stripTextSize: number;
+  stripTextPosition: TextPosition;
   timer: TimerOption;
   timerOptions: readonly number[];
   autoShoot: boolean;
@@ -21,27 +24,38 @@ interface SidebarProps {
   onFilterChange: (f: FilterType) => void;
   onStripTextChange: (s: string) => void;
   onStripTextColorChange: (c: string) => void;
+  onStripTextFontChange: (f: FontOption) => void;
+  onStripTextSizeChange: (s: number) => void;
+  onStripTextPositionChange: (p: TextPosition) => void;
   onTimerChange: (t: TimerOption) => void;
   onAutoShootToggle: () => void;
   addSticker: (src: string) => void;
+  faceFilter: FaceFilterId;
+  onFaceFilterChange: (id: FaceFilterId) => void;
 }
 
 // Tab definition
 const TABS = [
-  { id: 'frame', label: 'Background', icon: <FrameTabIcon /> },
-  { id: 'filter', label: 'Filter', icon: <FilterTabIcon /> },
-  { id: 'sticker', label: 'Stiker', icon: <StickerTabIcon /> },
-  { id: 'text', label: 'Teks', icon: <TextTabIcon /> },
-  { id: 'tmpl', label: 'Layout', icon: <LayoutTabIcon /> },
+  { id: 'frame',  label: 'Background', icon: <FrameTabIcon /> },
+  { id: 'filter', label: 'Filter',     icon: <FilterTabIcon /> },
+  { id: 'face',   label: 'Face',       icon: <FaceTabIcon /> },
+  { id: 'sticker',label: 'Stiker',     icon: <StickerTabIcon /> },
+  { id: 'text',   label: 'Teks',       icon: <TextTabIcon /> },
+  { id: 'tmpl',   label: 'Layout',     icon: <LayoutTabIcon /> },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
 
 export default function Sidebar({
   templates, frames, filters,
   activeTemplate, activeFrame, activeFilter,
-  stripText, stripTextColor, timer, timerOptions, isReviewMode,
+  stripText, stripTextColor, stripTextFont, stripTextSize, stripTextPosition,
+  faceFilter,
+  timer, timerOptions, isReviewMode,
   onTemplateChange, onFrameChange, onFilterChange,
-  onStripTextChange, onStripTextColorChange, onTimerChange, addSticker,
+  onStripTextChange, onStripTextColorChange,
+  onStripTextFontChange, onStripTextSizeChange, onStripTextPositionChange,
+  onFaceFilterChange,
+  onTimerChange, addSticker,
 }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabId>('frame');
   const [availableStickers, setAvailableStickers] = useState<string[]>([]);
@@ -159,8 +173,37 @@ export default function Sidebar({
           </Section>
         )}
 
+        {/* FACE FILTER */}
+        {activeTab === 'face' && (
+          <Section title="Filter Wajah (AR)">
+            <p className={styles.hint} style={{ marginBottom: '10px' }}>
+              Pilih filter — AI akan mendeteksi wajah otomatis.
+            </p>
+            <div className={styles.faceFilterGrid}>
+              {FACE_FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  id={`face-filter-${f.id}`}
+                  className={`${styles.faceFilterBtn} ${faceFilter === f.id ? styles.active : ''}`}
+                  onClick={() => onFaceFilterChange(f.id)}
+                  title={f.description}
+                >
+                  <span className={styles.faceFilterEmoji}>{f.icon}</span>
+                  <span className={styles.faceFilterLabel}>{f.label}</span>
+                </button>
+              ))}
+            </div>
+            {faceFilter !== 'none' && (
+              <p className={styles.hint} style={{ marginTop: '10px', color: 'var(--rg-accent)' }}>
+                ✨ {FACE_FILTERS.find(f => f.id === faceFilter)?.description}
+              </p>
+            )}
+          </Section>
+        )}
+
         {/* OVERLAY / STIKER */}
         {activeTab === 'sticker' && (
+
           <Section title="Pilih Stiker">
             <div className={styles.frameGrid}>
               {availableStickers.length === 0 && (
@@ -204,7 +247,71 @@ export default function Sidebar({
               maxLength={60}
             />
 
+            {/* Font family picker */}
             <div className={styles.bgColorPickerWrap} style={{ marginTop: '16px' }}>
+              <label className={styles.bgColorLabel}>Jenis Font:</label>
+              <div className={styles.fontGrid}>
+                {FONTS.map((font) => (
+                  <button
+                    key={font.id}
+                    className={`${styles.fontBtn} ${stripTextFont.id === font.id ? styles.active : ''}`}
+                    onClick={() => onStripTextFontChange(font)}
+                    style={{ fontFamily: font.cssFamily }}
+                    title={font.label}
+                  >
+                    {font.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Font size slider */}
+            <div className={styles.bgColorPickerWrap} style={{ marginTop: '14px' }}>
+              <label className={styles.bgColorLabel}>
+                Ukuran Font: <strong>{stripTextSize}px</strong>
+              </label>
+              <input
+                type="range"
+                min={FONT_SIZES[0]}
+                max={FONT_SIZES[FONT_SIZES.length - 1]}
+                value={stripTextSize}
+                onChange={(e) => onStripTextSizeChange(Number(e.target.value))}
+                className={styles.sizeSlider}
+                step={1}
+              />
+              <div className={styles.sizeSliderLabels}>
+                <span>{FONT_SIZES[0]}px</span>
+                <span>{FONT_SIZES[FONT_SIZES.length - 1]}px</span>
+              </div>
+            </div>
+
+            {/* Text position toggle */}
+            <div className={styles.bgColorPickerWrap} style={{ marginTop: '14px' }}>
+              <label className={styles.bgColorLabel}>Posisi Teks:</label>
+              <div className={styles.positionToggle}>
+                <button
+                  className={`${styles.positionBtn} ${stripTextPosition === 'top' ? styles.active : ''}`}
+                  onClick={() => onStripTextPositionChange('top')}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="5" y1="5" x2="19" y2="5"/><polyline points="12 19 12 9"/><polyline points="8 13 12 9 16 13"/>
+                  </svg>
+                  Atas
+                </button>
+                <button
+                  className={`${styles.positionBtn} ${stripTextPosition === 'bottom' ? styles.active : ''}`}
+                  onClick={() => onStripTextPositionChange('bottom')}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="5" y1="19" x2="19" y2="19"/><polyline points="12 5 12 15"/><polyline points="8 11 12 15 16 11"/>
+                  </svg>
+                  Bawah
+                </button>
+              </div>
+            </div>
+
+            {/* Text color */}
+            <div className={styles.bgColorPickerWrap} style={{ marginTop: '14px' }}>
               <label htmlFor="custom-text-color" className={styles.bgColorLabel}>
                 Warna Teks:
               </label>
@@ -220,7 +327,29 @@ export default function Sidebar({
                 <span className={styles.bgColorHex}>{stripTextColor.toUpperCase()}</span>
               </div>
             </div>
-            <p className={styles.hint}>Muncul di bagian bawah strip foto</p>
+
+            {/* Preview of selected font */}
+            {stripText && (
+              <div style={{
+                marginTop: '14px',
+                padding: '10px 14px',
+                background: 'var(--rg-surface)',
+                borderRadius: '10px',
+                border: '1.5px solid var(--rg-card)',
+                fontFamily: stripTextFont.cssFamily,
+                fontSize: `${Math.min(stripTextSize, 24)}px`,
+                color: stripTextColor,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}>
+                {stripText}
+              </div>
+            )}
+
+            <p className={styles.hint}>Muncul di bagian {stripTextPosition === 'top' ? 'atas' : 'bawah'} strip foto</p>
           </Section>
         )}
 
@@ -307,6 +436,17 @@ function TemplateIcon({ cols, rows }: { cols: number; rows: number }) {
 }
 
 // ─── Tab Icons (SVG) ──────────────────────────────────────────
+function FaceTabIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <circle cx="12" cy="8" r="5" />
+      <path d="M9 8.5c.5.5 1 .8 1.5.8s1-.3 1.5-.8" />
+      <circle cx="10" cy="7" r="0.8" fill="currentColor" />
+      <circle cx="14" cy="7" r="0.8" fill="currentColor" />
+      <path d="M3 20c0-3.3 4-6 9-6s9 2.7 9 6" />
+    </svg>
+  );
+}
 function FrameTabIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

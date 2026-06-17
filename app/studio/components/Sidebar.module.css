@@ -515,3 +515,159 @@
   margin-top: 6px;
   line-height: 1.4;
 }
+
+/* ── Font Grid (text customization) ───────────────────── */
+.bgColorPickerWrap {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.fontGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  width: 100%;
+}
+
+.fontBtn {
+  padding: 7px 6px;
+  border-radius: 7px;
+  border: 2px solid var(--rg-card);
+  background: var(--rg-bg);
+  color: var(--rg-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fontBtn:hover {
+  border-color: var(--rg-muted);
+}
+
+.fontBtn.active {
+  border-color: var(--rg-accent);
+  background: rgba(212, 83, 126, 0.08);
+  color: var(--rg-dark);
+}
+
+/* ── Size Slider ──────────────────────────────────────── */
+.sizeSlider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--rg-card);
+  outline: none;
+  cursor: pointer;
+}
+
+.sizeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--rg-accent);
+  border: 2px solid white;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(212, 83, 126, 0.4);
+}
+
+.sizeSliderLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--rg-muted);
+  font-weight: 700;
+}
+
+/* ── Position Toggle ──────────────────────────────────── */
+.positionToggle {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+.positionBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  border: 2px solid var(--rg-card);
+  background: var(--rg-bg);
+  color: var(--rg-muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.positionBtn:hover {
+  border-color: var(--rg-muted);
+  color: var(--rg-dark);
+}
+
+.positionBtn.active {
+  background: var(--rg-accent);
+  border-color: var(--rg-accent);
+  color: white;
+}
+
+/* ── Face Filter Grid ─────────────────────────────────────── */
+.faceFilterGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.faceFilterBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 9px 6px 7px;
+  border-radius: 10px;
+  border: 2px solid var(--rg-card);
+  background: var(--rg-bg);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.faceFilterBtn:hover {
+  border-color: var(--rg-muted);
+  transform: translateY(-1px);
+}
+
+.faceFilterBtn.active {
+  border-color: var(--rg-accent);
+  background: rgba(212, 83, 126, 0.08);
+}
+
+.faceFilterEmoji {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.faceFilterLabel {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: var(--rg-muted);
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+}
+
+.faceFilterBtn.active .faceFilterLabel {
+  color: var(--rg-accent);
+}

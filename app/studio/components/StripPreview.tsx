@@ -13,6 +13,9 @@ interface StripPreviewProps {
   filter: FilterType;
   stripText?: string;
   stripTextColor?: string;
+  stripTextFont?: string;   // CSS font-family
+  stripTextSize?: number;   // px value
+  stripTextPosition?: 'top' | 'bottom';
   stickers?: StickerItem[];
   updateSticker?: (id: string, updates: Partial<StickerItem>) => void;
   removeSticker?: (id: string) => void;
@@ -25,6 +28,9 @@ export default function StripPreview({
   filter,
   stripText,
   stripTextColor = '#000000',
+  stripTextFont = "'Nunito', sans-serif",
+  stripTextSize = 22,
+  stripTextPosition = 'bottom',
   stickers,
   updateSticker,
   removeSticker,
@@ -49,9 +55,12 @@ export default function StripPreview({
   
   const photoAreaW = padding * 2 + cols * slotW + (cols - 1) * gap;
   const photoAreaH = padding * 2 + rows * slotH + (rows - 1) * gap;
-  const footerH = stripText && stripText.trim() ? 56 : 0;
+  const hasText = !!(stripText && stripText.trim());
+  const footerH = hasText ? Math.max(56, stripTextSize * 2.8) : 0;
   const totalW = photoAreaW;
   const totalH = photoAreaH + footerH;
+  const isTextTop = stripTextPosition === 'top' && hasText;
+  const photoOffsetPct = isTextTop ? (footerH / totalH) * 100 : 0;
 
   // Calculate padding and gap as percentages of container width
   const padPct = (padding / photoAreaW) * 100;
@@ -73,7 +82,30 @@ export default function StripPreview({
       }}
       id="strip-preview-area"
     >
-      <div className={styles.contentArea}>
+      {/* Top text header */}
+      {isTextTop && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 0, left: 0, width: '100%',
+            height: `${(footerH / totalH) * 100}%`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          <span style={{
+            color: computedStripTextColor,
+            fontFamily: stripTextFont,
+            fontWeight: 'bold',
+            fontSize: `${(stripTextSize / totalW) * 100}cqi`,
+            whiteSpace: 'nowrap',
+          }}>
+            {stripText}
+          </span>
+        </div>
+      )}
+
+      <div className={styles.contentArea} style={{ top: `${photoOffsetPct}%`, height: `${(photoAreaH / totalH) * 100}%`, position: 'absolute', left: 0, width: '100%' }}>
       {/* 1. Photo grid */}
       <div
         className={styles.photoGrid}
@@ -119,36 +151,29 @@ export default function StripPreview({
       )}
       </div>
 
-      {/* 4. Strip Text Footer */}
-      {stripText && stripText.trim() && (
+      {/* Bottom text footer (default) */}
+      {hasText && !isTextTop && (
         <div 
-          className={styles.stripTextFooter}
-          style={{ 
+          style={{
             position: 'absolute',
             top: `${(photoAreaH / totalH) * 100}%`,
             left: 0,
             width: '100%',
             height: `${(footerH / totalH) * 100}%`,
-            padding: 0,
-            margin: 0,
-            boxSizing: 'border-box',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
             pointerEvents: 'none'
           }}
         >
-          <div style={{
-            position: 'absolute',
-            top: `${( (footerH / 2 - 6) / footerH ) * 100}%`,
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+          <span style={{
             color: computedStripTextColor,
-            fontFamily: '"Nunito", sans-serif',
+            fontFamily: stripTextFont,
             fontWeight: 'bold',
-            fontSize: `${(22 / totalW) * 100}cqi`,
+            fontSize: `${(stripTextSize / totalW) * 100}cqi`,
             whiteSpace: 'nowrap',
             lineHeight: 1
           }}>
             {stripText}
-          </div>
+          </span>
         </div>
       )}
     </div>

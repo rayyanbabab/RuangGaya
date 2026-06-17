@@ -191,3 +191,42 @@ export interface StickerItem {
   transform: string; // CSS transform string (translate, rotate)
 }
 
+// ─────────────────────────────────────────────────────────────────────
+//  Font & Text Customization
+// ─────────────────────────────────────────────────────────────────────
+
+export const FONTS = [
+  { id: 'Nunito',           label: 'Friendly',    cssFamily: "'Nunito', sans-serif" },
+  { id: 'Playfair Display', label: 'Elegant',     cssFamily: "'Playfair Display', serif" },
+  { id: 'Pacifico',         label: 'Playful',     cssFamily: "'Pacifico', cursive" },
+  { id: 'Courier Prime',    label: 'Retro',       cssFamily: "'Courier Prime', monospace" },
+  { id: 'Outfit',           label: 'Modern',      cssFamily: "'Outfit', sans-serif" },
+  { id: 'Dancing Script',   label: 'Handwriting', cssFamily: "'Dancing Script', cursive" },
+] as const;
+
+export type FontOption = (typeof FONTS)[number];
+
+export const FONT_SIZES = [16, 18, 20, 22, 26, 30, 36] as const;
+export type FontSize = (typeof FONT_SIZES)[number];
+
+export type TextPosition = 'top' | 'bottom';
+
+// ─────────────────────────────────────────────────────────────────────
+//  Face Filters
+// ─────────────────────────────────────────────────────────────────────
+
+export const FACE_FILTERS = [
+  { id: 'none',         label: 'Normal',       icon: '😐', description: 'Tanpa filter wajah' },
+  { id: 'cat',          label: 'Cat',          icon: '🐱', description: 'Telinga & hidung kucing' },
+  { id: 'dog',          label: 'Dog',          icon: '🐶', description: 'Telinga & lidah anjing' },
+  { id: 'glasses',      label: 'Glasses',      icon: '👓', description: 'Kacamata stylish' },
+  { id: 'crown',        label: 'Crown',        icon: '👑', description: 'Mahkota emas' },
+  { id: 'flower-crown', label: 'Flowers',      icon: '🌸', description: 'Mahkota bunga' },
+  { id: 'butterfly',    label: 'Butterfly',    icon: '🦋', description: 'Masker kupu-kupu' },
+  { id: 'clown',        label: 'Clown',        icon: '🤡', description: 'Hidung badut' },
+  { id: 'sparkle',      label: 'Sparkle',      icon: '✨', description: 'Kilap glitter' },
+  { id: 'beauty',       label: 'Beauty',       icon: '💄', description: 'Efek skin cerah' },
+] as const;
+
+export type FaceFilterId = (typeof FACE_FILTERS)[number]['id'];
+

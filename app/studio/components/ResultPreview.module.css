@@ -86,6 +86,30 @@
 }
 .qrBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
+.gifBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 16px;
+  background: linear-gradient(135deg, #9B59B6, #6C3483);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(155, 89, 182, 0.35);
+}
+.gifBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.48);
+}
+.gifBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .retakeBtn {
   display: flex;
   align-items: center;
