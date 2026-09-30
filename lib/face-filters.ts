@@ -90,17 +90,47 @@ export function drawFaceFilter(
 ) {
   if (!landmarks || landmarks.length < 468) return;
 
+  // Align landmarks with video element rendered via object-fit: cover
+  let lms = landmarks;
+  if (video && video.videoWidth > 0 && video.videoHeight > 0) {
+    const vw = video.videoWidth;
+    const vh = video.videoHeight;
+    const videoRatio = vw / vh;
+    const canvasRatio = w / h;
+
+    let renderedW = w;
+    let renderedH = h;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (videoRatio > canvasRatio) {
+      const s = h / vh;
+      renderedW = vw * s;
+      offsetX = (w - renderedW) / 2;
+    } else {
+      const s = w / vw;
+      renderedH = vh * s;
+      offsetY = (h - renderedH) / 2;
+    }
+
+    lms = landmarks.map((l) => ({
+      x: (offsetX + l.x * renderedW) / w,
+      y: (offsetY + l.y * renderedH) / h,
+      z: l.z,
+    }));
+  }
+
   ctx.save();
   switch (filterId) {
-    case 'cat':          drawCat(ctx, landmarks, w, h);         break;
-    case 'dog':          drawDog(ctx, landmarks, w, h);         break;
-    case 'glasses':      drawGlasses(ctx, landmarks, w, h);     break;
-    case 'crown':        drawCrown(ctx, landmarks, w, h);       break;
-    case 'flower-crown': drawFlowerCrown(ctx, landmarks, w, h); break;
-    case 'butterfly':    drawButterfly(ctx, landmarks, w, h);   break;
-    case 'clown':        drawClown(ctx, landmarks, w, h);       break;
-    case 'sparkle':      drawSparkle(ctx, landmarks, w, h);     break;
-    case 'beauty':       if (video) drawBeauty(ctx, landmarks, w, h, video); break;
+    case 'cat':          drawCat(ctx, lms, w, h);         break;
+    case 'dog':          drawDog(ctx, lms, w, h);         break;
+    case 'glasses':      drawGlasses(ctx, lms, w, h);     break;
+    case 'crown':        drawCrown(ctx, lms, w, h);       break;
+    case 'flower-crown': drawFlowerCrown(ctx, lms, w, h); break;
+    case 'butterfly':    drawButterfly(ctx, lms, w, h);   break;
+    case 'clown':        drawClown(ctx, lms, w, h);       break;
+    case 'sparkle':      drawSparkle(ctx, lms, w, h);     break;
+    case 'beauty':       if (video) drawBeauty(ctx, lms, w, h, video); break;
   }
   ctx.restore();
 }
@@ -595,6 +625,8 @@ function drawSparkle(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: nu
 
 // ─── 💄 Beauty Filter ────────────────────────────────────────────────
 
+let offscreenCanvas: HTMLCanvasElement | null = null;
+
 function drawBeauty(
   ctx: CanvasRenderingContext2D,
   lms: NLM[],
@@ -609,26 +641,51 @@ function drawBeauty(
   const faceW = dist(left, right);
 
   const padding = faceW * 0.12;
-  const fx      = left.x  - padding;
-  const fy      = top.y   - padding;
-  const fw      = faceW   + padding * 2;
-  const fh      = dist(top, chin) + padding * 2;
+  const fx      = Math.max(0, left.x - padding);
+  const fy      = Math.max(0, top.y - padding);
+  const fw      = Math.min(w - fx, faceW + padding * 2);
+  const fh      = Math.min(h - fy, dist(top, chin) + padding * 2);
 
-  // Off-screen canvas: extract face region from video → apply blur + brightness
-  const off = document.createElement('canvas');
-  off.width  = fw;
-  off.height = fh;
-  const offCtx = off.getContext('2d')!;
+  if (fw <= 0 || fh <= 0) return;
 
-  // Scale video coords to canvas display coords
-  const scaleX = w / video.videoWidth;
-  const scaleY = h / video.videoHeight;
+  if (!offscreenCanvas) {
+    offscreenCanvas = document.createElement('canvas');
+  }
+  const targetW = Math.ceil(fw);
+  const targetH = Math.ceil(fh);
+  if (offscreenCanvas.width !== targetW || offscreenCanvas.height !== targetH) {
+    offscreenCanvas.width  = targetW;
+    offscreenCanvas.height = targetH;
+  }
+  const offCtx = offscreenCanvas.getContext('2d');
+  if (!offCtx) return;
 
+  const vw = video.videoWidth || w;
+  const vh = video.videoHeight || h;
+  const videoRatio = vw / vh;
+  const canvasRatio = w / h;
+
+  let sx = 0, sy = 0, sw = vw, sh = vh;
+  if (videoRatio > canvasRatio) {
+    sw = vh * canvasRatio;
+    sx = (vw - sw) / 2;
+  } else {
+    sh = vw / canvasRatio;
+    sy = (vh - sh) / 2;
+  }
+
+  // Source crop from the raw video that corresponds to (fx, fy, fw, fh) on the canvas
+  const srcX = sx + (fx / w) * sw;
+  const srcY = sy + (fy / h) * sh;
+  const srcW = (fw / w) * sw;
+  const srcH = (fh / h) * sh;
+
+  offCtx.clearRect(0, 0, fw, fh);
   offCtx.filter = 'blur(2.5px) brightness(1.12) saturate(0.92)';
   offCtx.drawImage(
     video,
-    fx / scaleX, fy / scaleY, fw / scaleX, fh / scaleY,  // source
-    0, 0, fw, fh                                           // dest
+    srcX, srcY, srcW, srcH,
+    0, 0, fw, fh
   );
   offCtx.filter = 'none';
 
@@ -638,7 +695,7 @@ function drawBeauty(
   ctx.ellipse(fx + fw / 2, fy + fh / 2, fw / 2, fh / 2, 0, 0, Math.PI * 2);
   ctx.clip();
   ctx.globalAlpha = 0.72;
-  ctx.drawImage(off, fx, fy, fw, fh);
+  ctx.drawImage(offscreenCanvas, fx, fy, fw, fh);
   ctx.globalAlpha = 1;
   ctx.restore();
 
