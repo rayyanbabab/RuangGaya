@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Dark Navy Gradient -->
+    <linearGradient id="navyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e1726" />
+      <stop offset="50%" stop-color="#141f33" />
+      <stop offset="100%" stop-color="#0a111c" />
+    </linearGradient>
+
+    <!-- 4-point gold star -->
+    <g id="goldStar">
+      <path d="M 0,-8 Q 0,0 8,0 Q 0,0 0,8 Q 0,0 -8,0 Q 0,0 0,-8 Z" fill="#ffd166" />
+      <circle cx="0" cy="0" r="1.5" fill="#ffffff" />
+    </g>
+
+    <g id="smallStar">
+      <path d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z" fill="#facc15" opacity="0.8" />
+    </g>
+
+    <!-- Lace pattern strip -->
+    <pattern id="laceBorder" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="14" fill="none" stroke="#f4ede4" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.65" />
+      <circle cx="20" cy="20" r="5" fill="none" stroke="#f4ede4" stroke-width="1" opacity="0.5" />
+      <circle cx="0" cy="0" r="3" fill="#ffd166" opacity="0.7" />
+      <circle cx="40" cy="0" r="3" fill="#ffd166" opacity="0.7" />
+      <circle cx="0" cy="40" r="3" fill="#ffd166" opacity="0.7" />
+      <circle cx="40" cy="40" r="3" fill="#ffd166" opacity="0.7" />
+    </pattern>
+  </defs>
+
+  <!-- Deep Navy Base -->
+  <rect width="800" height="1200" fill="url(#navyBg)" />
+
+  <!-- Outer frame border with lace -->
+  <rect x="18" y="18" width="764" height="1164" rx="14" fill="none" stroke="#ffd166" stroke-width="2" opacity="0.8" />
+  <rect x="28" y="28" width="744" height="1144" rx="10" fill="none" stroke="#f4ede4" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.6" />
+
+  <!-- Lace strips on left, right, and center -->
+  <rect x="36" y="36" width="36" height="1128" fill="url(#laceBorder)" />
+  <rect x="728" y="36" width="36" height="1128" fill="url(#laceBorder)" />
+  <rect x="382" y="36" width="36" height="1128" fill="url(#laceBorder)" />
+
+  <!-- Scattered Gold Stars -->
+  <use href="#goldStar" x="120" y="70" />
+  <use href="#smallStar" x="250" y="50" />
+  <use href="#goldStar" x="650" y="80" />
+  <use href="#smallStar" x="520" y="60" />
+
+  <use href="#smallStar" x="90" y="280" />
+  <use href="#goldStar" x="710" y="260" />
+  <use href="#smallStar" x="90" y="600" />
+  <use href="#goldStar" x="710" y="580" />
+  <use href="#smallStar" x="90" y="900" />
+  <use href="#goldStar" x="710" y="920" />
+
+  <use href="#goldStar" x="150" y="1140" />
+  <use href="#smallStar" x="280" y="1150" />
+  <use href="#goldStar" x="660" y="1130" />
+  <use href="#smallStar" x="500" y="1145" />
+
+  <!-- Cursive "KK Studio" Watermark at Top Right -->
+  <g transform="translate(680, 52)">
+    <text x="0" y="0" font-family="'Brush Script MT', 'Dancing Script', 'Playfair Display', cursive" font-size="28" font-style="italic" fill="#f4ede4" text-anchor="end" opacity="0.9" letter-spacing="1">KK studio</text>
+  </g>
+</svg>

@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Vintage Newsprint Background Texture -->
+    <linearGradient id="paperBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8f5ec" />
+      <stop offset="50%" stop-color="#f4eee2" />
+      <stop offset="100%" stop-color="#eee6d5" />
+    </linearGradient>
+
+    <!-- Halftone / Paper Fiber Pattern -->
+    <pattern id="newsprintDots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.75" fill="#4a4235" opacity="0.08" />
+      <circle cx="8" cy="8" r="0.75" fill="#4a4235" opacity="0.08" />
+    </pattern>
+
+    <!-- Blueberry Illustration -->
+    <g id="blueberryCluster">
+      <circle cx="-10" cy="4" r="14" fill="#3b5998" />
+      <circle cx="-10" cy="4" r="11" fill="#4c6ef5" />
+      <circle cx="-9" cy="2" r="3" fill="#91a7ff" />
+      
+      <circle cx="10" cy="6" r="13" fill="#364fc7" />
+      <circle cx="10" cy="6" r="10" fill="#4263eb" />
+      <circle cx="11" cy="4" r="2.5" fill="#91a7ff" />
+
+      <circle cx="0" cy="-6" r="15" fill="#2b449b" />
+      <circle cx="0" cy="-6" r="12" fill="#3b5bdb" />
+      <circle cx="1" cy="-8" r="3" fill="#91a7ff" />
+      <!-- Star calyx -->
+      <polygon points="0,-16 -4,-12 4,-12" fill="#1c2f6d" />
+      <!-- Green Leaves -->
+      <path d="M -14,-14 Q -28,-24 -16,-34 Q -6,-22 -14,-14 Z" fill="#40c057" />
+      <path d="M 12,-16 Q 26,-26 18,-36 Q 6,-24 12,-16 Z" fill="#2f9e44" />
+    </g>
+
+    <!-- Croissant Illustration -->
+    <g id="croissantGraphic">
+      <path d="M -26,10 C -34,-2 -15,-20 0,-20 C 15,-20 34,-2 26,10 C 20,4 12,-2 0,-2 C -12,-2 -20,4 -26,10 Z" fill="#d97706" />
+      <path d="M -22,8 C -14,-2 -4,-14 0,-14 C 4,-14 14,-2 22,8 C 16,3 8,0 0,0 C -8,0 -16,3 -22,8 Z" fill="#f59e0b" />
+      <path d="M -14,6 C -8,-2 -2,-8 0,-8 C 2,-8 8,-2 14,6 C 10,2 4,1 0,1 C -4,1 -10,2 -14,6 Z" fill="#fde68a" />
+      <!-- Flaky tips -->
+      <path d="M -26,10 Q -36,18 -32,24 Q -22,20 -24,12 Z" fill="#b45309" />
+      <path d="M 26,10 Q 36,18 32,24 Q 22,20 24,12 Z" fill="#b45309" />
+    </g>
+
+    <!-- Spotify Soundwave Icon -->
+    <g id="spotifyWave">
+      <rect x="0" y="16" width="3" height="8" rx="1.5" fill="#1db954" />
+      <rect x="6" y="8" width="3" height="24" rx="1.5" fill="#1db954" />
+      <rect x="12" y="2" width="3" height="36" rx="1.5" fill="#1db954" />
+      <rect x="18" y="12" width="3" height="16" rx="1.5" fill="#1db954" />
+      <rect x="24" y="4" width="3" height="32" rx="1.5" fill="#1db954" />
+      <rect x="30" y="14" width="3" height="12" rx="1.5" fill="#1db954" />
+      <rect x="36" y="2" width="3" height="36" rx="1.5" fill="#1db954" />
+      <rect x="42" y="10" width="3" height="20" rx="1.5" fill="#1db954" />
+      <rect x="48" y="18" width="3" height="4" rx="1.5" fill="#1db954" />
+    </g>
+  </defs>
+
+  <!-- Newsprint Paper Base -->
+  <rect width="800" height="1200" fill="url(#paperBg)" />
+  <rect width="800" height="1200" fill="url(#newsprintDots)" />
+
+  <!-- Outer Double Newspaper Margin Lines -->
+  <rect x="24" y="24" width="752" height="1152" fill="none" stroke="#221e1a" stroke-width="2.5" />
+  <rect x="30" y="30" width="740" height="1140" fill="none" stroke="#221e1a" stroke-width="1" />
+
+  <!-- Top Header Banner -->
+  <g transform="translate(0, 48)">
+    <line x1="32" y1="0" x2="768" y2="0" stroke="#221e1a" stroke-width="1.5" />
+    
+    <text x="56" y="18" font-family="'Courier New', Courier, monospace" font-size="12" font-weight="700" letter-spacing="3" fill="#221e1a">SPECIAL EDITION</text>
+    
+    <!-- Center Banner Pill -->
+    <g transform="translate(400, 14)">
+      <rect x="-135" y="-12" width="270" height="24" rx="12" fill="#facc15" stroke="#221e1a" stroke-width="1.5" />
+      <text x="0" y="5" font-family="'Impact', 'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#221e1a" text-anchor="middle" letter-spacing="1">★ NEWS+ PHOTOBOOTH EDITION ★</text>
+    </g>
+
+    <text x="744" y="18" font-family="'Courier New', Courier, monospace" font-size="12" font-weight="700" letter-spacing="3" fill="#221e1a" text-anchor="end">SPECIAL EDITION</text>
+    
+    <line x1="32" y1="28" x2="768" y2="28" stroke="#221e1a" stroke-width="2" />
+  </g>
+
+  <!-- Main Giant Newspaper Headline: FOTO KITA BLUR -->
+  <g transform="translate(400, 145)">
+    <text x="0" y="0" font-family="'Playfair Display', 'Times New Roman', 'Georgia', serif" font-size="64" font-weight="900" letter-spacing="2" fill="#1c1917" text-anchor="middle">FOTO KITA BLUR</text>
+    <line x1="-360" y1="12" x2="360" y2="12" stroke="#1c1917" stroke-width="2.5" />
+    <!-- Elegant script subhead: Tak Banyak Yang Kelihat -->
+    <text x="0" y="44" font-family="'Brush Script MT', 'Dancing Script', 'Playfair Display', cursive" font-size="36" font-style="italic" fill="#292524" text-anchor="middle">Tak Banyak Yang Kelihat</text>
+    <line x1="-360" y1="58" x2="360" y2="58" stroke="#1c1917" stroke-width="1.2" />
+  </g>
+
+  <!-- Vertical Divider separating Left (Photos) and Right (Article) -->
+  <line x1="422" y1="218" x2="422" y2="1080" stroke="#221e1a" stroke-width="1.2" stroke-dasharray="4,2" />
+
+  <!-- ═══ LEFT COLUMN: 2 PHOTO SLOTS WITH BLUEBERRY & PASTRY BANNER ═══ -->
+  
+  <!-- Slot 1 Framing Border (x=52, y=246, w=360, h=336) -->
+  <rect x="50" y="244" width="364" height="340" rx="8" fill="#ffffff" stroke="#221e1a" stroke-width="2" />
+  <rect x="54" y="248" width="356" height="332" rx="6" fill="#fdfcf8" stroke="#78716c" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Center Banner: KAMU BLUBERRY & AKU PASTRY (y=616) -->
+  <g transform="translate(232, 638)">
+    <!-- Blueberry on left -->
+    <use href="#blueberryCluster" x="-148" y="0" transform="scale(0.85)" />
+
+    <!-- Center Yellow Badge -->
+    <rect x="-105" y="-17" width="210" height="34" rx="8" fill="#fef08a" stroke="#221e1a" stroke-width="2" />
+    <text x="0" y="5" font-family="'Impact', 'Arial Black', sans-serif" font-size="14" font-weight="900" fill="#1c1917" text-anchor="middle" letter-spacing="0.5">KAMU BLUBERRY &amp; AKU PASTRY</text>
+
+    <!-- Croissant on right -->
+    <use href="#croissantGraphic" x="145" y="0" transform="scale(0.85)" />
+  </g>
+
+  <!-- Slot 2 Framing Border (x=52, y=690, w=360, h=336) -->
+  <rect x="50" y="688" width="364" height="340" rx="8" fill="#ffffff" stroke="#221e1a" stroke-width="2" />
+  <rect x="54" y="692" width="356" height="332" rx="6" fill="#fdfcf8" stroke="#78716c" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- ═══ RIGHT COLUMN: EDITORIAL ARTICLE & SPOTIFY PLAYER ═══ -->
+
+  <!-- Editorial Article Paragraph (Justified newsprint) -->
+  <g transform="translate(442, 230)">
+    <text x="0" y="24" font-family="'Times New Roman', 'Georgia', serif" font-size="16.5" font-weight="700" fill="#1c1917" font-style="italic">RuangGaya Editorial — Jakarta</text>
+    
+    <!-- Paragraph lines -->
+    <text x="0" y="58" font-family="'Georgia', serif" font-size="15" fill="#292524" line-height="1.6">Lagu yang kita putar mengingatkan</text>
+    <text x="0" y="82" font-family="'Georgia', serif" font-size="15" fill="#292524">bahwa kenangan terbaik tidak selalu</text>
+    <text x="0" y="106" font-family="'Georgia', serif" font-size="15" fill="#292524">hadir dalam kualitas terbaik.</text>
+    <text x="0" y="140" font-family="'Georgia', serif" font-size="15" fill="#292524">Kadang, foto yang buram justru</text>
+    <text x="0" y="164" font-family="'Georgia', serif" font-size="15" fill="#292524">menjadi bukti bahwa kita benar-benar</text>
+    <text x="0" y="188" font-family="'Georgia', serif" font-size="15" fill="#292524">sedang hidup di dalam momen itu:</text>
+    <text x="0" y="222" font-family="'Georgia', serif" font-size="15" font-weight="700" fill="#1c1917">tertawa, bergerak, dan menikmati</text>
+    <text x="0" y="246" font-family="'Georgia', serif" font-size="15" font-weight="700" fill="#1c1917">waktu bersama tanpa beban.</text>
+  </g>
+
+  <!-- ═══ SPOTIFY PLAYER WIDGET BOX ═══ -->
+  <g transform="translate(442, 530)">
+    <!-- Player Card Container -->
+    <rect x="0" y="0" width="310" height="230" rx="14" fill="#ffffff" stroke="#1c1917" stroke-width="2.5" />
+    <rect x="6" y="6" width="298" height="218" rx="10" fill="#fdfbf7" stroke="#1c1917" stroke-width="1" />
+
+    <!-- Now Playing Tag -->
+    <rect x="18" y="18" width="112" height="22" rx="4" fill="#1c1917" />
+    <text x="74" y="34" font-family="'Impact', 'Arial Black', sans-serif" font-size="12" fill="#ffffff" text-anchor="middle" letter-spacing="1">NOW PLAYING:</text>
+
+    <!-- Track Title -->
+    <text x="18" y="68" font-family="'Arial Black', sans-serif" font-size="15" font-weight="900" fill="#1c1917">FOTO KITA BLUR - SAL PRIADI</text>
+
+    <!-- Spotify Brand Icon & Logo -->
+    <g transform="translate(18, 92)">
+      <!-- Spotify Circle -->
+      <circle cx="15" cy="15" r="15" fill="#1db954" />
+      <path d="M 8 13 Q 15 10 22 13" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <path d="M 9 17 Q 15 14 21 17" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" />
+      <path d="M 11 21 Q 15 19 19 21" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      
+      <!-- Waveform Animation -->
+      <use href="#spotifyWave" x="42" y="-4" />
+    </g>
+
+    <!-- Audio Progress Bar -->
+    <g transform="translate(18, 140)">
+      <line x1="0" y1="0" x2="274" y2="0" stroke="#e7e5e4" stroke-width="4" stroke-linecap="round" />
+      <line x1="0" y1="0" x2="160" y2="0" stroke="#1c1917" stroke-width="4" stroke-linecap="round" />
+      <circle cx="160" cy="0" r="5" fill="#1c1917" />
+      <text x="0" y="16" font-family="'Courier New', monospace" font-size="11" fill="#78716c">1:47</text>
+      <text x="274" y="16" font-family="'Courier New', monospace" font-size="11" fill="#78716c" text-anchor="end">3:24</text>
+    </g>
+
+    <!-- Audio Controls (Prev, Play, Next) -->
+    <g transform="translate(155, 186)">
+      <!-- Previous -->
+      <polygon points="-50,-8 -50,8 -38,0" fill="#1c1917" />
+      <line x1="-52" y1="-8" x2="-52" y2="8" stroke="#1c1917" stroke-width="2.5" />
+      
+      <!-- Play Button Circle -->
+      <circle cx="0" cy="0" r="16" fill="#1c1917" />
+      <polygon points="-4,-7 8,0 -4,7" fill="#ffffff" />
+      
+      <!-- Next -->
+      <polygon points="38,-8 38,8 50,0" fill="#1c1917" />
+      <line x1="52" y1="-8" x2="52" y2="8" stroke="#1c1917" stroke-width="2.5" />
+    </g>
+  </g>
+
+  <!-- Vintage Stamp / Quality Mark in Right Column (y=785) -->
+  <g transform="translate(597, 890)">
+    <circle cx="0" cy="0" r="54" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2" />
+    <circle cx="0" cy="0" r="48" fill="none" stroke="#dc2626" stroke-width="1" />
+    <text x="0" y="-12" font-family="'Courier New', monospace" font-size="11" font-weight="900" fill="#dc2626" text-anchor="middle">AUTHENTIC MEMORY</text>
+    <text x="0" y="8" font-family="'Impact', sans-serif" font-size="20" fill="#dc2626" text-anchor="middle">★ 100% ★</text>
+    <text x="0" y="26" font-family="'Courier New', monospace" font-size="11" font-weight="900" fill="#dc2626" text-anchor="middle">RUANGGAYA PRESS</text>
+  </g>
+
+  <!-- ═══ BOTTOM FOOTER: BARCODE & ISSUE METADATA ═══ -->
+  <g transform="translate(0, 1100)">
+    <line x1="32" y1="0" x2="768" y2="0" stroke="#1c1917" stroke-width="2" />
+    
+    <!-- Barcode simulation -->
+    <g transform="translate(56, 12)">
+      <rect x="0" y="0" width="3" height="42" fill="#1c1917" />
+      <rect x="6" y="0" width="1" height="42" fill="#1c1917" />
+      <rect x="10" y="0" width="4" height="42" fill="#1c1917" />
+      <rect x="18" y="0" width="2" height="42" fill="#1c1917" />
+      <rect x="23" y="0" width="5" height="42" fill="#1c1917" />
+      <rect x="31" y="0" width="1" height="42" fill="#1c1917" />
+      <rect x="36" y="0" width="3" height="42" fill="#1c1917" />
+      <rect x="42" y="0" width="6" height="42" fill="#1c1917" />
+      <rect x="51" y="0" width="2" height="42" fill="#1c1917" />
+      <rect x="56" y="0" width="4" height="42" fill="#1c1917" />
+      <rect x="63" y="0" width="1" height="42" fill="#1c1917" />
+      <rect x="68" y="0" width="5" height="42" fill="#1c1917" />
+      <rect x="76" y="0" width="2" height="42" fill="#1c1917" />
+      <rect x="81" y="0" width="3" height="42" fill="#1c1917" />
+      <rect x="88" y="0" width="6" height="42" fill="#1c1917" />
+      <text x="47" y="56" font-family="'Courier New', monospace" font-size="11" fill="#1c1917" text-anchor="middle">8 997022 169473</text>
+    </g>
+
+    <!-- Publication Info -->
+    <text x="442" y="32" font-family="'Times New Roman', serif" font-size="13" font-weight="700" fill="#1c1917">DIGITAL PHOTOBOOTH ARCHIVE — ISSUE NO. 03</text>
+    <text x="442" y="52" font-family="'Courier New', monospace" font-size="11" fill="#57534e">DISETUJUI OLEH SAL PRIADI &amp; RUANGGAYA STUDIO</text>
+  </g>
+</svg>

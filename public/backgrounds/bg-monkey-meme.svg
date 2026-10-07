@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Soft light purple lavender base -->
+    <linearGradient id="monkeyBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdfafe" />
+      <stop offset="100%" stop-color="#f5eefc" />
+    </linearGradient>
+
+    <!-- Monkey emoji graphic definition -->
+    <g id="funnyMonkey">
+      <!-- Ears -->
+      <circle cx="-38" cy="0" r="16" fill="#c28b5b" />
+      <circle cx="-38" cy="0" r="10" fill="#fcd3a1" />
+      <circle cx="38" cy="0" r="16" fill="#c28b5b" />
+      <circle cx="38" cy="0" r="10" fill="#fcd3a1" />
+      <!-- Head -->
+      <circle cx="0" cy="0" r="42" fill="#a46d3c" />
+      <!-- Face mask -->
+      <ellipse cx="0" cy="12" rx="30" ry="22" fill="#fed7aa" />
+      <ellipse cx="-12" cy="-6" rx="14" ry="16" fill="#fed7aa" />
+      <ellipse cx="12" cy="-6" rx="14" ry="16" fill="#fed7aa" />
+      <!-- Eyes -->
+      <circle cx="-10" cy="-6" r="4" fill="#1e1b4b" />
+      <circle cx="10" cy="-6" r="4" fill="#1e1b4b" />
+      <!-- Nose & Mouth -->
+      <ellipse cx="0" cy="10" rx="3" ry="2" fill="#78350f" />
+      <!-- Grin -->
+      <path d="M -14 18 Q 0 30 14 18" fill="none" stroke="#78350f" stroke-width="2.5" stroke-linecap="round" />
+    </g>
+  </defs>
+
+  <!-- Clean lavender card background -->
+  <rect width="800" height="1200" fill="url(#monkeyBase)" />
+
+  <!-- Soft grid lines -->
+  <g stroke="#8e36ff" stroke-width="0.75" opacity="0.12">
+    <line x1="0" y1="300" x2="800" y2="300" />
+    <line x1="0" y1="600" x2="800" y2="600" />
+    <line x1="0" y1="900" x2="800" y2="900" />
+  </g>
+
+  <!-- Top playful monkey mascot -->
+  <g transform="translate(680, 80)">
+    <use href="#funnyMonkey" transform="scale(0.85)" />
+    <!-- Pointing finger meme pose -->
+    <rect x="-8" y="28" width="16" height="24" rx="8" fill="#fed7aa" />
+  </g>
+
+  <!-- Bottom corner monkey mascot -->
+  <g transform="translate(110, 1120)">
+    <use href="#funnyMonkey" transform="scale(0.8)" />
+  </g>
+
+  <!-- Fun stickers -->
+  <text x="60" y="80" font-family="'Impact', 'Arial Black', sans-serif" font-size="28" fill="#8e36ff" opacity="0.8">COUPLE8</text>
+  <text x="640" y="1140" font-family="'Comic Sans MS', cursive, sans-serif" font-size="24" fill="#e11d48">✨ chill vibe</text>
+</svg>

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Midnight Navy Gradient -->
+    <linearGradient id="midnightNavyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1322" />
+      <stop offset="50%" stop-color="#101e33" />
+      <stop offset="100%" stop-color="#070d18" />
+    </linearGradient>
+
+    <!-- Golden 4-Point Star Stud -->
+    <g id="goldStarStud">
+      <path d="M 0,-9 Q 0,0 9,0 Q 0,0 0,9 Q 0,0 -9,0 Q 0,0 0,-9 Z" fill="#ffd166" />
+      <circle cx="0" cy="0" r="1.8" fill="#ffffff" />
+    </g>
+
+    <!-- Small Sparkle -->
+    <g id="smallSparkle">
+      <path d="M 0,-5 Q 0,0 5,0 Q 0,0 0,5 Q 0,0 -5,0 Q 0,0 0,-5 Z" fill="#facc15" />
+    </g>
+
+    <!-- Delicate Lace Border Pattern around Slots -->
+    <pattern id="laceDottedStitch" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="1.5" fill="#f5ede2" opacity="0.6" />
+      <circle cx="0" cy="0" r="1" fill="#ffd166" opacity="0.7" />
+      <circle cx="16" cy="0" r="1" fill="#ffd166" opacity="0.7" />
+      <circle cx="0" cy="16" r="1" fill="#ffd166" opacity="0.7" />
+      <circle cx="16" cy="16" r="1" fill="#ffd166" opacity="0.7" />
+    </pattern>
+  </defs>
+
+  <!-- Deep Midnight Navy Base -->
+  <rect width="800" height="1200" fill="url(#midnightNavyBg)" />
+
+  <!-- Outer Double Framing Line (Gold & Ivory) -->
+  <rect x="16" y="16" width="768" height="1168" rx="16" fill="none" stroke="#ffd166" stroke-width="2" opacity="0.85" />
+  <rect x="22" y="22" width="756" height="1156" rx="12" fill="none" stroke="#f5ede2" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.5" />
+
+  <!-- Lace Stitch Band on Outer Margins -->
+  <rect x="26" y="26" width="22" height="1148" fill="url(#laceDottedStitch)" />
+  <rect x="752" y="26" width="22" height="1148" fill="url(#laceDottedStitch)" />
+  <rect x="389" y="26" width="22" height="1148" fill="url(#laceDottedStitch)" />
+
+  <!-- ═══ TOP WATERMARK: "KK studio" (Cursive) ═══ -->
+  <g transform="translate(400, 44)">
+    <text x="0" y="0" font-family="'Brush Script MT', 'Dancing Script', 'Playfair Display', cursive" font-size="34" font-style="italic" fill="#f5ede2" text-anchor="middle" letter-spacing="2">KK studio</text>
+    <use href="#goldStarStud" x="-95" y="-8" />
+    <use href="#goldStarStud" x="95" y="-8" />
+  </g>
+
+  <!-- ═══ 8 PHOTO SLOTS (4 ROWS x 2 COLS) ═══ -->
+  <!-- Left Column: x=52, w=332 -->
+  <!-- Row 1: y=68, h=248 -->
+  <rect x="52" y="68" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="56" y="72" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Row 2: y=340, h=248 -->
+  <rect x="52" y="340" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="56" y="344" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Row 3: y=612, h=248 -->
+  <rect x="52" y="612" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="56" y="616" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Row 4: y=884, h=248 -->
+  <rect x="52" y="884" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="56" y="888" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Right Column: x=416, w=332 -->
+  <!-- Row 1: y=68, h=248 -->
+  <rect x="416" y="68" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="420" y="72" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Row 2: y=340, h=248 -->
+  <rect x="416" y="340" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="420" y="344" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Row 3: y=612, h=248 -->
+  <rect x="416" y="612" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="420" y="616" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- Row 4: y=884, h=248 -->
+  <rect x="416" y="884" width="332" height="248" rx="10" fill="#ffffff" stroke="#f5ede2" stroke-width="2.5" />
+  <rect x="420" y="888" width="324" height="240" rx="8" fill="#fdfbf8" stroke="#d5c8b5" stroke-width="1.2" stroke-dasharray="5,4" />
+
+  <!-- ═══ SCATTERED GOLD STARS ON MARGINS & DIVIDERS ═══ -->
+  <!-- Top corners -->
+  <use href="#goldStarStud" x="40" y="44" />
+  <use href="#goldStarStud" x="760" y="44" />
+
+  <!-- Side margins -->
+  <use href="#smallSparkle" x="38" y="200" />
+  <use href="#goldStarStud" x="38" y="325" />
+  <use href="#smallSparkle" x="38" y="480" />
+  <use href="#goldStarStud" x="38" y="600" />
+  <use href="#smallSparkle" x="38" y="750" />
+  <use href="#goldStarStud" x="38" y="870" />
+  <use href="#smallSparkle" x="38" y="1010" />
+
+  <use href="#smallSparkle" x="762" y="200" />
+  <use href="#goldStarStud" x="762" y="325" />
+  <use href="#smallSparkle" x="762" y="480" />
+  <use href="#goldStarStud" x="762" y="600" />
+  <use href="#smallSparkle" x="762" y="750" />
+  <use href="#goldStarStud" x="762" y="870" />
+  <use href="#smallSparkle" x="762" y="1010" />
+
+  <!-- Center divider stars -->
+  <use href="#goldStarStud" x="400" y="200" />
+  <use href="#smallSparkle" x="400" y="325" />
+  <use href="#goldStarStud" x="400" y="475" />
+  <use href="#smallSparkle" x="400" y="600" />
+  <use href="#goldStarStud" x="400" y="750" />
+  <use href="#smallSparkle" x="400" y="870" />
+  <use href="#goldStarStud" x="400" y="1010" />
+
+  <!-- Bottom Stars -->
+  <use href="#goldStarStud" x="40" y="1155" />
+  <use href="#goldStarStud" x="400" y="1155" />
+  <use href="#goldStarStud" x="760" y="1155" />
+  <use href="#smallSparkle" x="220" y="1155" />
+  <use href="#smallSparkle" x="580" y="1155" />
+</svg>

@@ -1,0 +1,262 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="coupleBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fcfaff" />
+      <stop offset="50%" stop-color="#f5eefc" />
+      <stop offset="100%" stop-color="#eee4fa" />
+    </linearGradient>
+
+    <!-- Monkey Character 1: Pointing Finger Up (Meme 1) -->
+    <g id="monkeyMeme1">
+      <!-- Sky / Outdoor backdrop -->
+      <rect x="0" y="0" width="344" height="264" rx="8" fill="#a4c2db" />
+      <!-- Sea / Horizon -->
+      <path d="M 0,160 Q 172,150 344,160 L 344,264 L 0,264 Z" fill="#6c93b5" />
+      
+      <!-- Monkey Body -->
+      <path d="M 80,264 C 90,160 250,160 260,264 Z" fill="#7a5538" />
+      
+      <!-- Monkey Head -->
+      <circle cx="172" cy="115" r="70" fill="#8d6342" />
+      
+      <!-- Ears -->
+      <ellipse cx="96" cy="115" rx="20" ry="26" fill="#8d6342" />
+      <ellipse cx="98" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+      <ellipse cx="248" cy="115" rx="20" ry="26" fill="#8d6342" />
+      <ellipse cx="246" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+
+      <!-- Face Mask Area -->
+      <path d="M 120,95 C 120,70 150,65 172,80 C 194,65 224,70 224,95 C 224,135 120,135 120,95 Z" fill="#fed7aa" />
+      <ellipse cx="172" cy="135" rx="46" ry="32" fill="#fed7aa" />
+
+      <!-- Eyes (Excited wide open) -->
+      <circle cx="148" cy="98" r="9" fill="#ffffff" />
+      <circle cx="148" cy="98" r="6" fill="#1c1917" />
+      <circle cx="146" cy="96" r="2" fill="#ffffff" />
+
+      <circle cx="196" cy="98" r="9" fill="#ffffff" />
+      <circle cx="196" cy="98" r="6" fill="#1c1917" />
+      <circle cx="194" cy="96" r="2" fill="#ffffff" />
+
+      <!-- Nostrils -->
+      <ellipse cx="166" cy="125" rx="3" ry="4" fill="#78350f" />
+      <ellipse cx="178" cy="125" rx="3" ry="4" fill="#78350f" />
+
+      <!-- Open smiling mouth -->
+      <path d="M 148,142 Q 172,166 196,142 Z" fill="#991b1b" />
+      <path d="M 152,142 Q 172,150 192,142" stroke="#ffffff" stroke-width="3" fill="none" />
+
+      <!-- Hand Pointing Finger Up (Left side of monkey) -->
+      <g transform="translate(100, 70)">
+        <!-- Arm -->
+        <path d="M 6,190 Q -10,100 20,40" stroke="#8d6342" stroke-width="34" stroke-linecap="round" fill="none" />
+        <!-- Hand palm -->
+        <circle cx="20" cy="30" r="18" fill="#fed7aa" />
+        <!-- Index Finger pointing straight up -->
+        <rect x="12" y="-22" width="14" height="42" rx="7" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.5" />
+        <ellipse cx="19" cy="-20" rx="4" ry="3" fill="#ffffff" opacity="0.6" />
+        <!-- Folded fingers -->
+        <ellipse cx="32" cy="24" rx="8" ry="7" fill="#fed7aa" />
+        <ellipse cx="30" cy="36" rx="8" ry="7" fill="#fed7aa" />
+        <ellipse cx="26" cy="46" rx="8" ry="7" fill="#fed7aa" />
+      </g>
+    </g>
+
+    <!-- Monkey Character 2: Pondering with Finger on Chin (Meme 2) -->
+    <g id="monkeyMeme2">
+      <!-- Backdrop -->
+      <rect x="0" y="0" width="344" height="264" rx="8" fill="#9dbbd3" />
+      <path d="M 0,160 Q 172,150 344,160 L 344,264 L 0,264 Z" fill="#6289a8" />
+
+      <!-- Monkey Body -->
+      <path d="M 70,264 C 80,160 260,160 270,264 Z" fill="#7a5538" />
+
+      <!-- Monkey Head -->
+      <circle cx="172" cy="115" r="70" fill="#8d6342" />
+
+      <!-- Ears -->
+      <ellipse cx="96" cy="115" rx="20" ry="26" fill="#8d6342" />
+      <ellipse cx="98" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+      <ellipse cx="248" cy="115" rx="20" ry="26" fill="#8d6342" />
+      <ellipse cx="246" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+
+      <!-- Face Mask Area -->
+      <path d="M 120,95 C 120,70 150,65 172,80 C 194,65 224,70 224,95 C 224,135 120,135 120,95 Z" fill="#fed7aa" />
+      <ellipse cx="172" cy="135" rx="46" ry="32" fill="#fed7aa" />
+
+      <!-- Eyes (Looking up thoughtfully) -->
+      <circle cx="148" cy="94" r="8" fill="#ffffff" />
+      <circle cx="148" cy="92" r="5.5" fill="#1c1917" />
+      <circle cx="146" cy="90" r="1.8" fill="#ffffff" />
+
+      <circle cx="196" cy="94" r="8" fill="#ffffff" />
+      <circle cx="196" cy="92" r="5.5" fill="#1c1917" />
+      <circle cx="194" cy="90" r="1.8" fill="#ffffff" />
+
+      <!-- Nostrils -->
+      <ellipse cx="166" cy="123" rx="3" ry="4" fill="#78350f" />
+      <ellipse cx="178" cy="123" rx="3" ry="4" fill="#78350f" />
+
+      <!-- Small contemplative mouth -->
+      <ellipse cx="172" cy="146" rx="8" ry="4" fill="#78350f" />
+
+      <!-- Hand resting on chin (Thinking pose) -->
+      <g transform="translate(172, 148)">
+        <path d="M 40,110 Q 30,50 10,25" stroke="#8d6342" stroke-width="32" stroke-linecap="round" fill="none" />
+        <circle cx="0" cy="15" r="18" fill="#fed7aa" />
+        <!-- Finger touching chin -->
+        <rect x="-10" y="-12" width="12" height="26" rx="6" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.2" transform="rotate(-15)" />
+        <rect x="0" y="-8" width="12" height="24" rx="6" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.2" transform="rotate(10)" />
+      </g>
+    </g>
+
+    <!-- Monkey Character 3: Hand on Cheek Side-Eye (Meme 3) -->
+    <g id="monkeyMeme3">
+      <!-- Backdrop -->
+      <rect x="0" y="0" width="344" height="264" rx="8" fill="#96b5cf" />
+      <path d="M 0,160 Q 172,150 344,160 L 344,264 L 0,264 Z" fill="#5c82a1" />
+
+      <!-- Monkey Body -->
+      <path d="M 70,264 C 80,160 260,160 270,264 Z" fill="#7a5538" />
+
+      <!-- Head tilted slightly -->
+      <g transform="rotate(-6 172 115)">
+        <circle cx="172" cy="115" r="70" fill="#8d6342" />
+
+        <!-- Ears -->
+        <ellipse cx="96" cy="115" rx="20" ry="26" fill="#8d6342" />
+        <ellipse cx="98" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+        <ellipse cx="248" cy="115" rx="20" ry="26" fill="#8d6342" />
+        <ellipse cx="246" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+
+        <!-- Face Mask Area -->
+        <path d="M 120,95 C 120,70 150,65 172,80 C 194,65 224,70 224,95 C 224,135 120,135 120,95 Z" fill="#fed7aa" />
+        <ellipse cx="172" cy="135" rx="46" ry="32" fill="#fed7aa" />
+
+        <!-- Side-eye eyes (pupils shifted left towards user photo) -->
+        <circle cx="148" cy="98" r="9" fill="#ffffff" />
+        <circle cx="142" cy="98" r="6" fill="#1c1917" />
+        <circle cx="140" cy="96" r="2" fill="#ffffff" />
+
+        <circle cx="196" cy="98" r="9" fill="#ffffff" />
+        <circle cx="190" cy="98" r="6" fill="#1c1917" />
+        <circle cx="188" cy="96" r="2" fill="#ffffff" />
+
+        <!-- Nostrils -->
+        <ellipse cx="166" cy="124" rx="3" ry="4" fill="#78350f" />
+        <ellipse cx="178" cy="124" rx="3" ry="4" fill="#78350f" />
+
+        <!-- Slight smirking mouth -->
+        <path d="M 152,144 Q 170,150 188,140" stroke="#78350f" stroke-width="3" fill="none" stroke-linecap="round" />
+
+        <!-- Hand resting on cheek -->
+        <g transform="translate(122, 130)">
+          <circle cx="0" cy="10" r="16" fill="#fed7aa" />
+          <rect x="-8" y="-14" width="12" height="24" rx="6" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.2" transform="rotate(-30)" />
+          <rect x="0" y="-12" width="12" height="24" rx="6" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.2" transform="rotate(-10)" />
+        </g>
+      </g>
+    </g>
+
+    <!-- Monkey Character 4: Clapping / Shouting Joy (Meme 4) -->
+    <g id="monkeyMeme4">
+      <!-- Backdrop -->
+      <rect x="0" y="0" width="344" height="264" rx="8" fill="#8faec9" />
+      <path d="M 0,160 Q 172,150 344,160 L 344,264 L 0,264 Z" fill="#547b9b" />
+
+      <!-- Monkey Body -->
+      <path d="M 70,264 C 80,160 260,160 270,264 Z" fill="#7a5538" />
+
+      <!-- Head -->
+      <circle cx="172" cy="115" r="70" fill="#8d6342" />
+
+      <!-- Ears -->
+      <ellipse cx="96" cy="115" rx="20" ry="26" fill="#8d6342" />
+      <ellipse cx="98" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+      <ellipse cx="248" cy="115" rx="20" ry="26" fill="#8d6342" />
+      <ellipse cx="246" cy="115" rx="14" ry="18" fill="#fbcfe8" />
+
+      <!-- Face Mask Area -->
+      <path d="M 120,95 C 120,70 150,65 172,80 C 194,65 224,70 224,95 C 224,135 120,135 120,95 Z" fill="#fed7aa" />
+      <ellipse cx="172" cy="135" rx="46" ry="32" fill="#fed7aa" />
+
+      <!-- Wide amazed eyes -->
+      <circle cx="148" cy="94" r="11" fill="#ffffff" />
+      <circle cx="148" cy="94" r="7" fill="#1c1917" />
+      <circle cx="145" cy="91" r="2.5" fill="#ffffff" />
+
+      <circle cx="196" cy="94" r="11" fill="#ffffff" />
+      <circle cx="196" cy="94" r="7" fill="#1c1917" />
+      <circle cx="193" cy="91" r="2.5" fill="#ffffff" />
+
+      <!-- Nostrils -->
+      <ellipse cx="166" cy="120" rx="3.5" ry="4.5" fill="#78350f" />
+      <ellipse cx="178" cy="120" rx="3.5" ry="4.5" fill="#78350f" />
+
+      <!-- Big O-shaped screaming / cheering mouth -->
+      <ellipse cx="172" cy="148" rx="18" ry="22" fill="#7f1d1d" />
+      <ellipse cx="172" cy="154" rx="12" ry="8" fill="#f87171" />
+      <rect x="160" y="128" width="24" height="6" rx="2" fill="#ffffff" />
+
+      <!-- Clapping / cheering hands -->
+      <g transform="translate(130, 175)">
+        <ellipse cx="0" cy="0" rx="16" ry="22" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.5" transform="rotate(-25)" />
+      </g>
+      <g transform="translate(214, 175)">
+        <ellipse cx="0" cy="0" rx="16" ry="22" fill="#fed7aa" stroke="#c28b5b" stroke-width="1.5" transform="rotate(25)" />
+      </g>
+    </g>
+  </defs>
+
+  <!-- Clean lavender background -->
+  <rect width="800" height="1200" fill="url(#coupleBg)" />
+
+  <!-- Outer frame border with subtle shadow -->
+  <rect x="20" y="20" width="760" height="1160" rx="18" fill="none" stroke="#8e36ff" stroke-width="2" opacity="0.4" />
+
+  <!-- ═══ LEFT COLUMN: 4 USER PHOTO SLOTS (x=44, w=344, h=264) ═══ -->
+  
+  <!-- Slot 1 outline (y=48) -->
+  <rect x="44" y="48" width="344" height="264" rx="8" fill="#ffffff" stroke="#ded6ee" stroke-width="2" />
+  
+  <!-- Slot 2 outline (y=330) -->
+  <rect x="44" y="330" width="344" height="264" rx="8" fill="#ffffff" stroke="#ded6ee" stroke-width="2" />
+  
+  <!-- Slot 3 outline (y=612) -->
+  <rect x="44" y="612" width="344" height="264" rx="8" fill="#ffffff" stroke="#ded6ee" stroke-width="2" />
+  
+  <!-- Slot 4 outline (y=894) -->
+  <rect x="44" y="894" width="344" height="264" rx="8" fill="#ffffff" stroke="#ded6ee" stroke-width="2" />
+
+  <!-- ═══ RIGHT COLUMN: 4 MONKEY MEME REACTION SLOTS (x=412, w=344, h=264) ═══ -->
+
+  <!-- Monkey 1 (Pointing up) -->
+  <g transform="translate(412, 48)">
+    <use href="#monkeyMeme1" />
+    <rect x="0" y="0" width="344" height="264" rx="8" fill="none" stroke="#ded6ee" stroke-width="2" />
+  </g>
+
+  <!-- Monkey 2 (Thinking) -->
+  <g transform="translate(412, 330)">
+    <use href="#monkeyMeme2" />
+    <rect x="0" y="0" width="344" height="264" rx="8" fill="none" stroke="#ded6ee" stroke-width="2" />
+  </g>
+
+  <!-- Monkey 3 (Side-eye) -->
+  <g transform="translate(412, 612)">
+    <use href="#monkeyMeme3" />
+    <rect x="0" y="0" width="344" height="264" rx="8" fill="none" stroke="#ded6ee" stroke-width="2" />
+  </g>
+
+  <!-- Monkey 4 (Cheering) -->
+  <g transform="translate(412, 894)">
+    <use href="#monkeyMeme4" />
+    <rect x="0" y="0" width="344" height="264" rx="8" fill="none" stroke="#ded6ee" stroke-width="2" />
+  </g>
+
+  <!-- Bottom Branding / Watermark -->
+  <g transform="translate(400, 1176)">
+    <text x="0" y="0" font-family="'Impact', 'Arial Black', sans-serif" font-size="16" fill="#8e36ff" text-anchor="middle" letter-spacing="2">★ COUPLE8 MEME PHOTOSTRIP ★</text>
+  </g>
+</svg>

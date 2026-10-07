@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Soft Ivory Background Texture -->
+    <linearGradient id="ivoryBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffef9" />
+      <stop offset="50%" stop-color="#fcf8f0" />
+      <stop offset="100%" stop-color="#f9f2e4" />
+    </linearGradient>
+
+    <!-- Indonesian Batik Blossom Motif -->
+    <g id="batikBlossom">
+      <!-- Petals pink/crimson -->
+      <path d="M 0,-18 C -10,-8 -10,8 0,18 C 10,8 10,-8 0,-18 Z" fill="#e85d75" />
+      <path d="M -18,0 C -8,-10 8,-10 18,0 C 8,10 -8,10 -18,0 Z" fill="#e85d75" />
+      <path d="M -12,-12 C -4,-6 4,-6 12,12 C 4,6 -4,6 -12,-12 Z" fill="#f43f5e" opacity="0.8" />
+      <path d="M 12,-12 C 4,-6 -4,-6 -12,12 C -4,6 4,6 12,-12 Z" fill="#f43f5e" opacity="0.8" />
+      <!-- Gold center core -->
+      <circle cx="0" cy="0" r="6" fill="#fbbf24" stroke="#d97706" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+    </g>
+
+    <!-- Olive Leaf Pair -->
+    <g id="oliveLeaves">
+      <path d="M 0,0 Q -18,-12 -12,-28 Q 0,-14 0,0 Z" fill="#65a30d" />
+      <path d="M 0,0 Q 18,-12 12,-28 Q 0,-14 0,0 Z" fill="#84cc16" />
+      <path d="M 0,0 Q -14,14 -26,10 Q -12,0 0,0 Z" fill="#4d7c0f" />
+      <path d="M 0,0 Q 14,14 26,10 Q 12,0 0,0 Z" fill="#65a30d" />
+    </g>
+
+    <!-- Center Batik Garland Pattern Strip -->
+    <pattern id="centerBatikPattern" width="70" height="150" patternUnits="userSpaceOnUse">
+      <line x1="35" y1="0" x2="35" y2="150" stroke="#84cc16" stroke-width="2" />
+      <use href="#oliveLeaves" x="35" y="40" />
+      <use href="#batikBlossom" x="35" y="75" transform="scale(0.85)" />
+      <use href="#oliveLeaves" x="35" y="115" transform="scale(0.9)" />
+      <circle cx="35" cy="145" r="4" fill="#fbbf24" />
+      <circle cx="35" cy="5" r="4" fill="#fbbf24" />
+    </pattern>
+
+    <!-- Outer Garland Side Border -->
+    <pattern id="sideGarlandPattern" width="46" height="100" patternUnits="userSpaceOnUse">
+      <path d="M 23,0 Q 8,25 23,50 Q 38,75 23,100" fill="none" stroke="#84cc16" stroke-width="2.5" />
+      <circle cx="16" cy="25" r="6" fill="#f43f5e" />
+      <circle cx="16" cy="25" r="2" fill="#fef08a" />
+      <circle cx="30" cy="75" r="6" fill="#e85d75" />
+      <circle cx="30" cy="75" r="2" fill="#fef08a" />
+      <ellipse cx="23" cy="50" rx="6" ry="3" fill="#65a30d" transform="rotate(-30 23 50)" />
+    </pattern>
+  </defs>
+
+  <!-- Base Ivory Background -->
+  <rect width="800" height="1200" fill="url(#ivoryBg)" />
+
+  <!-- Outer Double Gold Frame Border -->
+  <rect x="14" y="14" width="772" height="1172" rx="14" fill="none" stroke="#d4af37" stroke-width="2" />
+  <rect x="20" y="20" width="760" height="1160" rx="10" fill="none" stroke="#e6c97a" stroke-width="1.2" stroke-dasharray="6,4" />
+
+  <!-- Left Side Floral Garland -->
+  <rect x="24" y="24" width="42" height="1152" fill="url(#sideGarlandPattern)" />
+
+  <!-- Right Side Floral Garland -->
+  <rect x="734" y="24" width="42" height="1152" fill="url(#sideGarlandPattern)" />
+
+  <!-- Center Decorative Batik Vine Strip (between x=365 and x=435) -->
+  <rect x="365" y="24" width="70" height="1152" fill="url(#centerBatikPattern)" />
+
+  <!-- Top Center Medallion Ornament -->
+  <g transform="translate(400, 32)">
+    <circle cx="0" cy="0" r="18" fill="#fef08a" stroke="#d4af37" stroke-width="2" />
+    <circle cx="0" cy="0" r="12" fill="#e85d75" />
+    <circle cx="0" cy="0" r="5" fill="#ffffff" />
+  </g>
+
+  <!-- Bottom Center Medallion Ornament -->
+  <g transform="translate(400, 1168)">
+    <circle cx="0" cy="0" r="18" fill="#fef08a" stroke="#d4af37" stroke-width="2" />
+    <circle cx="0" cy="0" r="12" fill="#e85d75" />
+    <circle cx="0" cy="0" r="5" fill="#ffffff" />
+  </g>
+
+  <!-- ═══ 8 PHOTO SLOTS FRAMING CUTOUTS (2 COLS x 4 ROWS) ═══ -->
+  <!-- Left Column: x=52, w=324 -->
+  <!-- Row 1: y=60, h=252 -->
+  <rect x="52" y="60" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="56" y="64" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Row 2: y=336, h=252 -->
+  <rect x="52" y="336" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="56" y="340" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Row 3: y=612, h=252 -->
+  <rect x="52" y="612" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="56" y="616" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Row 4: y=888, h=252 -->
+  <rect x="52" y="888" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="56" y="892" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Right Column: x=424, w=324 -->
+  <!-- Row 1: y=60, h=252 -->
+  <rect x="424" y="60" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="428" y="64" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Row 2: y=336, h=252 -->
+  <rect x="424" y="336" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="428" y="340" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Row 3: y=612, h=252 -->
+  <rect x="424" y="612" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="428" y="616" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- Row 4: y=888, h=252 -->
+  <rect x="424" y="888" width="324" height="252" rx="8" fill="#ffffff" stroke="#d4af37" stroke-width="1.8" />
+  <rect x="428" y="892" width="316" height="244" rx="6" fill="#fefefb" stroke="#e8d5a7" stroke-width="1" stroke-dasharray="4,4" />
+
+  <!-- ═══ Lumore Signature Watermarks (Vertical, matching Jepreto) ═══ -->
+  <text x="44" y="1090" font-family="'Cinzel', 'Playfair Display', serif" font-size="18" font-weight="900" fill="#1c1917" letter-spacing="4" transform="rotate(-90 44 1090)">Lumore</text>
+  <text x="756" y="1090" font-family="'Cinzel', 'Playfair Display', serif" font-size="18" font-weight="900" fill="#1c1917" letter-spacing="4" transform="rotate(-90 756 1090)">Lumore</text>
+</svg>
