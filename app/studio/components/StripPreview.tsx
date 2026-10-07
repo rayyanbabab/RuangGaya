@@ -106,40 +106,90 @@ export default function StripPreview({
       )}
 
       <div className={styles.contentArea} style={{ top: `${photoOffsetPct}%`, height: `${(photoAreaH / totalH) * 100}%`, position: 'absolute', left: 0, width: '100%' }}>
-      {/* 1. Photo grid */}
-      <div
-        className={styles.photoGrid}
-        style={{ 
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          padding: `${padPct}%`,
-          gap: `${gapPct}%`,
-        }}
-      >
-        {slots.map((src, i) =>
-          src ? (
-            <div
-              key={i}
-              className={styles.photoCell}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={src}
-                alt={`Foto ${i + 1}`}
-                className={styles.photoImg}
-                style={{ filter: cssFilter !== 'none' ? cssFilter : undefined }}
-              />
-            </div>
-          ) : (
-            <div
-              key={i}
-              className={styles.emptyCell}
-              style={{ borderColor: emptyCellColor, color: emptyCellColor }}
-            >
-              <span className={styles.emptyCellNum}>{i + 1}</span>
-            </div>
-          )
-        )}
-      </div>
+      {/* 1. Photo grid or Custom Slots */}
+      {frame.customSlots && frame.customSlots.length > 0 ? (
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+          {frame.customSlots.map((rect, i) => {
+            const src = slots[i];
+            return (
+              <div
+                key={i}
+                style={{
+                  position: 'absolute',
+                  left: `${rect.x}%`,
+                  top: `${rect.y}%`,
+                  width: `${rect.width}%`,
+                  height: `${rect.height}%`,
+                  borderRadius: 6,
+                  overflow: 'hidden',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                }}
+              >
+                {src ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={src}
+                    alt={`Foto ${i + 1}`}
+                    className={styles.photoImg}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      filter: cssFilter !== 'none' ? cssFilter : undefined,
+                    }}
+                  />
+                ) : (
+                  <div
+                    className={styles.emptyCell}
+                    style={{
+                      borderColor: emptyCellColor,
+                      color: emptyCellColor,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  >
+                    <span className={styles.emptyCellNum}>{i + 1}</span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div
+          className={styles.photoGrid}
+          style={{ 
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
+            padding: `${padPct}%`,
+            gap: `${gapPct}%`,
+          }}
+        >
+          {slots.map((src, i) =>
+            src ? (
+              <div
+                key={i}
+                className={styles.photoCell}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt={`Foto ${i + 1}`}
+                  className={styles.photoImg}
+                  style={{ filter: cssFilter !== 'none' ? cssFilter : undefined }}
+                />
+              </div>
+            ) : (
+              <div
+                key={i}
+                className={styles.emptyCell}
+                style={{ borderColor: emptyCellColor, color: emptyCellColor }}
+              >
+                <span className={styles.emptyCellNum}>{i + 1}</span>
+              </div>
+            )
+          )}
+        </div>
+      )}
 
       {/* 2. Stickers */}
       {stickers && updateSticker && removeSticker && (

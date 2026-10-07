@@ -142,19 +142,39 @@ export async function buildStripCanvas({
     slots.map((src) => (src ? loadImage(src) : null))
   );
 
-  for (let i = 0; i < slots.length; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    const x = padding + col * (slotW + gap);
-    const y = photoOffsetY + padding + row * (slotH + gap);
+  if (frame.customSlots && frame.customSlots.length > 0) {
+    const photoH = totalH - footerH;
+    for (let i = 0; i < frame.customSlots.length; i++) {
+      const rect = frame.customSlots[i];
+      const x = (rect.x / 100) * totalW;
+      const y = photoOffsetY + (rect.y / 100) * photoH;
+      const w = (rect.width / 100) * totalW;
+      const h = (rect.height / 100) * photoH;
 
-    if (loadedSlots[i]) {
-      if (cssFilter !== 'none') ctx.filter = cssFilter;
-      ctx.drawImage(loadedSlots[i]!, x, y, slotW, slotH);
-      ctx.filter = 'none';
-    } else {
-      ctx.fillStyle = 'rgba(0,0,0,0.08)';
-      ctx.fillRect(x, y, slotW, slotH);
+      if (loadedSlots[i]) {
+        if (cssFilter !== 'none') ctx.filter = cssFilter;
+        ctx.drawImage(loadedSlots[i]!, x, y, w, h);
+        ctx.filter = 'none';
+      } else {
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(x, y, w, h);
+      }
+    }
+  } else {
+    for (let i = 0; i < slots.length; i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const x = padding + col * (slotW + gap);
+      const y = photoOffsetY + padding + row * (slotH + gap);
+
+      if (loadedSlots[i]) {
+        if (cssFilter !== 'none') ctx.filter = cssFilter;
+        ctx.drawImage(loadedSlots[i]!, x, y, slotW, slotH);
+        ctx.filter = 'none';
+      } else {
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(x, y, slotW, slotH);
+      }
     }
   }
 
@@ -181,26 +201,28 @@ export async function buildStripCanvas({
       try {
         ctx.save();
         
-        // Parse the transform string (e.g., "translate(100px, 100px) rotate(45deg)")
-        // Since DOMMatrix is not available in Node.js, and this runs in the browser,
-        // we can safely use DOMMatrix.
-        const matrix = new DOMMatrix(sticker.transform);
-        
-        // Apply the same matrix but scaled up
-        // transform matrix: a c e
-        //                   b d f
-        // e = tx, f = ty
-        ctx.translate(matrix.e * scale, matrix.f * scale);
-        
-        // Extract rotation and scaling from the matrix
-        const angle = Math.atan2(matrix.b, matrix.a);
-        const scaleX = Math.sqrt(matrix.a * matrix.a + matrix.b * matrix.b);
-        const scaleY = Math.sqrt(matrix.c * matrix.c + matrix.d * matrix.d);
-        
+        let tx = 0, ty = 0, angle = 0, scaleX = 1, scaleY = 1;
+        try {
+          const matrix = new DOMMatrix(sticker.transform);
+          tx = matrix.e;
+          ty = matrix.f;
+          angle = Math.atan2(matrix.b, matrix.a);
+          scaleX = Math.sqrt(matrix.a * matrix.a + matrix.b * matrix.b) || 1;
+          scaleY = Math.sqrt(matrix.c * matrix.c + matrix.d * matrix.d) || 1;
+        } catch {
+          const match = sticker.transform.match(/translate\(([^,]+)px,\s*([^)]+)px\)/);
+          if (match) {
+            tx = parseFloat(match[1]) || 0;
+            ty = parseFloat(match[2]) || 0;
+          }
+        }
+
+        // Apply position relative to photo area + footer offset
+        ctx.translate(tx * scale, photoOffsetY + ty * scale);
         ctx.rotate(angle);
         ctx.scale(scaleX, scaleY);
         
-        // The sticker width/height is also scaled
+        // Draw sticker
         ctx.drawImage(img, 0, 0, sticker.width * scale, sticker.height * scale);
         ctx.restore();
       } catch (err) {
@@ -209,7 +231,7 @@ export async function buildStripCanvas({
     }
   }
 
-  // ── 5. Strip text (top or bottom) ─────────────────────────────
+
   if (hasText) {
     // Pre-load font so it renders correctly in canvas
     const fontDecl = `bold ${stripTextSize}px ${stripTextFont}`;

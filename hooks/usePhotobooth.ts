@@ -30,6 +30,8 @@ interface PhotoboothState {
   stickers: StickerItem[];
 }
 
+export type FilterCanvasGetter = HTMLCanvasElement | null | (() => HTMLCanvasElement | null);
+
 interface PhotoboothActions {
   setTemplate: (t: Template) => void;
   setFrame: (f: Frame) => void;
@@ -44,8 +46,8 @@ interface PhotoboothActions {
   setTimer: (t: TimerOption) => void;
   setAutoShoot: (v: boolean) => void;
   capturePhoto: (video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => void;
-  startTimedCapture: (video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => void;
-  startAutoShoot: (video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => void;
+  startTimedCapture: (video: HTMLVideoElement, filterCanvas?: FilterCanvasGetter) => void;
+  startAutoShoot: (video: HTMLVideoElement, filterCanvas?: FilterCanvasGetter) => void;
   resetAll: () => void;
   cancelCountdown: () => void;
   addSticker: (src: string) => void;
@@ -138,7 +140,10 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
     });
   }, [activeSlot, advanceSlot, triggerFlash]);
 
-  const startTimedCapture = useCallback((video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => {
+  const startTimedCapture = useCallback((
+    video: HTMLVideoElement,
+    filterCanvas?: FilterCanvasGetter
+  ) => {
     if (isCountingDown) return;
     cancelCountdown();
     setIsCountingDown(true);
@@ -150,12 +155,16 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
       if (remaining <= 0) {
         clearInterval(countdownRef.current!);
         setIsCountingDown(false);
-        capturePhoto(video, filterCanvas);
+        const resolved = typeof filterCanvas === 'function' ? filterCanvas() : filterCanvas;
+        capturePhoto(video, resolved);
       }
     }, 1000);
   }, [isCountingDown, timer, cancelCountdown, capturePhoto]);
 
-  const startAutoShoot = useCallback((video: HTMLVideoElement, filterCanvas?: HTMLCanvasElement | null) => {
+  const startAutoShoot = useCallback((
+    video: HTMLVideoElement,
+    filterCanvas?: FilterCanvasGetter
+  ) => {
     if (isCountingDown) { cancelCountdown(); return; }
     const emptyIndices = slots.map((s, i) => (s === null ? i : -1)).filter((i) => i !== -1);
     if (emptyIndices.length === 0) return;
@@ -173,7 +182,8 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
         if (remaining <= 0) {
           clearInterval(countdownRef.current!);
           setIsCountingDown(false);
-          doCapture(video, slotIdx, filterCanvas);
+          const resolved = typeof filterCanvas === 'function' ? filterCanvas() : filterCanvas;
+          doCapture(video, slotIdx, resolved);
           idx += 1;
           if (idx < emptyIndices.length) {
             autoShootRef.current = setTimeout(shootNext, 800);
@@ -200,8 +210,8 @@ export function usePhotobooth(): PhotoboothState & PhotoboothActions {
       {
         id: `sticker-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
         src,
-        width: 150, // Default size
-        height: 150,
+        width: 140, // Default comfortable size
+        height: 140,
         transform: `translate(100px, 100px) rotate(0deg)`,
       },
     ]);

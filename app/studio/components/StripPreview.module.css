@@ -1,11 +1,12 @@
 .previewContainer {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;
   margin: 0 auto;
-  border-radius: 14px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  border: 2px solid var(--rg-dark);
+  box-shadow: 0 8px 0 var(--rg-dark);
   user-select: none;
   container-type: inline-size;
   /* background set via inline style (frame.bgColor) */
@@ -71,10 +72,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  /* Stop before the strip text footer — height calculated to match photo grid area */
-  height: 100%; /* Now matches contentArea height exactly */
+  height: 100%;
   object-fit: contain;
   pointer-events: none;
   z-index: 5;
-  /* If PNG has transparent areas, photos show through */
 }
