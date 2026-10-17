@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <rect width="800" height="1200" fill="#fff1f2" />
+  
+  <!-- Hand-drawn style hearts and doodles -->
+  <g fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.75">
+    <!-- Heart 1 -->
+    <path d="M 80 60 C 80 40 55 40 55 58 C 55 78 80 95 80 95 C 80 95 105 78 105 58 C 105 40 80 40 80 60 Z" />
+    <!-- Heart 2 -->
+    <path d="M 720 100 C 720 80 695 80 695 98 C 695 118 720 135 720 135 C 720 135 745 118 745 98 C 745 80 720 80 720 100 Z" />
+    <!-- Heart 3 -->
+    <path d="M 70 600 C 70 580 45 580 45 598 C 45 618 70 635 70 635 C 70 635 95 618 95 598 C 95 580 70 580 70 600 Z" />
+    <!-- Heart 4 -->
+    <path d="M 730 700 C 730 680 705 680 705 698 C 705 718 730 735 730 735 C 730 735 755 718 755 698 C 755 680 730 680 730 700 Z" />
+    <!-- Heart 5 -->
+    <path d="M 90 1100 C 90 1080 65 1080 65 1098 C 65 1118 90 1135 90 1135 C 90 1135 115 1118 115 1098 C 115 1080 90 1080 90 1100 Z" />
+    <!-- Heart 6 -->
+    <path d="M 710 1100 C 710 1080 685 1080 685 1098 C 685 1118 710 1135 710 1135 C 710 1135 735 1118 735 1098 C 735 1080 710 1080 710 1100 Z" />
+  </g>
+
+  <!-- Sparkles & Crosses -->
+  <g stroke="#fb7185" stroke-width="2.5" stroke-linecap="round" opacity="0.6">
+    <line x1="720" y1="400" x2="720" y2="420" />
+    <line x1="710" y1="410" x2="730" y2="410" />
+    <line x1="60" y1="850" x2="60" y2="870" />
+    <line x1="50" y1="860" x2="70" y2="860" />
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="1175" text-anchor="middle" font-family="'Pacifico', cursive" font-size="22" fill="#e11d48">Forever With You ♡</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Retro 70s wavy lines -->
+    <pattern id="wavyRetro" width="100" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 0 20 Q 25 0 50 20 T 100 20" fill="none" stroke="#fcd34d" stroke-width="8" opacity="0.4" />
+      <path d="M 0 40 Q 25 20 50 40 T 100 40" fill="none" stroke="#f472b6" stroke-width="8" opacity="0.4" />
+      <path d="M 0 60 Q 25 40 50 60 T 100 60" fill="none" stroke="#a78bfa" stroke-width="8" opacity="0.4" />
+    </pattern>
+  </defs>
+  <rect width="800" height="1200" fill="#fef3c7" />
+  <rect width="800" height="1200" fill="url(#wavyRetro)" />
+
+  <!-- Retro Sun element -->
+  <g transform="translate(400, 60)">
+    <circle cx="0" cy="0" r="28" fill="#f59e0b" />
+    <path d="M 0 -38 L 0 -46 M 27 -27 L 33 -33 M 38 0 L 46 0 M 27 27 L 33 33 M 0 38 L 0 46 M -27 27 L -33 33 M -38 0 L -46 0 M -27 -27 L -33 -33" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="1175" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="900" fill="#b45309" letter-spacing="4">★ GROOVY RETRO 70S VIBES ★</text>
+</svg>

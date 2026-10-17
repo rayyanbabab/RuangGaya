@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <rect width="800" height="1200" fill="#e8eee5" />
+  
+  <!-- Organic Sage & Cream Blobs -->
+  <path d="M 0 0 Q 300 120 180 380 Q 80 500 0 450 Z" fill="#d0dec9" opacity="0.6" />
+  <path d="M 800 1200 Q 550 1100 640 850 Q 750 720 800 780 Z" fill="#d0dec9" opacity="0.6" />
+  <circle cx="700" cy="180" r="140" fill="#fdfbf7" opacity="0.8" />
+  <circle cx="100" cy="1050" r="160" fill="#fdfbf7" opacity="0.8" />
+  
+  <!-- Minimalist Daisy Flowers -->
+  <g transform="translate(60, 80)">
+    <circle cx="0" cy="-14" r="9" fill="#ffffff" />
+    <circle cx="13" cy="-5" r="9" fill="#ffffff" />
+    <circle cx="8" cy="11" r="9" fill="#ffffff" />
+    <circle cx="-8" cy="11" r="9" fill="#ffffff" />
+    <circle cx="-13" cy="-5" r="9" fill="#ffffff" />
+    <circle cx="0" cy="0" r="7" fill="#fde047" />
+  </g>
+  <g transform="translate(730, 1100)">
+    <circle cx="0" cy="-14" r="9" fill="#ffffff" />
+    <circle cx="13" cy="-5" r="9" fill="#ffffff" />
+    <circle cx="8" cy="11" r="9" fill="#ffffff" />
+    <circle cx="-8" cy="11" r="9" fill="#ffffff" />
+    <circle cx="-13" cy="-5" r="9" fill="#ffffff" />
+    <circle cx="0" cy="0" r="7" fill="#fde047" />
+  </g>
+  <g transform="translate(720, 480)">
+    <circle cx="0" cy="-11" r="7" fill="#ffffff" />
+    <circle cx="10" cy="-4" r="7" fill="#ffffff" />
+    <circle cx="6" cy="9" r="7" fill="#ffffff" />
+    <circle cx="-6" cy="9" r="7" fill="#ffffff" />
+    <circle cx="-10" cy="-4" r="7" fill="#ffffff" />
+    <circle cx="0" cy="0" r="5" fill="#fde047" />
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="1170" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#52796f" letter-spacing="4">MATCHA &amp; SERENITY • PHOTOSTUDIO</text>
+</svg>

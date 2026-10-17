@@ -11,12 +11,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
-  height: 56px;
+  padding: 0 18px;
+  height: 54px;
   flex-shrink: 0;
   background: #ffffff;
-  border-bottom: 2px solid var(--rg-dark);
-  box-shadow: 0 3px 0 var(--rg-dark);
+  border-bottom: 1px solid var(--rg-border);
+  box-shadow: var(--rg-shadow-xs);
   z-index: 30;
 }
 
@@ -25,25 +25,24 @@
   align-items: center;
   gap: 8px;
   color: var(--rg-dark);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.95rem;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 0.88rem;
   text-decoration: none;
-  background: var(--rg-surface);
-  border: 1.5px solid var(--rg-dark);
+  background: #ffffff;
+  border: 1px solid var(--rg-border);
   padding: 6px 12px;
-  border-radius: 12px;
-  box-shadow: 2px 2px 0 var(--rg-dark);
+  border-radius: 8px;
+  box-shadow: var(--rg-shadow-xs);
   transition: all var(--transition);
 }
 .backLink:hover {
-  background: var(--rg-purple);
-  color: #ffffff;
-  transform: translateY(-1px);
+  background: #f8fafc;
+  border-color: var(--rg-border-hover);
+  color: var(--rg-purple);
 }
 .backLink:active {
-  transform: translateY(2px);
-  box-shadow: 0 0 0 var(--rg-dark);
+  transform: translateY(0);
 }
 
 .headerCenter {
@@ -53,24 +52,25 @@
 }
 
 .modePill {
-  font-family: var(--font-display);
+  font-family: var(--font-main);
   font-size: 0.78rem;
-  font-weight: 800;
-  padding: 5px 14px;
-  border-radius: 9999px;
-  border: 2px solid var(--rg-dark);
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--rg-radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   white-space: nowrap;
 }
 .shootMode {
-  background: var(--rg-yellow);
-  color: var(--rg-dark);
-  box-shadow: 2px 2px 0 var(--rg-dark);
+  background: var(--rg-purple-light);
+  color: var(--rg-purple);
+  border: 1px solid var(--rg-purple-border);
 }
 .reviewMode {
-  background: var(--rg-purple);
-  color: #ffffff;
-  box-shadow: 2px 2px 0 var(--rg-dark);
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
 }
 
 .headerRight {
@@ -83,27 +83,26 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: var(--font-display);
+  font-family: var(--font-main);
   font-size: 0.78rem;
-  font-weight: 800;
-  color: var(--rg-dark);
+  font-weight: 600;
+  color: var(--rg-muted);
   background: #ffffff;
-  border: 1.5px solid var(--rg-dark);
-  padding: 5px 12px;
-  border-radius: 9999px;
-  box-shadow: 2px 2px 0 var(--rg-dark);
+  border: 1px solid var(--rg-border);
+  padding: 4px 10px;
+  border-radius: var(--rg-radius-pill);
+  box-shadow: var(--rg-shadow-xs);
 }
 .camDot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--rg-muted);
+  background: var(--rg-subtle);
   flex-shrink: 0;
-  border: 1px solid var(--rg-dark);
 }
 .camOk .camDot {
   background: #22c55e;
-  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
 }
 .camErr .camDot {
   background: #ef4444;
@@ -150,11 +149,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 @media (min-width: 820px) {
-  .main { padding: 12px 20px; gap: 10px; }
+  .main { padding: 14px 20px; gap: 12px; }
 }
 @media (max-width: 819px) {
   .main { padding: 8px 10px; gap: 8px; }
@@ -165,11 +164,11 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  animation: fadeInUp 0.25s ease forwards;
+  animation: fadeInUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -184,7 +183,7 @@
 .reviewTitle {
   font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--rg-dark);
 }
 
@@ -192,24 +191,24 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 12px;
-  border: 2px solid var(--rg-dark);
-  background: var(--rg-yellow);
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--rg-border);
+  background: #ffffff;
   color: var(--rg-dark);
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 800;
-  box-shadow: 2px 2px 0 var(--rg-dark);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: var(--rg-shadow-xs);
   cursor: pointer;
   transition: all var(--transition);
   white-space: nowrap;
 }
 .backToShootBtn:hover {
-  background: var(--rg-yellow-hover);
-  transform: translateY(-1px);
+  background: #f8fafc;
+  border-color: var(--rg-border-hover);
+  color: var(--rg-purple);
 }
 .backToShootBtn:active {
-  transform: translateY(2px);
-  box-shadow: 0 0 0 var(--rg-dark);
+  transform: translateY(0);
 }

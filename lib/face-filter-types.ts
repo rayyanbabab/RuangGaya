@@ -10,7 +10,16 @@ export type FaceFilterId =
   | 'butterfly'
   | 'clown'
   | 'sparkle'
-  | 'beauty';
+  | 'beauty'
+  | 'devil'
+  | 'angel'
+  | 'bunny'
+  | 'pixel-glasses'
+  | 'heart-blush'
+  | 'cyber-visor'
+  | 'mustache'
+  | 'star-eyes'
+  | 'flower-blush';
 
 export interface FaceFilterDef {
   id: FaceFilterId;

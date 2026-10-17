@@ -468,31 +468,31 @@ export default function TemplateSelectionPage() {
                     >
                       {/* Top Badges */}
                       <span className={styles.badgeTopLeft}>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6.4-4.8-6.4 4.8 2.4-7.2-6-4.8h7.6z"/>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M20 6 9 17l-5-5"/>
                         </svg>
-                        <span>Free</span>
+                        <span>Gratis</span>
                       </span>
 
-                      <span className={styles.badgeTopRight}>Ad-free</span>
+                      <span className={styles.badgeTopRight}>Tanpa Iklan</span>
 
                       {/* Bottom Left Uses Badge */}
                       <span className={styles.badgeBottomLeft}>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                           <circle cx="9" cy="7" r="4" />
                         </svg>
-                        <span>{item.uses.toLocaleString()} uses</span>
+                        <span>{item.uses.toLocaleString()} sesi</span>
                       </span>
 
-                      {/* Hover Overlay with "Start Creating" Button */}
+                      {/* Hover Overlay with "Mulai Foto" Button */}
                       <div className={styles.hoverOverlay}>
                         <div className={styles.startBtn}>
-                          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                             <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
                             <circle cx="12" cy="13" r="3"/>
                           </svg>
-                          <span>Start Creating</span>
+                          <span>Mulai Foto</span>
                         </div>
                       </div>
 
@@ -510,16 +510,19 @@ export default function TemplateSelectionPage() {
                                 height: `${rect.height}%`,
                                 borderRadius: 6,
                                 background: 'rgba(255, 255, 255, 0.85)',
-                                border: '1.5px dashed rgba(32, 32, 48, 0.45)',
+                                border: '1px dashed rgba(100, 116, 139, 0.4)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.06)',
-                                fontSize: '1.1rem',
-                                color: '#8e36ff',
+                                boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.04)',
+                                color: 'var(--rg-purple)',
                               }}
                             >
-                              📸
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6 }}>
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                              </svg>
                             </div>
                           ))}
                         </div>
@@ -528,7 +531,7 @@ export default function TemplateSelectionPage() {
                         <div
                           className={styles.photostripWrapper}
                           style={{
-                            background: frameObj?.bgImage ? 'transparent' : 'rgba(255, 255, 255, 0.7)',
+                            background: frameObj?.bgImage ? 'transparent' : 'rgba(255, 255, 255, 0.75)',
                           }}
                         >
                           <div
@@ -540,7 +543,13 @@ export default function TemplateSelectionPage() {
                           >
                             {Array.from({ length: totalSlots }).map((_, slotIdx) => (
                               <div key={slotIdx} className={styles.cutoutSlot}>
-                                <span className={styles.slotPlaceholderIcon}>📸</span>
+                                <span className={styles.slotPlaceholderIcon}>
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.55 }}>
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                    <circle cx="9" cy="9" r="2"/>
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                  </svg>
+                                </span>
                               </div>
                             ))}
                           </div>

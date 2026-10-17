@@ -16,7 +16,7 @@
 
 /* ── Action column ───────────────────────────────────────── */
 .actionCol {
-  width: 196px;
+  width: 210px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -30,12 +30,13 @@
 
 /* ── Labels ──────────────────────────────────────────────── */
 .sectionLabel {
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 600;
   color: var(--rg-muted);
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
 }
 
 /* ── Buttons ─────────────────────────────────────────────── */
@@ -45,21 +46,25 @@
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, var(--rg-accent), var(--rg-dark));
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 800;
+  padding: 11px 16px;
+  background: var(--rg-purple);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(212, 83, 126, 0.35);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.28);
+  transition: all var(--transition);
 }
 .downloadBtn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(212, 83, 126, 0.45);
+  background: var(--rg-purple-hover);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.36);
+}
+.downloadBtn:active:not(:disabled) {
+  transform: translateY(0);
 }
 .downloadBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
@@ -70,19 +75,25 @@
   gap: 8px;
   width: 100%;
   padding: 11px 16px;
-  background: var(--rg-surface);
+  background: #ffffff;
   color: var(--rg-dark);
-  border: 2px solid var(--rg-card);
-  border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 800;
+  border: 1px solid var(--rg-border);
+  border-radius: 10px;
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: var(--rg-shadow-xs);
+  transition: all var(--transition);
 }
 .qrBtn:hover:not(:disabled) {
-  border-color: var(--rg-accent);
-  color: var(--rg-accent);
+  background: #f8fafc;
+  border-color: var(--rg-border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--rg-shadow-sm);
+}
+.qrBtn:active:not(:disabled) {
+  transform: translateY(0);
 }
 .qrBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
@@ -93,20 +104,26 @@
   gap: 8px;
   width: 100%;
   padding: 11px 16px;
-  background: linear-gradient(135deg, #9B59B6, #6C3483);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 800;
+  background: #ffffff;
+  color: var(--rg-dark);
+  border: 1px solid var(--rg-border);
+  border-radius: 10px;
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px rgba(155, 89, 182, 0.35);
+  box-shadow: var(--rg-shadow-xs);
+  transition: all var(--transition);
 }
 .gifBtn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(155, 89, 182, 0.48);
+  background: #fdf2f8;
+  border-color: #fbcfe8;
+  color: var(--rg-pink);
+  transform: translateY(-1px);
+  box-shadow: var(--rg-shadow-sm);
+}
+.gifBtn:active:not(:disabled) {
+  transform: translateY(0);
 }
 .gifBtn:disabled { opacity: 0.6; cursor: not-allowed; }
 
@@ -117,25 +134,33 @@
   gap: 6px;
   width: 100%;
   padding: 10px 16px;
-  background: var(--rg-surface);
+  background: #ffffff;
   color: var(--rg-muted);
-  border: 2px solid var(--rg-card);
-  border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
+  border: 1px solid var(--rg-border);
+  border-radius: 10px;
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: var(--rg-shadow-xs);
+  transition: all var(--transition);
 }
-.retakeBtn:hover { border-color: var(--rg-accent); color: var(--rg-accent); }
+.retakeBtn:hover {
+  background: #f8fafc;
+  color: var(--rg-dark);
+  border-color: var(--rg-border-hover);
+}
+.retakeBtn:active {
+  transform: translateY(0);
+}
 
 /* Spinner */
 .spinner {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255,255,255,0.35);
-  border-top-color: white;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-top-color: currentColor;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   flex-shrink: 0;
@@ -143,10 +168,10 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .spinnerLg {
-  width: 36px;
-  height: 36px;
-  border: 3px solid rgba(212, 83, 126, 0.15);
-  border-top-color: var(--rg-accent);
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(124, 58, 237, 0.2);
+  border-top-color: var(--rg-purple);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -156,28 +181,29 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #2e7d32;
-  background: #e8f5e9;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
   padding: 8px 12px;
   border-radius: 8px;
   text-align: center;
 }
-.successMsg svg { stroke: #2e7d32; flex-shrink: 0; }
+.successMsg svg { stroke: #15803d; flex-shrink: 0; }
 
 /* ── QR Modal ────────────────────────────────────────────── */
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 10, 20, 0.6);
-  backdrop-filter: blur(6px);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
   padding: 20px;
-  animation: fadeIn 0.18s ease;
+  animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeIn {
@@ -186,31 +212,31 @@
 }
 
 .modal {
-  background: white;
-  border-radius: 24px;
-  padding: 28px 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--rg-border);
+  box-shadow: var(--rg-shadow-xl);
+  padding: 24px 22px;
   max-width: 360px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
   position: relative;
-  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25);
-  animation: slideUp 0.22s ease;
+  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.modalClose {
+.closeBtn {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: var(--rg-bg);
-  border: none;
+  background: #f8fafc;
+  border: 1px solid var(--rg-border);
   border-radius: 50%;
   width: 32px;
   height: 32px;
@@ -219,107 +245,71 @@
   justify-content: center;
   cursor: pointer;
   color: var(--rg-muted);
-  transition: all 0.15s;
+  box-shadow: var(--rg-shadow-xs);
+  transition: all var(--transition);
 }
-.modalClose:hover { background: var(--rg-card); color: var(--rg-dark); }
-
-.modalLogo {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: var(--rg-accent);
-  margin-bottom: 2px;
+.closeBtn:hover {
+  background: #f1f5f9;
+  color: var(--rg-dark);
 }
 
 .modalTitle {
-  font-size: 0.88rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--rg-dark);
-  margin-bottom: 16px;
+  margin-bottom: 4px;
   text-align: center;
 }
 
-.modalLoading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  padding: 32px 0;
+.modalSubtitle {
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--rg-muted);
-  font-size: 0.85rem;
+  margin-bottom: 18px;
+  text-align: center;
 }
 
-/* QR Code image */
-.qrWrap {
-  background: white;
-  padding: 14px;
-  border-radius: 16px;
-  border: 2px solid var(--rg-card);
-  margin-bottom: 16px;
-}
-
-.qrImg {
-  display: block;
+.qrWrapper {
   width: 200px;
   height: 200px;
-}
-
-/* Steps */
-.qrSteps {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.step {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 0.78rem;
-  color: var(--rg-muted);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.stepNum {
-  background: var(--rg-accent);
-  color: white;
-  font-size: 0.65rem;
-  font-weight: 900;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
+  border: 1px solid var(--rg-border);
+  border-radius: 12px;
+  box-shadow: var(--rg-shadow-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
+  background: #ffffff;
+  padding: 8px;
+  margin-bottom: 16px;
 }
 
-.qrExpiry {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.7rem;
-  color: var(--rg-muted);
-  margin-bottom: 12px;
+.qrWrapper canvas,
+.qrWrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
 }
-.qrExpiry svg { flex-shrink: 0; }
 
-.copyLinkBtn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 18px;
-  background: var(--rg-surface);
-  color: var(--rg-muted);
-  border: 2px solid var(--rg-card);
-  border-radius: 10px;
-  font-family: 'Nunito', sans-serif;
+.modalInstructions {
   font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
+  color: var(--rg-muted);
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 16px;
 }
-.copyLinkBtn:hover { border-color: var(--rg-accent); color: var(--rg-accent); }
+
+.directLinkBtn {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--rg-purple);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.directLinkBtn:hover {
+  color: var(--rg-purple-hover);
+}

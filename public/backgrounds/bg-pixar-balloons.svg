@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Sky Dawn Gradient -->
+    <linearGradient id="upSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fdba74" />
+      <stop offset="25%" stop-color="#fed7aa" />
+      <stop offset="65%" stop-color="#e0f2fe" />
+      <stop offset="100%" stop-color="#bae6fd" />
+    </linearGradient>
+
+    <!-- Balloon Def -->
+    <g id="singleBalloon">
+      <ellipse cx="0" cy="0" rx="22" ry="26" />
+      <polygon points="-3,25 3,25 0,30" />
+      <ellipse cx="-6" cy="-8" rx="6" ry="10" fill="#ffffff" opacity="0.35" />
+    </g>
+
+    <!-- Grape Soda Badge -->
+    <g id="grapeSodaBadge" transform="scale(0.85)">
+      <circle cx="35" cy="35" r="28" fill="#cbd5e1" stroke="#64748b" stroke-width="3" />
+      <circle cx="35" cy="35" r="22" fill="#7e22ce" stroke="#9333ea" stroke-width="2" />
+      <!-- Grape bunch -->
+      <circle cx="35" cy="28" r="4" fill="#a855f7" />
+      <circle cx="30" cy="34" r="4" fill="#a855f7" />
+      <circle cx="40" cy="34" r="4" fill="#a855f7" />
+      <circle cx="35" cy="40" r="4" fill="#a855f7" />
+      <!-- Safety pin -->
+      <path d="M 12 18 L 58 18" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" />
+    </g>
+  </defs>
+
+  <!-- Sky Background -->
+  <rect width="800" height="1200" fill="url(#upSky)" />
+
+  <!-- Soft Clouds -->
+  <g fill="#ffffff" opacity="0.65">
+    <ellipse cx="140" cy="180" rx="90" ry="32" />
+    <ellipse cx="660" cy="220" rx="100" ry="36" />
+    <ellipse cx="80" cy="850" rx="70" ry="25" />
+    <ellipse cx="700" cy="880" rx="80" ry="28" />
+  </g>
+
+  <!-- Giant Cluster of Balloons in Top Left -->
+  <g transform="translate(100, 80)">
+    <!-- Strings -->
+    <path d="M -50 -10 Q 0 80 20 120 M 10 -20 Q 15 70 20 120 M 60 -10 Q 30 75 20 120 M -20 -40 Q 5 60 20 120 M 40 -35 Q 25 65 20 120" stroke="#94a3b8" stroke-width="1.5" fill="none" />
+    <!-- Balloons -->
+    <g fill="#ef4444"><use href="#singleBalloon" x="-50" y="-10" /></g>
+    <g fill="#3b82f6"><use href="#singleBalloon" x="-20" y="-45" /></g>
+    <g fill="#eab308"><use href="#singleBalloon" x="25" y="-40" /></g>
+    <g fill="#10b981"><use href="#singleBalloon" x="60" y="-10" /></g>
+    <g fill="#ec4899"><use href="#singleBalloon" x="10" y="-15" /></g>
+    <g fill="#8b5cf6"><use href="#singleBalloon" x="-25" y="15" /></g>
+    <g fill="#f97316"><use href="#singleBalloon" x="35" y="20" /></g>
+  </g>
+
+  <!-- Giant Cluster of Balloons in Top Right -->
+  <g transform="translate(680, 80)">
+    <!-- Strings -->
+    <path d="M -50 -10 Q -20 80 -10 120 M 0 -35 Q -5 70 -10 120 M 50 -15 Q 10 75 -10 120 M -20 -45 Q -15 60 -10 120 M 35 -35 Q 0 65 -10 120" stroke="#94a3b8" stroke-width="1.5" fill="none" />
+    <!-- Balloons -->
+    <g fill="#06b6d4"><use href="#singleBalloon" x="-45" y="-15" /></g>
+    <g fill="#f43f5e"><use href="#singleBalloon" x="-10" y="-45" /></g>
+    <g fill="#84cc16"><use href="#singleBalloon" x="35" y="-35" /></g>
+    <g fill="#fbbf24"><use href="#singleBalloon" x="55" y="-5" /></g>
+    <g fill="#a855f7"><use href="#singleBalloon" x="15" y="-10" /></g>
+    <g fill="#3b82f6"><use href="#singleBalloon" x="-20" y="20" /></g>
+    <g fill="#f97316"><use href="#singleBalloon" x="25" y="25" /></g>
+  </g>
+
+  <!-- Gentle Border Frame with Stitching -->
+  <rect x="18" y="18" width="764" height="1164" rx="20" fill="none" stroke="#f97316" stroke-width="3" opacity="0.75" />
+  <rect x="25" y="25" width="750" height="1150" rx="15" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="10 8" />
+
+  <!-- Bottom Left: Grape Soda Badge -->
+  <use href="#grapeSodaBadge" x="32" y="1090" />
+
+  <!-- Bottom Right: Cute Flying House Silhouette with Balloons -->
+  <g transform="translate(670, 1075)">
+    <!-- House -->
+    <rect x="15" y="45" width="36" height="30" fill="#fde047" stroke="#b45309" stroke-width="2" rx="2" />
+    <!-- Roof -->
+    <polygon points="10,45 33,25 56,45" fill="#ef4444" stroke="#b91c1c" stroke-width="2" />
+    <!-- Chimney -->
+    <rect x="42" y="25" width="8" height="14" fill="#94a3b8" />
+    <!-- Door & Window -->
+    <rect x="28" y="57" width="10" height="18" fill="#b45309" />
+    <rect x="18" y="50" width="7" height="7" fill="#67e8f9" />
+    <!-- Tiny Balloons above house -->
+    <circle cx="20" cy="12" r="9" fill="#ef4444" />
+    <circle cx="33" cy="6" r="10" fill="#3b82f6" />
+    <circle cx="46" cy="12" r="9" fill="#eab308" />
+    <circle cx="26" cy="2" r="8" fill="#10b981" />
+    <circle cx="39" cy="0" r="9" fill="#ec4899" />
+    <line x1="33" y1="18" x2="33" y2="28" stroke="#64748b" stroke-width="1.5" />
+  </g>
+
+  <!-- Bottom Center Cloud Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-220" y="-22" width="440" height="44" rx="22" fill="#ffffff" opacity="0.95" stroke="#f97316" stroke-width="2" />
+    <text x="0" y="6" font-family="'Comic Sans MS', 'Arial Black', sans-serif" font-size="18" font-weight="bold" fill="#ea580c" text-anchor="middle">
+      🎈 Adventure is out there! 🏕️
+    </text>
+  </g>
+</svg>

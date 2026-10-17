@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Comic Pop Gradient -->
+    <linearGradient id="sideEyeBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#fed7aa" />
+      <stop offset="100%" stop-color="#fecdd3" />
+    </linearGradient>
+
+    <!-- Comic Starburst Boom -->
+    <g id="comicBurst" fill="#ef4444">
+      <polygon points="25,0 32,15 48,10 40,24 55,32 38,40 45,55 30,48 24,62 18,48 2,54 10,38 -5,32 10,24 2,10 18,15" />
+    </g>
+
+    <!-- Dramatic Sideways Glaring Eye -->
+    <g id="dramaticEye">
+      <ellipse cx="25" cy="18" rx="22" ry="14" fill="#ffffff" stroke="#000000" stroke-width="2.5" />
+      <!-- Pupil shifted hard to the left corner -->
+      <ellipse cx="14" cy="18" rx="8" ry="10" fill="#000000" />
+      <circle cx="11" cy="15" r="3" fill="#ffffff" />
+      <!-- Eyelashes & Brow -->
+      <path d="M 4 8 Q 25 2 46 10" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round" />
+      <line x1="38" y1="8" x2="48" y2="2" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1200" fill="url(#sideEyeBg)" />
+
+  <!-- Comic Border with Bold Halftone Lines -->
+  <rect x="16" y="16" width="768" height="1168" rx="16" fill="none" stroke="#000000" stroke-width="4.5" />
+  <rect x="24" y="24" width="752" height="1152" rx="10" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="14 8" />
+
+  <!-- Top Center Speech Bubble -->
+  <g transform="translate(400, 52)">
+    <rect x="-190" y="-22" width="380" height="44" rx="12" fill="#000000" stroke="#facc15" stroke-width="3" />
+    <polygon points="0,22 15,35 22,22" fill="#000000" stroke="#facc15" stroke-width="2" />
+    <rect x="-1" y="18" width="24" height="6" fill="#000000" />
+    <text x="0" y="7" font-family="'Impact', 'Arial Black', sans-serif" font-size="21" fill="#facc15" text-anchor="middle" letter-spacing="1">
+      👁️ BOMBASTIC SIDE EYE 👁️
+    </text>
+  </g>
+
+  <!-- Top Left: Glaring Eyes Pair -->
+  <g transform="translate(28, 25)">
+    <use href="#dramaticEye" x="0" y="0" />
+    <use href="#dramaticEye" x="50" y="0" />
+  </g>
+
+  <!-- Top Right: Comic Burst "CRIMINAL" -->
+  <g transform="translate(710, 20)">
+    <use href="#comicBurst" x="0" y="0" />
+    <text x="25" y="36" font-family="'Impact', sans-serif" font-size="11" fill="#ffffff" text-anchor="middle">OFFENSIVE!</text>
+  </g>
+
+  <!-- Left Side Badges -->
+  <g transform="translate(22, 340)">
+    <rect x="0" y="0" width="115" height="32" rx="8" fill="#ec4899" stroke="#000000" stroke-width="2" />
+    <text x="57" y="21" font-family="'Arial Black', sans-serif" font-size="11" font-weight="900" fill="#ffffff" text-anchor="middle">AURA +9999 💅</text>
+  </g>
+  <g transform="translate(22, 680)">
+    <rect x="0" y="0" width="105" height="32" rx="8" fill="#000000" stroke="#facc15" stroke-width="2" />
+    <text x="52" y="21" font-family="'Arial Black', sans-serif" font-size="10" font-weight="900" fill="#facc15" text-anchor="middle">SKEPTICAL 👀</text>
+  </g>
+
+  <!-- Right Side Badges -->
+  <g transform="translate(670, 360)">
+    <rect x="0" y="0" width="105" height="32" rx="8" fill="#3b82f6" stroke="#000000" stroke-width="2" />
+    <text x="52" y="21" font-family="'Arial Black', sans-serif" font-size="10" font-weight="900" fill="#ffffff" text-anchor="middle">JUDGING YOU</text>
+  </g>
+  <g transform="translate(670, 700)">
+    <rect x="0" y="0" width="105" height="32" rx="8" fill="#22c55e" stroke="#000000" stroke-width="2" />
+    <text x="52" y="21" font-family="'Arial Black', sans-serif" font-size="10" font-weight="900" fill="#ffffff" text-anchor="middle">POP! POP! 😺</text>
+  </g>
+
+  <!-- Bottom Left: Popcat Meme Illustration -->
+  <g transform="translate(35, 1070)">
+    <!-- Cat Head -->
+    <ellipse cx="45" cy="45" rx="35" ry="26" fill="#f59e0b" stroke="#000000" stroke-width="2.5" />
+    <!-- Cat Ears -->
+    <polygon points="15,25 25,5 38,22" fill="#d97706" stroke="#000000" stroke-width="2" />
+    <polygon points="52,22 65,5 75,25" fill="#d97706" stroke="#000000" stroke-width="2" />
+    <!-- Popcat Wide Open Oval Mouth :O -->
+    <ellipse cx="45" cy="50" rx="16" ry="18" fill="#7f1d1d" stroke="#000000" stroke-width="2.5" />
+    <ellipse cx="45" cy="56" rx="10" ry="8" fill="#ef4444" />
+    <!-- Round Eyes -->
+    <circle cx="28" cy="34" r="7" fill="#000000" />
+    <circle cx="26" cy="32" r="2.5" fill="#ffffff" />
+    <circle cx="62" cy="34" r="7" fill="#000000" />
+    <circle cx="60" cy="32" r="2.5" fill="#ffffff" />
+  </g>
+
+  <!-- Bottom Right: Pair of Bombastic Side-Eyes -->
+  <g transform="translate(660, 1075)">
+    <use href="#dramaticEye" x="0" y="0" transform="scale(0.85)" />
+    <use href="#dramaticEye" x="45" y="0" transform="scale(0.85)" />
+    <text x="42" y="45" font-family="'Impact', sans-serif" font-size="12" fill="#ef4444" text-anchor="middle">CRIMINAL!</text>
+  </g>
+
+  <!-- Bottom Center Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-250" y="-22" width="500" height="44" rx="22" fill="#000000" stroke="#f43f5e" stroke-width="3" />
+    <text x="0" y="6" font-family="'Impact', 'Arial Black', sans-serif" font-size="17" fill="#ffffff" text-anchor="middle" letter-spacing="1">
+      👁️🫦👁️ BOMBASTIC SIDE EYE • CRIMINAL OFFENSIVE 💅
+    </text>
+  </g>
+</svg>

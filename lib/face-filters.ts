@@ -1,6 +1,6 @@
 /**
  * RuangGaya — Face Filter Drawing Library
- * All filters are drawn with Canvas 2D API (no PNG dependencies).
+ * All filters are drawn with Canvas 2D API (no external PNG dependencies).
  * Landmarks are MediaPipe FaceLandmarker normalized coords (0–1).
  */
 
@@ -26,6 +26,13 @@ function dist(a: { x: number; y: number }, b: { x: number; y: number }) {
   return Math.hypot(b.x - a.x, b.y - a.y);
 }
 
+/** Calculate head roll / tilt angle (radians) using eye landmarks */
+function getHeadAngle(lms: NLM[], w: number, h: number): number {
+  const lEye = px(lms, 33, w, h);
+  const rEye = px(lms, 263, w, h);
+  return Math.atan2(rEye.y - lEye.y, rEye.x - lEye.x);
+}
+
 /** Draw a filled star shape */
 function drawStar(
   ctx: CanvasRenderingContext2D,
@@ -46,6 +53,26 @@ function drawStar(
   }
   ctx.closePath();
   ctx.fill();
+}
+
+/** Draw a heart shape */
+function drawHeart(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  size: number,
+  color: string
+) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(0, size * 0.3);
+  ctx.bezierCurveTo(-size * 0.6, -size * 0.5, -size, size * 0.2, 0, size);
+  ctx.bezierCurveTo(size, size * 0.2, size * 0.6, -size * 0.5, 0, size * 0.3);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
 }
 
 /** Draw a single flower */
@@ -78,7 +105,7 @@ function drawFlower(
   ctx.restore();
 }
 
-// ─── Main dispatcher ──────────────────────────────────────────────────
+// ─── Main Dispatcher ──────────────────────────────────────────────────
 
 export function drawFaceFilter(
   ctx: CanvasRenderingContext2D,
@@ -122,60 +149,85 @@ export function drawFaceFilter(
 
   ctx.save();
   switch (filterId) {
-    case 'cat':          drawCat(ctx, lms, w, h);         break;
-    case 'dog':          drawDog(ctx, lms, w, h);         break;
-    case 'glasses':      drawGlasses(ctx, lms, w, h);     break;
-    case 'crown':        drawCrown(ctx, lms, w, h);       break;
-    case 'flower-crown': drawFlowerCrown(ctx, lms, w, h); break;
-    case 'butterfly':    drawButterfly(ctx, lms, w, h);   break;
-    case 'clown':        drawClown(ctx, lms, w, h);       break;
-    case 'sparkle':      drawSparkle(ctx, lms, w, h);     break;
-    case 'beauty':       if (video) drawBeauty(ctx, lms, w, h, video); break;
+    case 'cat':           drawCat(ctx, lms, w, h);          break;
+    case 'dog':           drawDog(ctx, lms, w, h);          break;
+    case 'glasses':       drawGlasses(ctx, lms, w, h);      break;
+    case 'crown':         drawCrown(ctx, lms, w, h);        break;
+    case 'flower-crown':  drawFlowerCrown(ctx, lms, w, h);  break;
+    case 'butterfly':     drawButterfly(ctx, lms, w, h);    break;
+    case 'clown':         drawClown(ctx, lms, w, h);        break;
+    case 'sparkle':       drawSparkle(ctx, lms, w, h);      break;
+    case 'beauty':        if (video) drawBeauty(ctx, lms, w, h, video); break;
+    case 'devil':         drawDevil(ctx, lms, w, h);        break;
+    case 'angel':         drawAngel(ctx, lms, w, h);        break;
+    case 'bunny':         drawBunny(ctx, lms, w, h);        break;
+    case 'pixel-glasses': drawPixelGlasses(ctx, lms, w, h); break;
+    case 'heart-blush':   drawHeartBlush(ctx, lms, w, h);   break;
+    case 'cyber-visor':   drawCyberVisor(ctx, lms, w, h);   break;
+    case 'mustache':      drawMustache(ctx, lms, w, h);     break;
+    case 'star-eyes':     drawStarEyes(ctx, lms, w, h);     break;
+    case 'flower-blush':  drawFlowerBlush(ctx, lms, w, h);  break;
   }
   ctx.restore();
 }
 
-// ─── 🐱 Cat Filter ───────────────────────────────────────────────────
+// ─── 🐱 1. Cat Filter ─────────────────────────────────────────────────
 
 function drawCat(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
-  const top    = px(lms, 10, w, h);   // forehead top
-  const left   = px(lms, 234, w, h);  // left face edge
-  const right  = px(lms, 454, w, h);  // right face edge
-  const nose   = px(lms, 4, w, h);    // nose tip
+  const top    = px(lms, 10, w, h);
+  const left   = px(lms, 234, w, h);
+  const right  = px(lms, 454, w, h);
+  const nose   = px(lms, 4, w, h);
   const faceW  = dist(left, right);
-  const earW   = faceW * 0.22;
-  const earH   = earW * 1.35;
+  const angle  = getHeadAngle(lms, w, h);
+
+  const earW   = faceW * 0.24;
+  const earH   = earW * 1.4;
+
+  // Draw tilted ears anchored at forehead top
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
 
   // Left ear
-  const lEarX  = top.x - faceW * 0.26;
-  const lEarY  = top.y - earH * 0.25;
-  drawCatEar(ctx, lEarX, lEarY, earW, earH, false);
-
+  drawCatEar(ctx, -faceW * 0.28, -earH * 0.35, earW, earH);
   // Right ear
-  const rEarX  = top.x + faceW * 0.26;
-  drawCatEar(ctx, rEarX, lEarY, earW, earH, true);
+  drawCatEar(ctx, faceW * 0.28, -earH * 0.35, earW, earH);
+  ctx.restore();
+
+  // Nose and whiskers anchored at nose with tilt
+  ctx.save();
+  ctx.translate(nose.x, nose.y);
+  ctx.rotate(angle);
 
   // Pink nose
   ctx.beginPath();
-  ctx.ellipse(nose.x, nose.y, faceW * 0.04, faceW * 0.028, 0, 0, Math.PI * 2);
-  ctx.fillStyle = '#FF90C0';
+  ctx.ellipse(0, 0, faceW * 0.045, faceW * 0.032, 0, 0, Math.PI * 2);
+  ctx.fillStyle = '#FF85A1';
   ctx.fill();
 
   // Whiskers left
-  const wY = nose.y + faceW * 0.01;
-  ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-  ctx.lineWidth = Math.max(1.5, faceW * 0.007);
-  [[left.x + faceW * 0.05, wY - faceW * 0.03, nose.x - faceW * 0.07, wY],
-   [left.x + faceW * 0.05, wY, nose.x - faceW * 0.07, wY],
-   [left.x + faceW * 0.05, wY + faceW * 0.03, nose.x - faceW * 0.07, wY]].forEach(([x1, y1, x2, y2]) => {
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+  ctx.lineWidth = Math.max(2, faceW * 0.012);
+  ctx.lineCap = 'round';
+  [
+    [-faceW * 0.06, -faceW * 0.02, -faceW * 0.45, -faceW * 0.08],
+    [-faceW * 0.06, 0,             -faceW * 0.48, 0],
+    [-faceW * 0.06, faceW * 0.02,  -faceW * 0.45, faceW * 0.08],
+  ].forEach(([x1, y1, x2, y2]) => {
     ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
   });
+
   // Whiskers right
-  [[nose.x + faceW * 0.07, wY, right.x - faceW * 0.05, wY - faceW * 0.03],
-   [nose.x + faceW * 0.07, wY, right.x - faceW * 0.05, wY],
-   [nose.x + faceW * 0.07, wY, right.x - faceW * 0.05, wY + faceW * 0.03]].forEach(([x1, y1, x2, y2]) => {
+  [
+    [faceW * 0.06, -faceW * 0.02, faceW * 0.45, -faceW * 0.08],
+    [faceW * 0.06, 0,            faceW * 0.48, 0],
+    [faceW * 0.06, faceW * 0.02, faceW * 0.45, faceW * 0.08],
+  ].forEach(([x1, y1, x2, y2]) => {
     ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
   });
+
+  ctx.restore();
 }
 
 function drawCatEar(
@@ -183,8 +235,7 @@ function drawCatEar(
   cx: number,
   cy: number,
   ew: number,
-  eh: number,
-  _flip: boolean
+  eh: number
 ) {
   // Outer ear
   ctx.beginPath();
@@ -192,10 +243,10 @@ function drawCatEar(
   ctx.lineTo(cx, cy - eh * 0.5);
   ctx.lineTo(cx + ew / 2, cy + eh * 0.5);
   ctx.closePath();
-  ctx.fillStyle = '#F5A0C0';
+  ctx.fillStyle = '#FFAFCC';
   ctx.fill();
-  ctx.strokeStyle = '#E07090';
-  ctx.lineWidth = Math.max(2, ew * 0.08);
+  ctx.strokeStyle = '#FB6F92';
+  ctx.lineWidth = Math.max(2.5, ew * 0.09);
   ctx.stroke();
 
   // Inner ear
@@ -204,50 +255,72 @@ function drawCatEar(
   ctx.lineTo(cx, cy - eh * 0.28);
   ctx.lineTo(cx + ew * 0.28, cy + eh * 0.38);
   ctx.closePath();
-  ctx.fillStyle = '#FF70A8';
+  ctx.fillStyle = '#FF477E';
   ctx.fill();
 }
 
-// ─── 🐶 Dog Filter ───────────────────────────────────────────────────
+// ─── 🐶 2. Dog Filter ─────────────────────────────────────────────────
 
 function drawDog(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
   const top    = px(lms, 10, w, h);
   const left   = px(lms, 234, w, h);
   const right  = px(lms, 454, w, h);
-  const chin   = px(lms, 152, w, h);
   const nose   = px(lms, 4, w, h);
-  const mouth  = px(lms, 14, w, h);  // lower lip
+  const mouth  = px(lms, 14, w, h);
   const faceW  = dist(left, right);
-  const earH   = faceW * 0.7;
-  const earW   = faceW * 0.3;
+  const angle  = getHeadAngle(lms, w, h);
+
+  const earW   = faceW * 0.32;
+  const earH   = faceW * 0.75;
+
+  // Floppy ears anchored with head angle
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
 
   // Left floppy ear
-  drawDogEar(ctx, left.x - earW * 0.1, top.y + faceW * 0.05, earW, earH, false);
+  drawDogEar(ctx, -faceW * 0.55, earH * 0.05, earW, earH);
   // Right floppy ear
-  drawDogEar(ctx, right.x - earW * 0.9, top.y + faceW * 0.05, earW, earH, true);
+  drawDogEar(ctx, faceW * 0.23, earH * 0.05, earW, earH);
+  ctx.restore();
 
-  // Black nose
+  // Dog nose
+  ctx.save();
+  ctx.translate(nose.x, nose.y);
+  ctx.rotate(angle);
   ctx.beginPath();
-  ctx.ellipse(nose.x, nose.y, faceW * 0.07, faceW * 0.052, 0, 0, Math.PI * 2);
-  ctx.fillStyle = '#222';
+  ctx.ellipse(0, 0, faceW * 0.075, faceW * 0.055, 0, 0, Math.PI * 2);
+  ctx.fillStyle = '#1e1e24';
   ctx.fill();
+  // Nose shine
+  ctx.beginPath();
+  ctx.arc(-faceW * 0.02, -faceW * 0.015, faceW * 0.016, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fill();
+  ctx.restore();
 
-  // Tongue
-  const tongueX = (mouth.x + chin.x * 0.3) / 1.3;
-  const tongueY = mouth.y + faceW * 0.02;
-  const tongueW = faceW * 0.13;
-  const tongueH = faceW * 0.2;
+  // Cute dog tongue sticking out
+  ctx.save();
+  ctx.translate(mouth.x, mouth.y);
+  ctx.rotate(angle);
+  const tongueW = faceW * 0.16;
+  const tongueH = faceW * 0.24;
   ctx.beginPath();
-  ctx.roundRect(tongueX - tongueW / 2, tongueY, tongueW, tongueH, tongueW / 2);
-  ctx.fillStyle = '#FF6699';
+  ctx.roundRect(-tongueW / 2, faceW * 0.02, tongueW, tongueH, tongueW / 2);
+  ctx.fillStyle = '#FF5D8F';
   ctx.fill();
-  // Center line on tongue
+  ctx.strokeStyle = '#D90429';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Tongue crease
   ctx.beginPath();
-  ctx.moveTo(tongueX, tongueY + tongueH * 0.15);
-  ctx.lineTo(tongueX, tongueY + tongueH * 0.85);
-  ctx.strokeStyle = '#CC3366';
+  ctx.moveTo(0, faceW * 0.04);
+  ctx.lineTo(0, faceW * 0.02 + tongueH * 0.7);
+  ctx.strokeStyle = '#C9184A';
   ctx.lineWidth = Math.max(1.5, faceW * 0.012);
   ctx.stroke();
+  ctx.restore();
 }
 
 function drawDogEar(
@@ -255,125 +328,135 @@ function drawDogEar(
   x: number,
   y: number,
   ew: number,
-  eh: number,
-  _flip: boolean
+  eh: number
 ) {
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x + ew, y);
-  ctx.bezierCurveTo(
-    x + ew + ew * 0.3, y + eh * 0.5,
-    x + ew * 0.7, y + eh,
-    x + ew * 0.5, y + eh
-  );
-  ctx.bezierCurveTo(
-    x + ew * 0.3, y + eh,
-    x - ew * 0.15, y + eh * 0.5,
-    x, y
-  );
+  ctx.bezierCurveTo(x + ew * 1.3, y + eh * 0.5, x + ew * 0.7, y + eh, x + ew * 0.5, y + eh);
+  ctx.bezierCurveTo(x + ew * 0.3, y + eh, x - ew * 0.2, y + eh * 0.5, x, y);
   ctx.fillStyle = '#C8956A';
   ctx.fill();
-  ctx.strokeStyle = '#A0704A';
+  ctx.strokeStyle = '#99582A';
   ctx.lineWidth = Math.max(2, ew * 0.07);
   ctx.stroke();
 
   // Inner ear
   ctx.beginPath();
-  ctx.moveTo(x + ew * 0.15, y + eh * 0.12);
-  ctx.lineTo(x + ew * 0.82, y + eh * 0.12);
-  ctx.bezierCurveTo(
-    x + ew * 1.0, y + eh * 0.55,
-    x + ew * 0.65, y + eh * 0.85,
-    x + ew * 0.5, y + eh * 0.85
-  );
-  ctx.bezierCurveTo(
-    x + ew * 0.35, y + eh * 0.85,
-    x + ew * 0.02, y + eh * 0.55,
-    x + ew * 0.15, y + eh * 0.12
-  );
+  ctx.moveTo(x + ew * 0.2, y + eh * 0.15);
+  ctx.lineTo(x + ew * 0.8, y + eh * 0.15);
+  ctx.bezierCurveTo(x + ew * 0.95, y + eh * 0.55, x + ew * 0.65, y + eh * 0.85, x + ew * 0.5, y + eh * 0.85);
+  ctx.bezierCurveTo(x + ew * 0.35, y + eh * 0.85, x + ew * 0.05, y + eh * 0.55, x + ew * 0.2, y + eh * 0.15);
   ctx.fillStyle = '#E8C0A0';
   ctx.fill();
 }
 
-// ─── 👓 Glasses Filter ───────────────────────────────────────────────
+// ─── 👓 3. Glasses Filter ─────────────────────────────────────────────
 
 function drawGlasses(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
-  const lEyeOuter  = px(lms, 33, w, h);
-  const lEyeInner  = px(lms, 133, w, h);
-  const rEyeInner  = px(lms, 362, w, h);
-  const rEyeOuter  = px(lms, 263, w, h);
-  const left       = px(lms, 234, w, h);
-  const right      = px(lms, 454, w, h);
+  const lEye = px(lms, 33, w, h);
+  const rEye = px(lms, 263, w, h);
+  const midEye = mid(lEye, rEye);
+  const eyeDist = dist(lEye, rEye);
+  const angle = getHeadAngle(lms, w, h);
 
-  const lCenter    = mid(lEyeOuter, lEyeInner);
-  const rCenter    = mid(rEyeInner, rEyeOuter);
-  const lensR      = dist(lEyeOuter, lEyeInner) * 0.75;
-  const thickness  = Math.max(3, lensR * 0.12);
+  const lensR = eyeDist * 0.42;
+  const thickness = Math.max(3.5, lensR * 0.12);
 
-  ctx.strokeStyle = '#1a1a2e';
-  ctx.lineWidth   = thickness;
-  ctx.lineJoin    = 'round';
-  ctx.lineCap     = 'round';
+  ctx.save();
+  ctx.translate(midEye.x, midEye.y);
+  ctx.rotate(angle);
+
+  ctx.strokeStyle = '#181824';
+  ctx.lineWidth = thickness;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
 
   // Left lens
   ctx.beginPath();
-  ctx.arc(lCenter.x, lCenter.y, lensR, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(120, 200, 255, 0.18)';
+  ctx.arc(-eyeDist / 2, 0, lensR, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(120, 210, 255, 0.22)';
   ctx.fill();
+  ctx.stroke();
+
+  // Left lens shine
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+  ctx.lineWidth = thickness * 0.6;
+  ctx.beginPath();
+  ctx.arc(-eyeDist / 2, 0, lensR * 0.72, -Math.PI * 0.8, -Math.PI * 0.3);
   ctx.stroke();
 
   // Right lens
+  ctx.strokeStyle = '#181824';
+  ctx.lineWidth = thickness;
   ctx.beginPath();
-  ctx.arc(rCenter.x, rCenter.y, lensR, 0, Math.PI * 2);
+  ctx.arc(eyeDist / 2, 0, lensR, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(120, 210, 255, 0.22)';
   ctx.fill();
   ctx.stroke();
 
-  // Bridge
+  // Right lens shine
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+  ctx.lineWidth = thickness * 0.6;
   ctx.beginPath();
-  ctx.moveTo(lCenter.x + lensR, lCenter.y);
-  ctx.lineTo(rCenter.x - lensR, rCenter.y);
+  ctx.arc(eyeDist / 2, 0, lensR * 0.72, -Math.PI * 0.8, -Math.PI * 0.3);
   ctx.stroke();
 
-  // Temple arms
+  // Bridge
+  ctx.strokeStyle = '#181824';
+  ctx.lineWidth = thickness;
   ctx.beginPath();
-  ctx.moveTo(lCenter.x - lensR, lCenter.y);
-  ctx.lineTo(left.x - lensR * 0.3, lCenter.y + lensR * 0.15);
+  ctx.arc(0, -lensR * 0.2, eyeDist * 0.22, 0.2, Math.PI - 0.2, true);
   ctx.stroke();
+
+  // Left temple arm
   ctx.beginPath();
-  ctx.moveTo(rCenter.x + lensR, rCenter.y);
-  ctx.lineTo(right.x + lensR * 0.3, rCenter.y + lensR * 0.15);
+  ctx.moveTo(-eyeDist / 2 - lensR, 0);
+  ctx.lineTo(-eyeDist * 0.95, -lensR * 0.2);
   ctx.stroke();
+
+  // Right temple arm
+  ctx.beginPath();
+  ctx.moveTo(eyeDist / 2 + lensR, 0);
+  ctx.lineTo(eyeDist * 0.95, -lensR * 0.2);
+  ctx.stroke();
+
+  ctx.restore();
 }
 
-// ─── 👑 Crown Filter ─────────────────────────────────────────────────
+// ─── 👑 4. Crown Filter ───────────────────────────────────────────────
 
 function drawCrown(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
   const top   = px(lms, 10, w, h);
   const left  = px(lms, 234, w, h);
   const right = px(lms, 454, w, h);
   const faceW = dist(left, right);
-  const cw    = faceW * 1.05;
-  const ch    = faceW * 0.45;
-  const cx    = top.x;
-  const cy    = top.y - ch * 0.25;
+  const angle = getHeadAngle(lms, w, h);
 
-  const grad = ctx.createLinearGradient(cx, cy - ch, cx, cy);
-  grad.addColorStop(0, '#FFD700');
-  grad.addColorStop(0.5, '#FFA500');
-  grad.addColorStop(1, '#DAA520');
+  const cw = faceW * 1.05;
+  const ch = faceW * 0.48;
+
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
+
+  const grad = ctx.createLinearGradient(0, -ch, 0, 0);
+  grad.addColorStop(0, '#FFF3B0');
+  grad.addColorStop(0.4, '#FFD166');
+  grad.addColorStop(1, '#B8860B');
 
   ctx.fillStyle = grad;
-  ctx.strokeStyle = '#B8860B';
-  ctx.lineWidth = Math.max(2, faceW * 0.01);
+  ctx.strokeStyle = '#9E2A2B';
+  ctx.lineWidth = Math.max(2.5, faceW * 0.012);
   ctx.lineJoin = 'round';
 
-  // Crown shape — 5 points
+  // 5 point crown
   ctx.beginPath();
-  const baseY = cy;
-  const baseL = cx - cw / 2;
-  const baseR = cx + cw / 2;
+  const baseY = -ch * 0.15;
+  const baseL = -cw / 2;
+  const baseR = cw / 2;
   const pts = 5;
-  const pointHeights = [0.9, 0.6, 1.0, 0.6, 0.9]; // relative heights per spike
+  const pointHeights = [0.85, 0.55, 1.0, 0.55, 0.85];
 
   ctx.moveTo(baseL, baseY);
   for (let i = 0; i < pts; i++) {
@@ -381,7 +464,7 @@ function drawCrown(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: numb
     ctx.lineTo(x, baseY - ch * pointHeights[i]);
     if (i < pts - 1) {
       const nx = baseL + ((i + 1) / (pts - 1)) * cw;
-      ctx.lineTo((x + nx) / 2, baseY - ch * 0.2);
+      ctx.lineTo((x + nx) / 2, baseY - ch * 0.22);
     }
   }
   ctx.lineTo(baseR, baseY);
@@ -389,195 +472,208 @@ function drawCrown(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: numb
   ctx.fill();
   ctx.stroke();
 
-  // Gems
-  [[cx, cy - ch * 1.05], [cx - cw * 0.32, cy - ch * 0.66], [cx + cw * 0.32, cy - ch * 0.66]].forEach(([gx, gy]) => {
-    ctx.beginPath();
-    ctx.arc(gx, gy, faceW * 0.032, 0, Math.PI * 2);
-    ctx.fillStyle = '#FF3366';
-    ctx.fill();
-    ctx.strokeStyle = '#CC0033';
-    ctx.lineWidth = Math.max(1, faceW * 0.007);
-    ctx.stroke();
+  // Bottom gold band
+  ctx.fillStyle = '#9E2A2B';
+  ctx.beginPath();
+  ctx.roundRect(baseL, baseY, cw, ch * 0.18, 6);
+  ctx.fill();
 
-    // Gem shine
+  // Gemstones on peaks & band
+  const gemPositions: Array<[number, number, string]> = [
+    [0, baseY - ch * 1.0, '#FF0054'],
+    [-cw * 0.25, baseY - ch * 0.55, '#06D6A0'],
+    [cw * 0.25, baseY - ch * 0.55, '#06D6A0'],
+    [-cw * 0.5, baseY - ch * 0.85, '#118AB2'],
+    [cw * 0.5, baseY - ch * 0.85, '#118AB2'],
+    [0, baseY + ch * 0.09, '#FFD166'],
+    [-cw * 0.3, baseY + ch * 0.09, '#FF0054'],
+    [cw * 0.3, baseY + ch * 0.09, '#FF0054'],
+  ];
+
+  gemPositions.forEach(([gx, gy, col]) => {
     ctx.beginPath();
-    ctx.arc(gx - faceW * 0.01, gy - faceW * 0.01, faceW * 0.01, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.arc(gx, gy, faceW * 0.035, 0, Math.PI * 2);
+    ctx.fillStyle = col;
     ctx.fill();
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
   });
+
+  ctx.restore();
 }
 
-// ─── 🌸 Flower Crown Filter ──────────────────────────────────────────
+// ─── 🌸 5. Flower Crown Filter ────────────────────────────────────────
 
 function drawFlowerCrown(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
   const top   = px(lms, 10, w, h);
   const left  = px(lms, 234, w, h);
   const right = px(lms, 454, w, h);
   const faceW = dist(left, right);
+  const angle = getHeadAngle(lms, w, h);
   const r     = faceW * 0.075;
 
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
+
+  // Green leafy vine curve
+  ctx.strokeStyle = '#38B000';
+  ctx.lineWidth   = Math.max(3, faceW * 0.015);
+  ctx.beginPath();
+  ctx.moveTo(-faceW * 0.5, 0);
+  ctx.quadraticCurveTo(0, -faceW * 0.15, faceW * 0.5, 0);
+  ctx.stroke();
+
   const colors: Array<[string, string]> = [
-    ['#FF6EB4', '#FFD700'],
-    ['#FF9DCC', '#FF6600'],
-    ['#FFFFFF', '#FFD700'],
-    ['#FF3399', '#FF9900'],
-    ['#FFB3D9', '#FFD700'],
-    ['#FF6EB4', '#FF9900'],
-    ['#FFD700', '#FF3399'],
+    ['#FF85A1', '#FFEA00'],
+    ['#FFFFFF', '#FFB703'],
+    ['#F72585', '#FFEA00'],
+    ['#FFB3C6', '#FF5D8F'],
+    ['#7209B7', '#FFEA00'],
+    ['#FFFFFF', '#FFB703'],
+    ['#FF85A1', '#FFEA00'],
   ];
 
-  // Spread flowers along forehead arc
   const count = 7;
   for (let i = 0; i < count; i++) {
-    const t = i / (count - 1);        // 0 → 1
-    const fx = left.x + t * faceW;
-    const fy = top.y - faceW * 0.04 - Math.sin(t * Math.PI) * faceW * 0.08;
+    const t = i / (count - 1);
+    const fx = -faceW * 0.48 + t * faceW * 0.96;
+    const fy = -Math.sin(t * Math.PI) * faceW * 0.12;
     const [petC, cenC] = colors[i % colors.length];
     drawFlower(ctx, fx, fy, r, petC, cenC);
   }
 
-  // Green stem/leaves connecting flowers
-  ctx.strokeStyle = '#3DA037';
-  ctx.lineWidth   = Math.max(2, faceW * 0.013);
-  ctx.beginPath();
-  ctx.moveTo(left.x, top.y - faceW * 0.04);
-  for (let i = 0; i <= 10; i++) {
-    const t  = i / 10;
-    const fx = left.x + t * faceW;
-    const fy = top.y - faceW * 0.04 - Math.sin(t * Math.PI) * faceW * 0.08;
-    i === 0 ? ctx.moveTo(fx, fy) : ctx.lineTo(fx, fy);
-  }
-  ctx.stroke();
+  ctx.restore();
 }
 
-// ─── 🦋 Butterfly Filter ─────────────────────────────────────────────
+// ─── 🦋 6. Butterfly Filter ───────────────────────────────────────────
 
 function drawButterfly(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
-  const lEyeOuter = px(lms, 33, w, h);
-  const rEyeOuter = px(lms, 263, w, h);
-  const nose      = px(lms, 1, w, h);   // nose bridge
-  const left      = px(lms, 234, w, h);
-  const right     = px(lms, 454, w, h);
-  const faceW     = dist(left, right);
-  const cx        = mid(lEyeOuter, rEyeOuter).x;
-  const cy        = mid(lEyeOuter, rEyeOuter).y + faceW * 0.03;
-  const ww        = faceW * 0.55;  // wing width
-  const wh        = faceW * 0.38;  // wing height
+  const nose  = px(lms, 1, w, h);
+  const left  = px(lms, 234, w, h);
+  const right = px(lms, 454, w, h);
+  const faceW = dist(left, right);
+  const angle = getHeadAngle(lms, w, h);
 
-  // Wing gradients
-  const leftGrad = ctx.createRadialGradient(cx - ww * 0.45, cy, 0, cx - ww * 0.45, cy, ww * 0.9);
-  leftGrad.addColorStop(0, 'rgba(140, 60, 200, 0.85)');
-  leftGrad.addColorStop(0.5, 'rgba(200, 80, 160, 0.75)');
-  leftGrad.addColorStop(1, 'rgba(80, 20, 150, 0.55)');
+  const ww = faceW * 0.58;
+  const wh = faceW * 0.42;
 
-  const rightGrad = ctx.createRadialGradient(cx + ww * 0.45, cy, 0, cx + ww * 0.45, cy, ww * 0.9);
-  rightGrad.addColorStop(0, 'rgba(140, 60, 200, 0.85)');
-  rightGrad.addColorStop(0.5, 'rgba(200, 80, 160, 0.75)');
-  rightGrad.addColorStop(1, 'rgba(80, 20, 150, 0.55)');
+  ctx.save();
+  ctx.translate(nose.x, nose.y);
+  ctx.rotate(angle);
 
-  // Left upper wing
+  // Left wings
+  const leftGrad = ctx.createRadialGradient(-ww * 0.5, 0, 0, -ww * 0.5, 0, ww * 0.9);
+  leftGrad.addColorStop(0, 'rgba(247, 37, 133, 0.85)');
+  leftGrad.addColorStop(0.6, 'rgba(114, 9, 183, 0.75)');
+  leftGrad.addColorStop(1, 'rgba(58, 12, 163, 0.55)');
+
   ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.bezierCurveTo(cx - ww * 0.15, cy - wh * 1.0, cx - ww, cy - wh * 1.1, cx - ww, cy - wh * 0.2);
-  ctx.bezierCurveTo(cx - ww, cy + wh * 0.1, cx - ww * 0.4, cy + wh * 0.3, cx, cy);
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(-ww * 0.15, -wh, -ww, -wh * 1.1, -ww, -wh * 0.2);
+  ctx.bezierCurveTo(-ww, wh * 0.1, -ww * 0.4, wh * 0.3, 0, 0);
   ctx.fillStyle = leftGrad;
   ctx.fill();
 
-  // Left lower wing
   ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.bezierCurveTo(cx - ww * 0.4, cy + wh * 0.25, cx - ww * 0.75, cy + wh * 0.6, cx - ww * 0.45, cy + wh * 0.75);
-  ctx.bezierCurveTo(cx - ww * 0.15, cy + wh * 0.9, cx - ww * 0.1, cy + wh * 0.6, cx, cy);
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(-ww * 0.4, wh * 0.25, -ww * 0.75, wh * 0.6, -ww * 0.45, wh * 0.8);
+  ctx.bezierCurveTo(-ww * 0.15, wh * 0.9, -ww * 0.1, wh * 0.6, 0, 0);
   ctx.fillStyle = 'rgba(160, 80, 210, 0.7)';
   ctx.fill();
 
-  // Right upper wing
+  // Right wings
+  const rightGrad = ctx.createRadialGradient(ww * 0.5, 0, 0, ww * 0.5, 0, ww * 0.9);
+  rightGrad.addColorStop(0, 'rgba(247, 37, 133, 0.85)');
+  rightGrad.addColorStop(0.6, 'rgba(114, 9, 183, 0.75)');
+  rightGrad.addColorStop(1, 'rgba(58, 12, 163, 0.55)');
+
   ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.bezierCurveTo(cx + ww * 0.15, cy - wh * 1.0, cx + ww, cy - wh * 1.1, cx + ww, cy - wh * 0.2);
-  ctx.bezierCurveTo(cx + ww, cy + wh * 0.1, cx + ww * 0.4, cy + wh * 0.3, cx, cy);
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(ww * 0.15, -wh, ww, -wh * 1.1, ww, -wh * 0.2);
+  ctx.bezierCurveTo(ww, wh * 0.1, ww * 0.4, wh * 0.3, 0, 0);
   ctx.fillStyle = rightGrad;
   ctx.fill();
 
-  // Right lower wing
   ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.bezierCurveTo(cx + ww * 0.4, cy + wh * 0.25, cx + ww * 0.75, cy + wh * 0.6, cx + ww * 0.45, cy + wh * 0.75);
-  ctx.bezierCurveTo(cx + ww * 0.15, cy + wh * 0.9, cx + ww * 0.1, cy + wh * 0.6, cx, cy);
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(ww * 0.4, wh * 0.25, ww * 0.75, wh * 0.6, ww * 0.45, wh * 0.8);
+  ctx.bezierCurveTo(ww * 0.15, wh * 0.9, ww * 0.1, wh * 0.6, 0, 0);
   ctx.fillStyle = 'rgba(160, 80, 210, 0.7)';
   ctx.fill();
 
-  // Wing patterns — spots
-  const spots: Array<[number, number, number, string]> = [
-    [cx - ww * 0.5, cy - wh * 0.45, faceW * 0.035, 'rgba(255,210,80,0.8)'],
-    [cx - ww * 0.65, cy - wh * 0.1, faceW * 0.025, 'rgba(255,255,255,0.6)'],
-    [cx + ww * 0.5, cy - wh * 0.45, faceW * 0.035, 'rgba(255,210,80,0.8)'],
-    [cx + ww * 0.65, cy - wh * 0.1, faceW * 0.025, 'rgba(255,255,255,0.6)'],
-  ];
-  spots.forEach(([sx, sy, sr, sc]) => {
-    ctx.beginPath();
-    ctx.arc(sx, sy, sr, 0, Math.PI * 2);
-    ctx.fillStyle = sc;
-    ctx.fill();
-  });
-
   // Antennae
-  ctx.strokeStyle = '#5A1A8A';
-  ctx.lineWidth   = Math.max(1.5, faceW * 0.009);
+  ctx.strokeStyle = '#3A0CA3';
+  ctx.lineWidth   = Math.max(2, faceW * 0.01);
   ctx.beginPath();
-  ctx.moveTo(cx - faceW * 0.02, cy - wh * 0.15);
-  ctx.quadraticCurveTo(cx - faceW * 0.12, cy - wh * 0.9, cx - faceW * 0.18, cy - wh * 1.0);
+  ctx.moveTo(-faceW * 0.02, -wh * 0.1);
+  ctx.quadraticCurveTo(-faceW * 0.15, -wh * 0.8, -faceW * 0.2, -wh * 0.95);
   ctx.stroke();
+
   ctx.beginPath();
-  ctx.moveTo(cx + faceW * 0.02, cy - wh * 0.15);
-  ctx.quadraticCurveTo(cx + faceW * 0.12, cy - wh * 0.9, cx + faceW * 0.18, cy - wh * 1.0);
+  ctx.moveTo(faceW * 0.02, -wh * 0.1);
+  ctx.quadraticCurveTo(faceW * 0.15, -wh * 0.8, faceW * 0.2, -wh * 0.95);
   ctx.stroke();
-  // Antennae tips
-  [[cx - faceW * 0.18, cy - wh * 1.0], [cx + faceW * 0.18, cy - wh * 1.0]].forEach(([ax, ay]) => {
-    ctx.beginPath();
-    ctx.arc(ax, ay, faceW * 0.018, 0, Math.PI * 2);
-    ctx.fillStyle = '#9B59B6';
-    ctx.fill();
-  });
+
+  // Antenna tips
+  ctx.fillStyle = '#FFD166';
+  ctx.beginPath();
+  ctx.arc(-faceW * 0.2, -wh * 0.95, faceW * 0.02, 0, Math.PI * 2);
+  ctx.arc(faceW * 0.2, -wh * 0.95, faceW * 0.02, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
 }
 
-// ─── 🤡 Clown Filter ─────────────────────────────────────────────────
+// ─── 🤡 7. Clown Filter ───────────────────────────────────────────────
 
 function drawClown(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
   const nose   = px(lms, 4, w, h);
   const left   = px(lms, 234, w, h);
   const right  = px(lms, 454, w, h);
+  const mouth  = px(lms, 14, w, h);
   const faceW  = dist(left, right);
-  const r      = faceW * 0.1;
+  const r      = faceW * 0.11;
 
-  // Shadow
-  ctx.beginPath();
-  ctx.arc(nose.x + r * 0.08, nose.y + r * 0.1, r, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(0,0,0,0.25)';
-  ctx.fill();
-
-  // Nose body
+  // Red spherical clown nose
   const nGrad = ctx.createRadialGradient(
     nose.x - r * 0.3, nose.y - r * 0.3, r * 0.05,
     nose.x, nose.y, r
   );
-  nGrad.addColorStop(0, '#FF6666');
-  nGrad.addColorStop(0.6, '#FF0000');
-  nGrad.addColorStop(1, '#CC0000');
+  nGrad.addColorStop(0, '#FF85A1');
+  nGrad.addColorStop(0.5, '#D90429');
+  nGrad.addColorStop(1, '#7F0909');
 
   ctx.beginPath();
   ctx.arc(nose.x, nose.y, r, 0, Math.PI * 2);
   ctx.fillStyle = nGrad;
   ctx.fill();
 
-  // Shine
+  // Shine spot
   ctx.beginPath();
-  ctx.arc(nose.x - r * 0.28, nose.y - r * 0.28, r * 0.22, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255,255,255,0.65)';
+  ctx.arc(nose.x - r * 0.3, nose.y - r * 0.3, r * 0.25, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
   ctx.fill();
+
+  // Cute cheek triangles
+  const lCheek = px(lms, 117, w, h);
+  const rCheek = px(lms, 346, w, h);
+  ctx.fillStyle = 'rgba(255, 77, 109, 0.6)';
+  ctx.beginPath();
+  ctx.arc(lCheek.x, lCheek.y, faceW * 0.07, 0, Math.PI * 2);
+  ctx.arc(rCheek.x, rCheek.y, faceW * 0.07, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Clown smile arcs
+  ctx.strokeStyle = '#D90429';
+  ctx.lineWidth = Math.max(3, faceW * 0.015);
+  ctx.beginPath();
+  ctx.arc(mouth.x, mouth.y - faceW * 0.02, faceW * 0.22, 0.2, Math.PI - 0.2);
+  ctx.stroke();
 }
 
-// ─── ✨ Sparkle Filter ────────────────────────────────────────────────
+// ─── ✨ 8. Sparkle Filter ─────────────────────────────────────────────
 
 function drawSparkle(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
   const left  = px(lms, 234, w, h);
@@ -590,40 +686,38 @@ function drawSparkle(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: nu
   const cy    = (top.y + chin.y) / 2;
   const t     = Date.now() / 1000;
 
-  // Sparkle positions (relative to face center)
   const sparkleData: Array<[number, number, number, string, number]> = [
-    [-0.55,  -0.55, 0.035, '#FFD700', 0.0],
-    [ 0.52,  -0.48, 0.028, '#FF69B4', 1.2],
-    [-0.48,   0.40, 0.022, '#87CEEB', 2.4],
-    [ 0.50,   0.45, 0.030, '#FFD700', 0.7],
-    [-0.10,  -0.75, 0.038, '#FF69B4', 1.8],
-    [ 0.10,  -0.72, 0.025, '#FFD700', 3.1],
-    [-0.72,   0.05, 0.020, '#87CEEB', 0.3],
-    [ 0.70,   0.02, 0.026, '#FF69B4', 2.0],
-    [-0.30,   0.70, 0.022, '#FFD700', 1.5],
-    [ 0.32,   0.68, 0.020, '#87CEEB', 0.9],
+    [-0.55, -0.55, 0.04, '#FFD700', 0.0],
+    [ 0.52, -0.48, 0.035, '#FF69B4', 1.2],
+    [-0.48,  0.40, 0.028, '#00F0FF', 2.4],
+    [ 0.50,  0.45, 0.035, '#FFD700', 0.7],
+    [-0.10, -0.75, 0.042, '#FF69B4', 1.8],
+    [ 0.10, -0.72, 0.030, '#FFD700', 3.1],
+    [-0.72,  0.05, 0.025, '#00F0FF', 0.3],
+    [ 0.70,  0.02, 0.032, '#FF69B4', 2.0],
+    [-0.30,  0.70, 0.028, '#FFD700', 1.5],
+    [ 0.32,  0.68, 0.026, '#00F0FF', 0.9],
   ];
 
   sparkleData.forEach(([rx, ry, rs, color, phase]) => {
-    const pulse = 0.7 + 0.3 * Math.sin(t * 2.5 + phase);
+    const pulse = 0.7 + 0.3 * Math.sin(t * 3.5 + phase);
     const sx    = cx + rx * faceW;
     const sy    = cy + ry * faceH;
     const sr    = rs * faceW * pulse;
-    const rot   = t * 1.2 + phase;
+    const rot   = t * 1.5 + phase;
 
     ctx.fillStyle = color;
-    ctx.globalAlpha = 0.7 + 0.3 * Math.sin(t * 3 + phase);
-    drawStar(ctx, sx, sy, sr, sr * 0.4, 4, rot);
+    ctx.globalAlpha = 0.8 + 0.2 * Math.sin(t * 4 + phase);
+    drawStar(ctx, sx, sy, sr, sr * 0.35, 4, rot);
 
-    // Outer glow
-    ctx.globalAlpha = 0.2 * pulse;
-    ctx.fillStyle = color;
-    drawStar(ctx, sx, sy, sr * 1.8, sr * 0.6, 4, rot + Math.PI / 4);
+    // Glowing aura
+    ctx.globalAlpha = 0.25 * pulse;
+    drawStar(ctx, sx, sy, sr * 1.9, sr * 0.55, 4, rot + Math.PI / 4);
     ctx.globalAlpha = 1;
   });
 }
 
-// ─── 💄 Beauty Filter ────────────────────────────────────────────────
+// ─── 💄 9. Beauty Filter ─────────────────────────────────────────────
 
 let offscreenCanvas: HTMLCanvasElement | null = null;
 
@@ -640,7 +734,7 @@ function drawBeauty(
   const chin  = px(lms, 152, w, h);
   const faceW = dist(left, right);
 
-  const padding = faceW * 0.12;
+  const padding = faceW * 0.14;
   const fx      = Math.max(0, left.x - padding);
   const fy      = Math.max(0, top.y - padding);
   const fw      = Math.min(w - fx, faceW + padding * 2);
@@ -648,9 +742,7 @@ function drawBeauty(
 
   if (fw <= 0 || fh <= 0) return;
 
-  if (!offscreenCanvas) {
-    offscreenCanvas = document.createElement('canvas');
-  }
+  if (!offscreenCanvas) offscreenCanvas = document.createElement('canvas');
   const targetW = Math.ceil(fw);
   const targetH = Math.ceil(fh);
   if (offscreenCanvas.width !== targetW || offscreenCanvas.height !== targetH) {
@@ -674,43 +766,499 @@ function drawBeauty(
     sy = (vh - sh) / 2;
   }
 
-  // Source crop from the raw video that corresponds to (fx, fy, fw, fh) on the canvas
   const srcX = sx + (fx / w) * sw;
   const srcY = sy + (fy / h) * sh;
   const srcW = (fw / w) * sw;
   const srcH = (fh / h) * sh;
 
   offCtx.clearRect(0, 0, fw, fh);
-  offCtx.filter = 'blur(2.5px) brightness(1.12) saturate(0.92)';
-  offCtx.drawImage(
-    video,
-    srcX, srcY, srcW, srcH,
-    0, 0, fw, fh
-  );
+  offCtx.filter = 'blur(2.8px) brightness(1.14) saturate(0.94)';
+  offCtx.drawImage(video, srcX, srcY, srcW, srcH, 0, 0, fw, fh);
   offCtx.filter = 'none';
 
-  // Ellipse clip mask for smooth edge
+  // Smooth ellipse clip
   ctx.save();
   ctx.beginPath();
   ctx.ellipse(fx + fw / 2, fy + fh / 2, fw / 2, fh / 2, 0, 0, Math.PI * 2);
   ctx.clip();
-  ctx.globalAlpha = 0.72;
+  ctx.globalAlpha = 0.75;
   ctx.drawImage(offscreenCanvas, fx, fy, fw, fh);
   ctx.globalAlpha = 1;
-  ctx.restore();
 
-  // Subtle warm glow overlay for skin brightening
-  const glowGrad = ctx.createRadialGradient(
+  // Gentle peach glow
+  const glow = ctx.createRadialGradient(
     fx + fw / 2, fy + fh / 2, fw * 0.1,
     fx + fw / 2, fy + fh / 2, Math.max(fw, fh) / 2
   );
-  glowGrad.addColorStop(0, 'rgba(255, 240, 220, 0.14)');
-  glowGrad.addColorStop(1, 'rgba(255, 240, 220, 0)');
-  ctx.save();
-  ctx.beginPath();
-  ctx.ellipse(fx + fw / 2, fy + fh / 2, fw / 2, fh / 2, 0, 0, Math.PI * 2);
-  ctx.clip();
-  ctx.fillStyle = glowGrad;
+  glow.addColorStop(0, 'rgba(255, 230, 220, 0.18)');
+  glow.addColorStop(1, 'rgba(255, 230, 220, 0)');
+  ctx.fillStyle = glow;
   ctx.fillRect(fx, fy, fw, fh);
   ctx.restore();
+}
+
+// ─── 😈 10. Devil Horns Filter ────────────────────────────────────────
+
+function drawDevil(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const top   = px(lms, 10, w, h);
+  const left  = px(lms, 234, w, h);
+  const right = px(lms, 454, w, h);
+  const faceW = dist(left, right);
+  const angle = getHeadAngle(lms, w, h);
+
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
+
+  const hornW = faceW * 0.18;
+  const hornH = faceW * 0.52;
+
+  // Draw Horn Function
+  const renderHorn = (dir: 1 | -1) => {
+    ctx.save();
+    ctx.scale(dir, 1);
+
+    const grad = ctx.createLinearGradient(faceW * 0.22, 0, faceW * 0.45, -hornH);
+    grad.addColorStop(0, '#7F0909');
+    grad.addColorStop(0.5, '#D90429');
+    grad.addColorStop(1, '#FF5400');
+
+    ctx.fillStyle = grad;
+    ctx.strokeStyle = '#4A0E17';
+    ctx.lineWidth = Math.max(2.5, faceW * 0.012);
+    ctx.beginPath();
+    ctx.moveTo(faceW * 0.18, 0);
+    ctx.bezierCurveTo(faceW * 0.22, -hornH * 0.5, faceW * 0.35, -hornH * 0.85, faceW * 0.48, -hornH);
+    ctx.bezierCurveTo(faceW * 0.38, -hornH * 0.6, faceW * 0.3, -hornH * 0.2, faceW * 0.32, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Horn highlight shine
+    ctx.strokeStyle = 'rgba(255, 200, 100, 0.8)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(faceW * 0.26, -hornH * 0.1);
+    ctx.bezierCurveTo(faceW * 0.3, -hornH * 0.5, faceW * 0.4, -hornH * 0.8, faceW * 0.45, -hornH * 0.95);
+    ctx.stroke();
+
+    ctx.restore();
+  };
+
+  renderHorn(1);
+  renderHorn(-1);
+
+  ctx.restore();
+
+  // Dark red blush on cheeks
+  const lCheek = px(lms, 117, w, h);
+  const rCheek = px(lms, 346, w, h);
+  ctx.fillStyle = 'rgba(217, 4, 41, 0.45)';
+  ctx.beginPath();
+  ctx.arc(lCheek.x, lCheek.y, faceW * 0.08, 0, Math.PI * 2);
+  ctx.arc(rCheek.x, rCheek.y, faceW * 0.08, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// ─── 😇 11. Angel Halo Filter ─────────────────────────────────────────
+
+function drawAngel(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const top   = px(lms, 10, w, h);
+  const left  = px(lms, 234, w, h);
+  const right = px(lms, 454, w, h);
+  const faceW = dist(left, right);
+  const angle = getHeadAngle(lms, w, h);
+  const t     = Date.now() / 1000;
+
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
+
+  // Floating bob animation
+  const bobY = -faceW * 0.42 + Math.sin(t * 3) * 6;
+  const haloW = faceW * 0.46;
+  const haloH = faceW * 0.15;
+
+  // Outer golden glow
+  ctx.strokeStyle = 'rgba(255, 215, 0, 0.4)';
+  ctx.lineWidth = faceW * 0.08;
+  ctx.beginPath();
+  ctx.ellipse(0, bobY, haloW, haloH, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Inner golden ring
+  const haloGrad = ctx.createLinearGradient(-haloW, bobY, haloW, bobY);
+  haloGrad.addColorStop(0, '#FFE066');
+  haloGrad.addColorStop(0.5, '#FFF9DB');
+  haloGrad.addColorStop(1, '#FAB005');
+
+  ctx.strokeStyle = haloGrad;
+  ctx.lineWidth = Math.max(5, faceW * 0.035);
+  ctx.beginPath();
+  ctx.ellipse(0, bobY, haloW, haloH, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Halo glint stars
+  ctx.fillStyle = '#FFFFFF';
+  drawStar(ctx, -haloW * 0.8, bobY - 4, faceW * 0.04, faceW * 0.015, 4, t * 2);
+  drawStar(ctx, haloW * 0.7, bobY - 2, faceW * 0.035, faceW * 0.012, 4, -t * 2);
+
+  ctx.restore();
+
+  // Golden shimmer on cheeks
+  const lCheek = px(lms, 117, w, h);
+  const rCheek = px(lms, 346, w, h);
+  ctx.fillStyle = 'rgba(255, 230, 109, 0.4)';
+  ctx.beginPath();
+  ctx.arc(lCheek.x, lCheek.y, faceW * 0.07, 0, Math.PI * 2);
+  ctx.arc(rCheek.x, rCheek.y, faceW * 0.07, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// ─── 🐰 12. Bunny Ears Filter ─────────────────────────────────────────
+
+function drawBunny(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const top   = px(lms, 10, w, h);
+  const left  = px(lms, 234, w, h);
+  const right = px(lms, 454, w, h);
+  const nose  = px(lms, 4, w, h);
+  const mouth = px(lms, 13, w, h);
+  const faceW = dist(left, right);
+  const angle = getHeadAngle(lms, w, h);
+
+  const earW = faceW * 0.28;
+  const earH = faceW * 0.95;
+
+  ctx.save();
+  ctx.translate(top.x, top.y);
+  ctx.rotate(angle);
+
+  // Left ear (straight tall)
+  drawSingleBunnyEar(ctx, -faceW * 0.28, -earH * 0.4, earW, earH, 0);
+  // Right ear (slightly bent floppy tip)
+  drawSingleBunnyEar(ctx, faceW * 0.28, -earH * 0.4, earW, earH, 0.15);
+
+  ctx.restore();
+
+  // Pink nose & teeth
+  ctx.save();
+  ctx.translate(nose.x, nose.y);
+  ctx.rotate(angle);
+  drawHeart(ctx, 0, -faceW * 0.01, faceW * 0.045, '#FF85A1');
+  ctx.restore();
+
+  // Cute front teeth
+  ctx.save();
+  ctx.translate(mouth.x, mouth.y);
+  ctx.rotate(angle);
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#D8D8D8';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(-faceW * 0.035, 0, faceW * 0.032, faceW * 0.042, [0, 0, 3, 3]);
+  ctx.roundRect(faceW * 0.003, 0, faceW * 0.032, faceW * 0.042, [0, 0, 3, 3]);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawSingleBunnyEar(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  ew: number,
+  eh: number,
+  rot: number
+) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(rot);
+
+  // Outer white ear
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#FFB3C6';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, ew * 0.5, eh * 0.5, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Inner pink ear
+  ctx.fillStyle = '#FF85A1';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, ew * 0.28, eh * 0.38, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+// ─── 😎 13. Pixel Sunglasses (Thug Life) ──────────────────────────────
+
+function drawPixelGlasses(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const lEye = px(lms, 33, w, h);
+  const rEye = px(lms, 263, w, h);
+  const midEye = mid(lEye, rEye);
+  const eyeDist = dist(lEye, rEye);
+  const angle = getHeadAngle(lms, w, h);
+
+  ctx.save();
+  ctx.translate(midEye.x, midEye.y);
+  ctx.rotate(angle);
+
+  const pxSize = Math.max(4, Math.round(eyeDist * 0.07));
+  const grid = [
+    'XXXXXXXXXXXXXX.XXXXXXXXXXXXXX',
+    'XXXXXXXXXXXXXX.XXXXXXXXXXXXXX',
+    'XXXXWWXXXXXXXX.XXXXWWXXXXXXXX',
+    'XXXXWWXXXXXXXX.XXXXWWXXXXXXXX',
+    '.XXXXXXXXXXXX...XXXXXXXXXXXX.',
+    '..XXXXXXXXXX.....XXXXXXXXXX..',
+  ];
+
+  const totalCols = grid[0].length;
+  const startX = -(totalCols * pxSize) / 2;
+  const startY = -(grid.length * pxSize) / 2;
+
+  grid.forEach((row, r) => {
+    for (let c = 0; c < row.length; c++) {
+      const char = row[c];
+      if (char === 'X') {
+        ctx.fillStyle = '#111116';
+        ctx.fillRect(startX + c * pxSize, startY + r * pxSize, pxSize, pxSize);
+      } else if (char === 'W') {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(startX + c * pxSize, startY + r * pxSize, pxSize, pxSize);
+      }
+    }
+  });
+
+  ctx.restore();
+}
+
+// ─── 💕 14. Heart Blush Filter ────────────────────────────────────────
+
+function drawHeartBlush(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const lCheek = px(lms, 117, w, h);
+  const rCheek = px(lms, 346, w, h);
+  const nose   = px(lms, 4, w, h);
+  const left   = px(lms, 234, w, h);
+  const right  = px(lms, 454, w, h);
+  const faceW  = dist(left, right);
+  const t      = Date.now() / 1000;
+
+  // Soft cheeks heart blush
+  drawHeart(ctx, lCheek.x, lCheek.y - faceW * 0.03, faceW * 0.12, 'rgba(255, 77, 109, 0.65)');
+  drawHeart(ctx, rCheek.x, rCheek.y - faceW * 0.03, faceW * 0.12, 'rgba(255, 77, 109, 0.65)');
+
+  // Little nose heart
+  drawHeart(ctx, nose.x, nose.y, faceW * 0.045, '#FF4D6D');
+
+  // Floating floating mini hearts
+  const floatingHearts = [
+    [lCheek.x - faceW * 0.15, lCheek.y - faceW * 0.25, 0.05, 0],
+    [rCheek.x + faceW * 0.15, rCheek.y - faceW * 0.28, 0.045, 1.2],
+    [lCheek.x - faceW * 0.05, lCheek.y - faceW * 0.45, 0.038, 2.4],
+    [rCheek.x + faceW * 0.05, rCheek.y - faceW * 0.42, 0.042, 3.1],
+  ];
+
+  floatingHearts.forEach(([hx, hy, scale, phase]) => {
+    const floatY = hy + Math.sin(t * 2 + phase) * 8;
+    drawHeart(ctx, hx, floatY, faceW * scale, '#FF758F');
+  });
+}
+
+// ─── 🤖 15. Cyber Visor Filter ────────────────────────────────────────
+
+function drawCyberVisor(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const lEye = px(lms, 33, w, h);
+  const rEye = px(lms, 263, w, h);
+  const midEye = mid(lEye, rEye);
+  const eyeDist = dist(lEye, rEye);
+  const angle = getHeadAngle(lms, w, h);
+  const t = Date.now() / 1000;
+
+  ctx.save();
+  ctx.translate(midEye.x, midEye.y);
+  ctx.rotate(angle);
+
+  const vw = eyeDist * 1.9;
+  const vh = eyeDist * 0.46;
+
+  // Semi-transparent cyber visor body
+  const visorGrad = ctx.createLinearGradient(-vw / 2, 0, vw / 2, 0);
+  visorGrad.addColorStop(0, 'rgba(0, 240, 255, 0.65)');
+  visorGrad.addColorStop(0.5, 'rgba(247, 37, 133, 0.65)');
+  visorGrad.addColorStop(1, 'rgba(0, 240, 255, 0.65)');
+
+  ctx.fillStyle = visorGrad;
+  ctx.strokeStyle = '#00F0FF';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.roundRect(-vw / 2, -vh / 2, vw, vh, [8, 8, 16, 16]);
+  ctx.fill();
+  ctx.stroke();
+
+  // Tech scan lines
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+  ctx.lineWidth = 1.5;
+  const scanY = -vh / 2 + ((t * 60) % vh);
+  ctx.beginPath();
+  ctx.moveTo(-vw / 2 + 10, scanY);
+  ctx.lineTo(vw / 2 - 10, scanY);
+  ctx.stroke();
+
+  // HUD brackets on sides
+  ctx.strokeStyle = '#FFE600';
+  ctx.lineWidth = 2.5;
+  // Left bracket
+  ctx.beginPath();
+  ctx.moveTo(-vw / 2 + 18, -vh / 3);
+  ctx.lineTo(-vw / 2 + 6, -vh / 3);
+  ctx.lineTo(-vw / 2 + 6, vh / 3);
+  ctx.lineTo(-vw / 2 + 18, vh / 3);
+  ctx.stroke();
+
+  // Right bracket
+  ctx.beginPath();
+  ctx.moveTo(vw / 2 - 18, -vh / 3);
+  ctx.lineTo(vw / 2 - 6, -vh / 3);
+  ctx.lineTo(vw / 2 - 6, vh / 3);
+  ctx.lineTo(vw / 2 - 18, vh / 3);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+// ─── 🥸 16. Gentleman Mustache Filter ─────────────────────────────────
+
+function drawMustache(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const nose  = px(lms, 4, w, h);
+  const left  = px(lms, 234, w, h);
+  const right = px(lms, 454, w, h);
+  const rEye  = px(lms, 263, w, h);
+  const faceW = dist(left, right);
+  const angle = getHeadAngle(lms, w, h);
+
+  // Handlebar mustache anchored right below nose
+  ctx.save();
+  ctx.translate(nose.x, nose.y + faceW * 0.08);
+  ctx.rotate(angle);
+
+  const mw = faceW * 0.32;
+  const mh = faceW * 0.12;
+
+  ctx.fillStyle = '#212529';
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 2;
+
+  // Left curly mustache
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(-mw * 0.4, -mh * 0.2, -mw * 0.8, mh * 0.4, -mw, -mh * 0.3);
+  ctx.bezierCurveTo(-mw * 0.8, -mh * 0.6, -mw * 0.6, mh * 0.8, 0, mh * 0.6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Right curly mustache
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.bezierCurveTo(mw * 0.4, -mh * 0.2, mw * 0.8, mh * 0.4, mw, -mh * 0.3);
+  ctx.bezierCurveTo(mw * 0.8, -mh * 0.6, mw * 0.6, mh * 0.8, 0, mh * 0.6);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.restore();
+
+  // Golden monocle over right eye
+  ctx.save();
+  ctx.translate(rEye.x, rEye.y);
+  ctx.rotate(angle);
+  const monoR = faceW * 0.12;
+  ctx.strokeStyle = '#FFD166';
+  ctx.lineWidth = Math.max(3, faceW * 0.012);
+  ctx.beginPath();
+  ctx.arc(0, 0, monoR, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255, 230, 100, 0.15)';
+  ctx.fill();
+  ctx.stroke();
+
+  // Monocle hanging chain
+  ctx.strokeStyle = '#E09F3E';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(monoR, 0);
+  ctx.quadraticCurveTo(monoR + faceW * 0.06, faceW * 0.2, monoR - faceW * 0.02, faceW * 0.35);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ─── 🤩 17. Star Eyes Filter ──────────────────────────────────────────
+
+function drawStarEyes(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const lEye = px(lms, 33, w, h);
+  const rEye = px(lms, 263, w, h);
+  const left = px(lms, 234, w, h);
+  const right = px(lms, 454, w, h);
+  const faceW = dist(left, right);
+  const t = Date.now() / 1000;
+
+  // Rotating golden sparkling stars directly over pupils
+  const starR = faceW * 0.09;
+
+  ctx.fillStyle = '#FFD166';
+  drawStar(ctx, lEye.x, lEye.y, starR, starR * 0.35, 5, t * 2);
+  drawStar(ctx, rEye.x, rEye.y, starR, starR * 0.35, 5, -t * 2);
+
+  // Center white star glint
+  ctx.fillStyle = '#FFFFFF';
+  drawStar(ctx, lEye.x, lEye.y, starR * 0.4, starR * 0.15, 4, 0);
+  drawStar(ctx, rEye.x, rEye.y, starR * 0.4, starR * 0.15, 4, 0);
+
+  // Star freckles on cheeks
+  const lCheek = px(lms, 117, w, h);
+  const rCheek = px(lms, 346, w, h);
+  const freckles = [
+    [lCheek.x - 15, lCheek.y - 10, 6, '#FF758F'],
+    [lCheek.x + 10, lCheek.y,      5, '#FFD166'],
+    [lCheek.x - 5,  lCheek.y + 12, 4, '#00F0FF'],
+    [rCheek.x + 15, rCheek.y - 10, 6, '#FF758F'],
+    [rCheek.x - 10, rCheek.y,      5, '#FFD166'],
+    [rCheek.x + 5,  rCheek.y + 12, 4, '#00F0FF'],
+  ];
+
+  freckles.forEach(([fx, fy, size, col]) => {
+    ctx.fillStyle = col as string;
+    drawStar(ctx, fx as number, fy as number, size as number, (size as number) * 0.35, 4, 0.4);
+  });
+}
+
+// ─── 🌼 18. Daisy Flower Blush Filter ─────────────────────────────────
+
+function drawFlowerBlush(ctx: CanvasRenderingContext2D, lms: NLM[], w: number, h: number) {
+  const lCheek = px(lms, 117, w, h);
+  const rCheek = px(lms, 346, w, h);
+  const nose   = px(lms, 4, w, h);
+  const left   = px(lms, 234, w, h);
+  const right  = px(lms, 454, w, h);
+  const faceW  = dist(left, right);
+
+  // Soft peach blush on cheeks and bridge
+  ctx.fillStyle = 'rgba(255, 138, 128, 0.45)';
+  ctx.beginPath();
+  ctx.arc(lCheek.x, lCheek.y, faceW * 0.09, 0, Math.PI * 2);
+  ctx.arc(rCheek.x, rCheek.y, faceW * 0.09, 0, Math.PI * 2);
+  ctx.arc(nose.x, nose.y, faceW * 0.06, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Cute little daisies
+  const flowerR = faceW * 0.045;
+  drawFlower(ctx, lCheek.x, lCheek.y, flowerR, '#FFFFFF', '#FFD166');
+  drawFlower(ctx, rCheek.x, rCheek.y, flowerR, '#FFFFFF', '#FFD166');
+  drawFlower(ctx, nose.x, nose.y, flowerR * 0.8, '#FFFFFF', '#FFD166');
+
+  // Mini accent daisies
+  drawFlower(ctx, lCheek.x + faceW * 0.06, lCheek.y - faceW * 0.04, flowerR * 0.6, '#FFF0F5', '#FFB703');
+  drawFlower(ctx, rCheek.x - faceW * 0.06, rCheek.y - faceW * 0.04, flowerR * 0.6, '#FFF0F5', '#FFB703');
 }

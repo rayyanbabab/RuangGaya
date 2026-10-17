@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <rect width="800" height="1200" fill="#fffbf5" />
+  
+  <!-- Stylized aesthetic cow spots in warm charcoal / coffee -->
+  <g fill="#242124" opacity="0.9">
+    <path d="M -20 -10 Q 60 10 90 70 Q 110 130 50 150 Q -10 160 -30 110 Z" />
+    <path d="M 720 -20 Q 810 20 820 100 Q 770 140 730 110 Q 680 70 700 10 Z" />
+    <path d="M 60 280 Q 120 260 150 310 Q 170 370 120 390 Q 60 410 40 350 Q 30 300 60 280 Z" />
+    <path d="M 680 320 Q 750 300 780 350 Q 800 420 740 440 Q 670 430 660 380 Q 650 340 680 320 Z" />
+    <path d="M -30 550 Q 40 540 60 600 Q 80 660 30 690 Q -20 710 -40 640 Z" />
+    <path d="M 710 580 Q 780 570 820 620 Q 810 700 750 710 Q 700 710 690 650 Q 690 600 710 580 Z" />
+    <path d="M 30 850 Q 100 830 130 890 Q 140 960 90 980 Q 30 990 10 930 Q 0 870 30 850 Z" />
+    <path d="M 670 860 Q 760 840 790 910 Q 810 980 750 1000 Q 690 1010 660 950 Q 640 890 670 860 Z" />
+    <path d="M 120 1100 Q 200 1090 220 1150 Q 210 1220 140 1220 Q 70 1220 60 1160 Q 60 1110 120 1100 Z" />
+    <path d="M 660 1120 Q 740 1100 790 1150 Q 820 1220 730 1220 Q 650 1210 640 1160 Z" />
+    <!-- Small mini spots -->
+    <ellipse cx="280" cy="80" rx="22" ry="16" transform="rotate(-15 280 80)" />
+    <ellipse cx="540" cy="1120" rx="28" ry="18" transform="rotate(25 540 1120)" />
+    <ellipse cx="740" cy="790" rx="18" ry="12" />
+  </g>
+
+  <!-- Cute pink ribbon accent in bottom corner -->
+  <g transform="translate(680, 1100) scale(0.6)" fill="#ff7da7">
+    <circle cx="50" cy="50" r="14" />
+    <path d="M 38 46 C 10 20 0 70 36 56 Z" />
+    <path d="M 62 46 C 90 20 100 70 64 56 Z" />
+  </g>
+</svg>

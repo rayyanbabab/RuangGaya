@@ -1282,7 +1282,7 @@ export interface FilterMeta {
 }
 
 export const FILTER_METAS: FilterMeta[] = [
-  { id: 'Normal',      label: 'Normal',      icon: '✨', description: 'Warna asli kamera',            previewBg: 'linear-gradient(135deg, #cbd5e1, #f8fafc)' },
+  { id: 'Normal',      label: 'Normal',      icon: '📷', description: 'Warna asli kamera',            previewBg: 'linear-gradient(135deg, #cbd5e1, #f8fafc)' },
   { id: 'B&W',         label: 'B&W',         icon: '🖤', description: 'Monokrom klasik hitam putih', previewBg: 'linear-gradient(135deg, #1e293b, #94a3b8)' },
   { id: 'Vintage',     label: 'Vintage',     icon: '🎞️', description: 'Nuansa sepia hangat jadul',   previewBg: 'linear-gradient(135deg, #b45309, #fde68a)' },
   { id: 'Vivid',       label: 'Vivid',       icon: '🌈', description: 'Warna kontras & ekstra pop',  previewBg: 'linear-gradient(135deg, #ec4899, #06b6d4)' },

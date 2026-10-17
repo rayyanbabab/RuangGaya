@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Vaporwave Grid Background -->
+    <linearGradient id="huhBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ede9fe" />
+      <stop offset="60%" stop-color="#fae8ff" />
+      <stop offset="100%" stop-color="#e0e7ff" />
+    </linearGradient>
+
+    <!-- Retro Windows Dialog Box -->
+    <g id="retroWinBox" transform="scale(0.85)">
+      <rect x="0" y="0" width="130" height="70" fill="#c0c0c0" stroke="#ffffff" stroke-width="2" />
+      <rect x="0" y="0" width="130" height="70" fill="none" stroke="#404040" stroke-width="2" />
+      <!-- Header -->
+      <rect x="3" y="3" width="124" height="16" fill="#000080" />
+      <text x="8" y="15" font-family="'Courier New', monospace" font-size="10" font-weight="bold" fill="#ffffff">SYSTEM.EXE</text>
+      <rect x="114" y="5" width="11" height="12" fill="#c0c0c0" stroke="#ffffff" stroke-width="1" />
+      <text x="119" y="14" font-family="'Courier New', monospace" font-size="9" font-weight="bold" fill="#000000" text-anchor="middle">×</text>
+      <!-- Message -->
+      <text x="10" y="36" font-family="'Courier New', monospace" font-size="9" fill="#000000">100% GANTENG</text>
+      <text x="10" y="48" font-family="'Courier New', monospace" font-size="9" fill="#000000">DAN KECE BANGET</text>
+      <rect x="45" y="52" width="36" height="14" fill="#c0c0c0" stroke="#808080" stroke-width="1" />
+      <text x="63" y="62" font-family="'Courier New', monospace" font-size="8" fill="#000000" text-anchor="middle">OK</text>
+    </g>
+
+    <!-- Confused Question Mark -->
+    <g id="questionMark" fill="#7c3aed" opacity="0.8">
+      <text font-family="'Impact', 'Arial Black', sans-serif" font-size="28" font-weight="bold">???</text>
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1200" fill="url(#huhBg)" />
+
+  <!-- Pixel Grid Lines -->
+  <line x1="0" y1="200" x2="800" y2="200" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+  <line x1="0" y1="400" x2="800" y2="400" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+  <line x1="0" y1="600" x2="800" y2="600" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+  <line x1="0" y1="800" x2="800" y2="800" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+  <line x1="0" y1="1000" x2="800" y2="1000" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" />
+
+  <!-- Retro Frame Border -->
+  <rect x="16" y="16" width="768" height="1168" rx="16" fill="none" stroke="#7c3aed" stroke-width="4" />
+  <rect x="24" y="24" width="752" height="1152" rx="10" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="10 8" />
+
+  <!-- Top Center: Speech Bubble "HUH???" -->
+  <g transform="translate(400, 50)">
+    <rect x="-140" y="-22" width="280" height="44" rx="12" fill="#ffffff" stroke="#7c3aed" stroke-width="3" />
+    <polygon points="0,22 15,35 22,22" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5" />
+    <rect x="-1" y="19" width="24" height="6" fill="#ffffff" />
+    <text x="0" y="8" font-family="'Impact', 'Arial Black', sans-serif" font-size="26" fill="#7c3aed" text-anchor="middle" letter-spacing="2">
+      HUH??? 🤔
+    </text>
+  </g>
+
+  <!-- Floating Question Marks on Borders -->
+  <use href="#questionMark" x="35" y="160" transform="rotate(-15 35 160)" />
+  <use href="#questionMark" x="720" y="200" transform="rotate(18 720 200)" />
+  <use href="#questionMark" x="30" y="600" transform="rotate(12 30 600)" />
+  <use href="#questionMark" x="725" y="650" transform="rotate(-10 725 650)" />
+
+  <!-- Left: Retro Windows Error Popup -->
+  <use href="#retroWinBox" x="25" y="340" />
+
+  <!-- Right: Buffering Spinner Dialog -->
+  <g transform="translate(660, 360)">
+    <rect x="0" y="0" width="110" height="40" rx="8" fill="#1e1b4b" stroke="#06b6d4" stroke-width="2" />
+    <circle cx="20" cy="20" r="10" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-dasharray="8 6" />
+    <text x="40" y="24" font-family="'Courier New', monospace" font-size="10" fill="#a5f3fc">Loading...</text>
+  </g>
+
+  <!-- Bottom Left: Iconic Confused Open-Mouthed Cat -->
+  <g transform="translate(35, 1070)">
+    <!-- Cat Ears -->
+    <polygon points="12,24 25,2 40,24" fill="#a855f7" stroke="#581c87" stroke-width="2" />
+    <polygon points="18,22 25,10 34,22" fill="#f472b6" />
+    <polygon points="50,24 65,2 78,24" fill="#a855f7" stroke="#581c87" stroke-width="2" />
+    <polygon points="56,22 65,10 72,22" fill="#f472b6" />
+    <!-- Cat Head -->
+    <ellipse cx="45" cy="45" rx="35" ry="26" fill="#ffffff" stroke="#581c87" stroke-width="2.5" />
+    <!-- Wide Derp Eyes -->
+    <circle cx="32" cy="38" r="8" fill="#ffffff" stroke="#1e1b4b" stroke-width="2" />
+    <circle cx="32" cy="38" r="3.5" fill="#1e1b4b" />
+    <circle cx="58" cy="38" r="8" fill="#ffffff" stroke="#1e1b4b" stroke-width="2" />
+    <circle cx="58" cy="38" r="3.5" fill="#1e1b4b" />
+    <!-- Iconic Open O Mouth in Complete Confusion -->
+    <ellipse cx="45" cy="54" rx="7" ry="10" fill="#1e1b4b" />
+    <ellipse cx="45" cy="58" rx="4" ry="4" fill="#ef4444" />
+  </g>
+
+  <!-- Bottom Right: "Bro Thought He Cooked" Badge -->
+  <g transform="translate(670, 1085)">
+    <rect x="0" y="0" width="105" height="42" rx="10" fill="#ffffff" stroke="#ef4444" stroke-width="2" />
+    <text x="52" y="18" font-family="'Arial Black', sans-serif" font-size="9" fill="#ef4444" text-anchor="middle">BRO THOUGHT</text>
+    <text x="52" y="32" font-family="'Arial Black', sans-serif" font-size="9" fill="#1e1b4b" text-anchor="middle">HE COOKED 🍳</text>
+  </g>
+
+  <!-- Bottom Center Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-240" y="-22" width="480" height="44" rx="22" fill="#1e1b4b" stroke="#7c3aed" stroke-width="2.5" />
+    <text x="0" y="6" font-family="'Impact', 'Arial Black', sans-serif" font-size="18" fill="#a5f3fc" text-anchor="middle" letter-spacing="1">
+      🐱 HUH??? SISTEM TIDAK BISA MEMPROSES KECE INI 🐱
+    </text>
+  </g>
+</svg>

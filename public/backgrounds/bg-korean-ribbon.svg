@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <radialGradient id="ribbonBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#fff5f7" />
+      <stop offset="100%" stop-color="#fce7f3" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#ribbonBg)" />
+  
+  <!-- Ribbon Bows -->
+  <!-- Top Left Bow -->
+  <g transform="translate(70, 70) scale(0.9)" fill="#ec4899">
+    <ellipse cx="-22" cy="-8" rx="20" ry="12" transform="rotate(-25 -22 -8)" />
+    <ellipse cx="22" cy="-8" rx="20" ry="12" transform="rotate(25 22 -8)" />
+    <circle cx="0" cy="0" r="7" fill="#db2777" />
+    <path d="M -5 5 Q -20 35 -30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+    <path d="M 5 5 Q 20 35 30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+  </g>
+  <!-- Top Right Bow -->
+  <g transform="translate(730, 70) scale(0.9)" fill="#ec4899">
+    <ellipse cx="-22" cy="-8" rx="20" ry="12" transform="rotate(-25 -22 -8)" />
+    <ellipse cx="22" cy="-8" rx="20" ry="12" transform="rotate(25 22 -8)" />
+    <circle cx="0" cy="0" r="7" fill="#db2777" />
+    <path d="M -5 5 Q -20 35 -30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+    <path d="M 5 5 Q 20 35 30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+  </g>
+  <!-- Bottom Left Bow -->
+  <g transform="translate(70, 1120) scale(0.9)" fill="#ec4899">
+    <ellipse cx="-22" cy="-8" rx="20" ry="12" transform="rotate(-25 -22 -8)" />
+    <ellipse cx="22" cy="-8" rx="20" ry="12" transform="rotate(25 22 -8)" />
+    <circle cx="0" cy="0" r="7" fill="#db2777" />
+    <path d="M -5 5 Q -20 35 -30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+    <path d="M 5 5 Q 20 35 30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+  </g>
+  <!-- Bottom Right Bow -->
+  <g transform="translate(730, 1120) scale(0.9)" fill="#ec4899">
+    <ellipse cx="-22" cy="-8" rx="20" ry="12" transform="rotate(-25 -22 -8)" />
+    <ellipse cx="22" cy="-8" rx="20" ry="12" transform="rotate(25 22 -8)" />
+    <circle cx="0" cy="0" r="7" fill="#db2777" />
+    <path d="M -5 5 Q -20 35 -30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+    <path d="M 5 5 Q 20 35 30 45" stroke="#ec4899" stroke-width="5" fill="none" stroke-linecap="round" />
+  </g>
+
+  <!-- Sparkles -->
+  <g fill="#f472b6" opacity="0.6">
+    <polygon points="400,45 403,55 413,58 403,61 400,71 397,61 387,58 397,55" />
+    <polygon points="120,400 122,408 130,410 122,412 120,420 118,412 110,410 118,408" />
+    <polygon points="680,800 682,808 690,810 682,812 680,820 678,812 670,810 678,808" />
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="1175" text-anchor="middle" font-family="'Dancing Script', cursive" font-size="20" font-weight="700" fill="#be185d">Pretty moments forever &amp; ever ♡</text>
+</svg>

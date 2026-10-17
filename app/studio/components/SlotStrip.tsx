@@ -18,15 +18,26 @@ export default function SlotStrip({ slots, activeSlot, onSlotClick }: SlotStripP
       <div className={styles.headerRow}>
         <div className={styles.label}>
           <span className={styles.poseBadge}>
-            {isAllFilled ? '✨ Siap Edit' : `Pose ${activeSlot + 1} / ${slots.length}`}
+            {isAllFilled ? 'Foto Lengkap' : `Pose ${activeSlot + 1} / ${slots.length}`}
           </span>
           <span className={styles.countText}>
             {filledCount}/{slots.length} foto siap
           </span>
         </div>
-        <span className={styles.hintText}>
-          {isAllFilled ? 'Mengarahkan ke Edit Studio...' : '💡 Tekan tombol kamera atau Spasi'}
-        </span>
+        <div className={styles.hintText}>
+          {isAllFilled ? (
+            <span>Mengarahkan ke Edit Studio...</span>
+          ) : (
+            <>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+              <span>Tekan tombol kamera atau Spasi</span>
+            </>
+          )}
+        </div>
       </div>
 
       <div
@@ -56,7 +67,12 @@ export default function SlotStrip({ slots, activeSlot, onSlotClick }: SlotStripP
               ) : (
                 <div className={styles.empty}>
                   <span className={styles.emptyNum}>{i + 1}</span>
-                  <span className={styles.emptyIcon}>📷</span>
+                  <span className={styles.emptyIcon}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                      <circle cx="12" cy="13" r="3"/>
+                    </svg>
+                  </span>
                 </div>
               )}
 
@@ -71,7 +87,9 @@ export default function SlotStrip({ slots, activeSlot, onSlotClick }: SlotStripP
 
               {isFilled && (
                 <div className={styles.retakeOverlay}>
-                  <span>🔄</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                  </svg>
                 </div>
               )}
             </button>
@@ -81,4 +99,3 @@ export default function SlotStrip({ slots, activeSlot, onSlotClick }: SlotStripP
     </div>
   );
 }
-

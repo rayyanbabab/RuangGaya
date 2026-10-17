@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <linearGradient id="cyberBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#180e29" />
+      <stop offset="50%" stop-color="#2a0845" />
+      <stop offset="100%" stop-color="#0f051d" />
+    </linearGradient>
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ff007f" stroke-width="0.7" opacity="0.25" />
+    </pattern>
+  </defs>
+  <rect width="800" height="1200" fill="url(#cyberBg)" />
+  <rect width="800" height="1200" fill="url(#cyberGrid)" />
+  
+  <!-- Cyber starbursts & hearts -->
+  <g fill="#00f0ff" opacity="0.6">
+    <path d="M 70 80 Q 70 110 40 110 Q 70 110 70 140 Q 70 110 100 110 Q 70 110 70 80 Z" />
+    <path d="M 720 180 Q 720 200 700 200 Q 720 200 720 220 Q 720 200 740 200 Q 720 200 720 180 Z" />
+    <path d="M 80 1060 Q 80 1080 60 1080 Q 80 1080 80 1100 Q 80 1080 100 1080 Q 80 1080 80 1060 Z" />
+  </g>
+  <g fill="#ff007f" opacity="0.7">
+    <path d="M 730 1020 Q 730 1050 700 1050 Q 730 1050 730 1080 Q 730 1050 760 1050 Q 730 1050 730 1020 Z" />
+    <!-- Heart outline -->
+    <path d="M 80 500 C 80 470 50 470 50 495 C 50 520 80 540 80 540 C 80 540 110 520 110 495 C 110 470 80 470 80 500 Z" fill="none" stroke="#ff007f" stroke-width="3" />
+    <path d="M 720 680 C 720 650 690 650 690 675 C 690 700 720 720 720 720 C 720 720 750 700 750 675 C 750 650 720 650 720 680 Z" fill="none" stroke="#00f0ff" stroke-width="3" />
+  </g>
+  <!-- Cyber barcode / text elements -->
+  <text x="60" y="1160" font-family="Courier, monospace" font-size="14" font-weight="bold" fill="#00f0ff" opacity="0.8" letter-spacing="4">★ Y2K DIGITAL PHOTOBOOTH // 2026 ★</text>
+</svg>

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Warm Doge Gradient -->
+    <linearGradient id="dogeBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="50%" stop-color="#fef3c7" />
+      <stop offset="100%" stop-color="#fde68a" />
+    </linearGradient>
+
+    <!-- Bonk Hammer -->
+    <g id="bonkHammer" transform="scale(0.85)">
+      <rect x="15" y="2" width="22" height="34" rx="4" fill="#92400e" stroke="#451a03" stroke-width="2" />
+      <rect x="0" y="16" width="52" height="6" rx="2" fill="#d97706" />
+      <polygon points="45,4 56,12 50,22" fill="#ef4444" />
+      <text x="46" y="38" font-family="'Comic Sans MS', cursive" font-size="10" font-weight="bold" fill="#dc2626">BONK!</text>
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1200" fill="url(#dogeBg)" />
+
+  <!-- Playful Dashed Yellow & Red Border -->
+  <rect x="16" y="16" width="768" height="1168" rx="20" fill="none" stroke="#f59e0b" stroke-width="4" />
+  <rect x="24" y="24" width="752" height="1152" rx="14" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="14 10" />
+
+  <!-- Floating Iconic Multi-color Comic Sans Meme Words -->
+  <!-- Top Left -->
+  <text x="50" y="80" font-family="'Comic Sans MS', cursive" font-size="20" font-weight="bold" fill="#ec4899" transform="rotate(-12 50 80)">such cute</text>
+  <!-- Top Center -->
+  <text x="400" y="55" font-family="'Comic Sans MS', cursive" font-size="24" font-weight="bold" fill="#3b82f6" text-anchor="middle" transform="rotate(4 400 55)">much photogenic</text>
+  <!-- Top Right -->
+  <text x="730" y="85" font-family="'Comic Sans MS', cursive" font-size="22" font-weight="bold" fill="#10b981" text-anchor="end" transform="rotate(10 730 85)">very gaya</text>
+
+  <!-- Left Side Border Meme Texts -->
+  <text x="25" y="320" font-family="'Comic Sans MS', cursive" font-size="20" font-weight="bold" fill="#8b5cf6" transform="rotate(-20 25 320)">so aesthetic</text>
+  <text x="22" y="540" font-family="'Comic Sans MS', cursive" font-size="22" font-weight="bold" fill="#ef4444" transform="rotate(15 22 540)">amaze</text>
+  <text x="25" y="780" font-family="'Comic Sans MS', cursive" font-size="20" font-weight="bold" fill="#06b6d4" transform="rotate(-10 25 780)">wow</text>
+
+  <!-- Right Side Border Meme Texts -->
+  <text x="765" y="340" font-family="'Comic Sans MS', cursive" font-size="22" font-weight="bold" fill="#f97316" text-anchor="end" transform="rotate(18 765 340)">many poses</text>
+  <text x="765" y="560" font-family="'Comic Sans MS', cursive" font-size="24" font-weight="bold" fill="#ec4899" text-anchor="end" transform="rotate(-15 765 560)">such model</text>
+  <text x="765" y="790" font-family="'Comic Sans MS', cursive" font-size="22" font-weight="bold" fill="#84cc16" text-anchor="end" transform="rotate(12 765 790)">so handsome</text>
+
+  <!-- Top Doge Sparkles -->
+  <g fill="#f59e0b" opacity="0.7">
+    <polygon points="170,40 173,48 181,51 173,54 170,62 167,54 159,51 167,48" />
+    <polygon points="630,45 633,53 641,56 633,59 630,67 627,59 619,56 627,53" />
+  </g>
+
+  <!-- Bottom Left: Doge Shiba Face -->
+  <g transform="translate(35, 1070)">
+    <!-- Doge Head -->
+    <ellipse cx="45" cy="42" rx="34" ry="28" fill="#d97706" stroke="#78350f" stroke-width="2.5" />
+    <!-- Doge Ears -->
+    <polygon points="18,22 28,2 38,20" fill="#b45309" stroke="#78350f" stroke-width="2" />
+    <polygon points="52,20 62,2 72,22" fill="#b45309" stroke="#78350f" stroke-width="2" />
+    <!-- White Muzzle -->
+    <ellipse cx="45" cy="50" rx="20" ry="14" fill="#fffbeb" stroke="#78350f" stroke-width="1.5" />
+    <ellipse cx="45" cy="44" rx="7" ry="5" fill="#1e293b" />
+    <!-- Derp Eyes -->
+    <ellipse cx="32" cy="34" rx="6" ry="8" fill="#1e293b" />
+    <circle cx="34" cy="32" r="2.5" fill="#ffffff" />
+    <ellipse cx="58" cy="34" rx="6" ry="8" fill="#1e293b" />
+    <circle cx="60" cy="32" r="2.5" fill="#ffffff" />
+    <!-- Eyebrow dots -->
+    <circle cx="30" cy="24" r="3" fill="#fffbeb" />
+    <circle cx="60" cy="24" r="3" fill="#fffbeb" />
+  </g>
+
+  <!-- Bottom Right: Bonk Hammer -->
+  <use href="#bonkHammer" x="720" y="1080" />
+
+  <!-- Bottom Center Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-240" y="-22" width="480" height="44" rx="22" fill="#ffffff" opacity="0.95" stroke="#f59e0b" stroke-width="3" />
+    <text x="0" y="6" font-family="'Comic Sans MS', cursive" font-size="18" font-weight="bold" fill="#b45309" text-anchor="middle">
+      🐕 MUCH WOW • VERY GAYA • SUCH POSE ⭐
+    </text>
+  </g>
+</svg>

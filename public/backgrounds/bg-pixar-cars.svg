@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Racing Red Gradient -->
+    <linearGradient id="carsRedGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7f1d1d" />
+      <stop offset="35%" stop-color="#b91c1c" />
+      <stop offset="70%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#991b1b" />
+    </linearGradient>
+
+    <!-- Checkered Flag Pattern Unit -->
+    <pattern id="checkeredBorder" width="30" height="30" patternUnits="userSpaceOnUse">
+      <rect width="15" height="15" fill="#ffffff" />
+      <rect x="15" width="15" height="15" fill="#000000" />
+      <rect y="15" width="15" height="15" fill="#000000" />
+      <rect x="15" y="15" width="15" height="15" fill="#ffffff" />
+    </pattern>
+
+    <!-- Lightning Bolt #95 Style -->
+    <g id="lightningBolt" transform="scale(0.85)">
+      <polygon points="40,0 10,60 35,55 5,120 65,45 35,50" fill="#facc15" stroke="#ca8a04" stroke-width="2.5" />
+      <polygon points="36,12 16,55 35,51 14,105 55,48 33,52" fill="#ef4444" />
+    </g>
+
+    <!-- Route 66 Shield -->
+    <g id="routeShield" transform="scale(0.85)">
+      <path d="M 10 15 C 10 5, 25 5, 40 5 C 55 5, 70 5, 70 15 C 70 45, 60 70, 40 85 C 20 70, 10 45, 10 15 Z" fill="#ffffff" stroke="#1e293b" stroke-width="3" />
+      <path d="M 14 18 C 14 10, 25 10, 40 10 C 55 10, 66 10, 66 18 C 66 42, 57 65, 40 78 C 23 65, 14 42, 14 18 Z" fill="#0f172a" />
+      <text x="40" y="32" font-family="'Impact', sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">ROUTE</text>
+      <text x="40" y="65" font-family="'Impact', sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">66</text>
+    </g>
+
+    <!-- Piston Cup Trophy -->
+    <g id="pistonCup" transform="scale(0.85)">
+      <path d="M 20 15 L 60 15 L 55 50 C 50 65, 30 65, 25 50 Z" fill="#facc15" stroke="#a16207" stroke-width="2.5" />
+      <path d="M 20 22 C 8 22, 8 42, 23 42" stroke="#a16207" stroke-width="3" fill="none" />
+      <path d="M 60 22 C 72 22, 72 42, 57 42" stroke="#a16207" stroke-width="3" fill="none" />
+      <rect x="36" y="58" width="8" height="18" fill="#ca8a04" />
+      <rect x="25" y="74" width="30" height="12" rx="3" fill="#1e293b" />
+      <circle cx="40" cy="35" r="8" fill="#ca8a04" />
+      <text x="40" y="39" font-family="'Arial Black', sans-serif" font-size="10" fill="#ffffff" text-anchor="middle">1</text>
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1200" fill="url(#carsRedGrad)" />
+
+  <!-- Checkered Flag Border Ribbons -->
+  <!-- Left Strip -->
+  <rect x="0" y="0" width="22" height="1200" fill="url(#checkeredBorder)" opacity="0.9" />
+  <!-- Right Strip -->
+  <rect x="778" y="0" width="22" height="1200" fill="url(#checkeredBorder)" opacity="0.9" />
+  <!-- Top Strip -->
+  <rect x="0" y="0" width="800" height="22" fill="url(#checkeredBorder)" opacity="0.9" />
+  <!-- Bottom Strip -->
+  <rect x="0" y="1178" width="800" height="22" fill="url(#checkeredBorder)" opacity="0.9" />
+
+  <!-- Inner Gold Racing Border -->
+  <rect x="28" y="28" width="744" height="1144" rx="16" fill="none" stroke="#facc15" stroke-width="3.5" />
+  <rect x="36" y="36" width="728" height="1128" rx="10" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="12 8" />
+
+  <!-- Top Center: Racing Number #95 Badge -->
+  <g transform="translate(400, 56)">
+    <polygon points="-80,-20 80,-20 70,22 -70,22" fill="#facc15" stroke="#1e293b" stroke-width="3" />
+    <text x="0" y="12" font-family="'Impact', sans-serif" font-size="34" font-weight="bold" fill="#dc2626" text-anchor="middle" letter-spacing="2">
+      ⚡ 95 ⚡
+    </text>
+  </g>
+
+  <!-- Top Left: Route 66 Shield -->
+  <use href="#routeShield" x="42" y="32" />
+
+  <!-- Top Right: Piston Cup Trophy -->
+  <use href="#pistonCup" x="690" y="32" />
+
+  <!-- Side Lightning Bolts -->
+  <use href="#lightningBolt" x="32" y="320" />
+  <use href="#lightningBolt" x="32" y="700" />
+  <use href="#lightningBolt" x="725" y="320" transform="scale(-1, 1) translate(-60, 0)" />
+  <use href="#lightningBolt" x="725" y="700" transform="scale(-1, 1) translate(-60, 0)" />
+
+  <!-- Bottom Left: Rust-eze Medallion -->
+  <g transform="translate(42, 1080)">
+    <circle cx="36" cy="36" r="32" fill="#f97316" stroke="#c2410c" stroke-width="3" />
+    <circle cx="36" cy="36" r="26" fill="#ea580c" />
+    <text x="36" y="34" font-family="'Impact', sans-serif" font-size="11" fill="#fef08a" text-anchor="middle">RUST-EZE</text>
+    <text x="36" y="48" font-family="'Arial Black', sans-serif" font-size="9" fill="#ffffff" text-anchor="middle">RACING</text>
+  </g>
+
+  <!-- Bottom Right: Piston Cup Badge -->
+  <use href="#pistonCup" x="690" y="1080" />
+
+  <!-- Bottom Center Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-240" y="-22" width="480" height="44" rx="22" fill="#1e293b" stroke="#facc15" stroke-width="3" />
+    <text x="0" y="6" font-family="'Impact', 'Arial Black', sans-serif" font-size="20" font-weight="bold" fill="#fde047" text-anchor="middle" letter-spacing="2">
+      🏎️ KA-CHOW! • SPEED, I AM SPEED ⚡
+    </text>
+  </g>
+</svg>

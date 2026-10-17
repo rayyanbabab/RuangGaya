@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b6e0fe" />
+      <stop offset="50%" stop-color="#d6e4ff" />
+      <stop offset="100%" stop-color="#ffd5ec" />
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="800" height="1200" fill="url(#skyGrad)" />
+
+  <!-- Soft fluffy clouds -->
+  <g fill="#ffffff" opacity="0.85">
+    <!-- Top-left cloud -->
+    <path d="M 40 100 A 30 30 0 0 1 90 90 A 45 45 0 0 1 160 100 A 30 30 0 0 1 180 130 L 30 130 A 20 20 0 0 1 40 100 Z" />
+    <!-- Top-right cloud -->
+    <path d="M 640 160 A 25 25 0 0 1 680 150 A 40 40 0 0 1 740 160 A 25 25 0 0 1 760 185 L 630 185 A 20 20 0 0 1 640 160 Z" />
+    <!-- Bottom clouds -->
+    <path d="M 40 1080 A 35 35 0 0 1 100 1070 A 50 50 0 0 1 180 1080 A 35 35 0 0 1 200 1120 L 30 1120 A 25 25 0 0 1 40 1080 Z" />
+    <path d="M 600 1060 A 35 35 0 0 1 660 1050 A 55 55 0 0 1 740 1060 A 35 35 0 0 1 770 1110 L 580 1110 A 25 25 0 0 1 600 1060 Z" />
+  </g>
+
+  <!-- Twinkling 4-point stars -->
+  <g fill="#f8d22a" opacity="0.9">
+    <path d="M 80 200 Q 80 215 65 215 Q 80 215 80 230 Q 80 215 95 215 Q 80 215 80 200 Z" />
+    <path d="M 730 260 Q 730 280 710 280 Q 730 280 730 300 Q 730 280 750 280 Q 730 280 730 260 Z" />
+    <path d="M 70 820 Q 70 835 55 835 Q 70 835 70 850 Q 70 835 85 835 Q 70 835 70 820 Z" />
+    <path d="M 730 760 Q 730 775 715 775 Q 730 775 730 790 Q 730 775 745 775 Q 730 775 730 760 Z" />
+    <path d="M 400 1150 Q 400 1165 385 1165 Q 400 1165 400 1180 Q 400 1165 415 1165 Q 400 1165 400 1150 Z" />
+  </g>
+
+  <!-- Tiny dots & sparkles -->
+  <g fill="#ffffff" opacity="0.7">
+    <circle cx="130" cy="240" r="3" />
+    <circle cx="670" cy="330" r="4" />
+    <circle cx="100" cy="760" r="3" />
+    <circle cx="700" cy="850" r="4" />
+  </g>
+</svg>

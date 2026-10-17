@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <linearGradient id="filmGrain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </linearGradient>
+  </defs>
+  <!-- Dark film background -->
+  <rect width="800" height="1200" fill="url(#filmGrain)" />
+  
+  <!-- Left Sprocket Holes -->
+  <g fill="#292524">
+    <rect x="6" y="40" width="16" height="24" rx="4" />
+    <rect x="6" y="100" width="16" height="24" rx="4" />
+    <rect x="6" y="160" width="16" height="24" rx="4" />
+    <rect x="6" y="220" width="16" height="24" rx="4" />
+    <rect x="6" y="280" width="16" height="24" rx="4" />
+    <rect x="6" y="340" width="16" height="24" rx="4" />
+    <rect x="6" y="400" width="16" height="24" rx="4" />
+    <rect x="6" y="460" width="16" height="24" rx="4" />
+    <rect x="6" y="520" width="16" height="24" rx="4" />
+    <rect x="6" y="580" width="16" height="24" rx="4" />
+    <rect x="6" y="640" width="16" height="24" rx="4" />
+    <rect x="6" y="700" width="16" height="24" rx="4" />
+    <rect x="6" y="760" width="16" height="24" rx="4" />
+    <rect x="6" y="820" width="16" height="24" rx="4" />
+    <rect x="6" y="880" width="16" height="24" rx="4" />
+    <rect x="6" y="940" width="16" height="24" rx="4" />
+    <rect x="6" y="1000" width="16" height="24" rx="4" />
+    <rect x="6" y="1060" width="16" height="24" rx="4" />
+    <rect x="6" y="1120" width="16" height="24" rx="4" />
+  </g>
+
+  <!-- Right Sprocket Holes -->
+  <g fill="#292524">
+    <rect x="778" y="40" width="16" height="24" rx="4" />
+    <rect x="778" y="100" width="16" height="24" rx="4" />
+    <rect x="778" y="160" width="16" height="24" rx="4" />
+    <rect x="778" y="220" width="16" height="24" rx="4" />
+    <rect x="778" y="280" width="16" height="24" rx="4" />
+    <rect x="778" y="340" width="16" height="24" rx="4" />
+    <rect x="778" y="400" width="16" height="24" rx="4" />
+    <rect x="778" y="460" width="16" height="24" rx="4" />
+    <rect x="778" y="520" width="16" height="24" rx="4" />
+    <rect x="778" y="580" width="16" height="24" rx="4" />
+    <rect x="778" y="640" width="16" height="24" rx="4" />
+    <rect x="778" y="700" width="16" height="24" rx="4" />
+    <rect x="778" y="760" width="16" height="24" rx="4" />
+    <rect x="778" y="820" width="16" height="24" rx="4" />
+    <rect x="778" y="880" width="16" height="24" rx="4" />
+    <rect x="778" y="940" width="16" height="24" rx="4" />
+    <rect x="778" y="1000" width="16" height="24" rx="4" />
+    <rect x="778" y="1060" width="16" height="24" rx="4" />
+    <rect x="778" y="1120" width="16" height="24" rx="4" />
+  </g>
+
+  <!-- Film text mark -->
+  <text x="35" y="1180" font-family="Courier, monospace" font-size="13" font-weight="bold" fill="#ea580c" opacity="0.9" letter-spacing="3">KODAK PORTRA 400 • 35MM FILM • EXP 36</text>
+  <text x="680" y="1180" font-family="Courier, monospace" font-size="13" font-weight="bold" fill="#ea580c" opacity="0.9" letter-spacing="2">▶ 24A</text>
+</svg>

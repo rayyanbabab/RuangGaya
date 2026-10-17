@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Warm Earthy Autumn Gradient -->
+    <linearGradient id="chillGuyBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="50%" stop-color="#fef3c7" />
+      <stop offset="100%" stop-color="#fed7aa" />
+    </linearGradient>
+
+    <!-- Chill Guy Character Doodle -->
+    <g id="chillGuyFigure" transform="scale(0.85)">
+      <!-- Head / Dog Face -->
+      <ellipse cx="40" cy="30" rx="26" ry="20" fill="#fef3c7" stroke="#78350f" stroke-width="2.5" />
+      <!-- Floppy Ear -->
+      <path d="M 18 20 C 5 25, 8 45, 20 40 Z" fill="#d97706" stroke="#78350f" stroke-width="2" />
+      <!-- Calm happy eyes (curved lines) -->
+      <path d="M 30 28 Q 35 24 40 28" stroke="#78350f" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <path d="M 46 28 Q 51 24 56 28" stroke="#78350f" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <!-- Gentle smirk -->
+      <path d="M 38 38 Q 44 42 50 38" stroke="#78350f" stroke-width="2" fill="none" stroke-linecap="round" />
+      <ellipse cx="44" cy="34" rx="4" ry="2.5" fill="#78350f" />
+      <!-- Brown Turtleneck Sweater -->
+      <path d="M 22 50 L 58 50 L 68 95 L 12 95 Z" fill="#92400e" stroke="#78350f" stroke-width="2.5" />
+      <!-- Rolled up sweater collar -->
+      <rect x="26" y="46" width="28" height="10" rx="3" fill="#b45309" stroke="#78350f" stroke-width="2" />
+      <!-- Hands in pockets (relaxed pose) -->
+      <path d="M 16 65 Q 26 80 32 90" stroke="#78350f" stroke-width="3" fill="none" />
+      <path d="M 64 65 Q 54 80 48 90" stroke="#78350f" stroke-width="3" fill="none" />
+      <!-- Blue rolled up jeans -->
+      <rect x="22" y="95" width="16" height="20" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" />
+      <rect x="42" y="95" width="16" height="20" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" />
+      <!-- Red sneakers -->
+      <ellipse cx="28" cy="118" rx="12" ry="5" fill="#ef4444" />
+      <ellipse cx="52" cy="118" rx="12" ry="5" fill="#ef4444" />
+    </g>
+
+    <!-- Autumn Leaf -->
+    <g id="autumnLeaf" fill="#ea580c" opacity="0.75">
+      <path d="M 0 0 C 15 -10, 25 10, 0 30 C -25 10, -15 -10, 0 0 Z" />
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1200" fill="url(#chillGuyBg)" />
+
+  <!-- Autumn Leaves scattered -->
+  <use href="#autumnLeaf" x="40" y="240" transform="rotate(35 40 240) scale(0.8)" />
+  <use href="#autumnLeaf" x="735" y="300" transform="rotate(-25 735 300) scale(0.9)" />
+  <use href="#autumnLeaf" x="35" y="650" transform="rotate(45 35 650) scale(0.85)" />
+  <use href="#autumnLeaf" x="740" y="700" transform="rotate(-15 740 700) scale(0.8)" />
+
+  <!-- Borders -->
+  <rect x="18" y="18" width="764" height="1164" rx="20" fill="none" stroke="#92400e" stroke-width="3.5" />
+  <rect x="26" y="26" width="748" height="1148" rx="14" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="14 10" />
+
+  <!-- Top Center: Speech Bubble -->
+  <g transform="translate(400, 52)">
+    <rect x="-190" y="-22" width="380" height="44" rx="22" fill="#ffffff" stroke="#92400e" stroke-width="2.5" />
+    <text x="0" y="7" font-family="'Comic Sans MS', cursive" font-size="19" font-weight="bold" fill="#78350f" text-anchor="middle">
+      🍂 JUST A CHILL GUY ☕
+    </text>
+  </g>
+
+  <!-- Top Left: Coffee Cup -->
+  <g transform="translate(38, 30)">
+    <rect x="0" y="10" width="30" height="34" rx="5" fill="#ffffff" stroke="#78350f" stroke-width="2" />
+    <path d="M 30 16 C 40 16, 40 32, 30 32" stroke="#78350f" stroke-width="2.5" fill="none" />
+    <text x="15" y="32" font-family="'Arial', sans-serif" font-size="14" fill="#78350f" text-anchor="middle">☕</text>
+  </g>
+
+  <!-- Top Right: Chill Badge -->
+  <g transform="translate(680, 32)">
+    <rect x="0" y="0" width="85" height="32" rx="8" fill="#92400e" />
+    <text x="42" y="21" font-family="'Arial Black', sans-serif" font-size="10" fill="#fef3c7" text-anchor="middle">SANTAI ✌️</text>
+  </g>
+
+  <!-- Side Meme Badges -->
+  <g transform="translate(22, 450)">
+    <rect x="0" y="0" width="115" height="30" rx="8" fill="#ffffff" stroke="#92400e" stroke-width="2" />
+    <text x="57" y="20" font-family="'Comic Sans MS', cursive" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">lowkey chill 🍂</text>
+  </g>
+  <g transform="translate(670, 480)">
+    <rect x="0" y="0" width="105" height="30" rx="8" fill="#ffffff" stroke="#92400e" stroke-width="2" />
+    <text x="52" y="20" font-family="'Comic Sans MS', cursive" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">no problem 😌</text>
+  </g>
+
+  <!-- Bottom Left: Chill Guy Character Standing -->
+  <use href="#chillGuyFigure" x="35" y="1040" />
+
+  <!-- Bottom Right: Coffee & Relaxing Leaves -->
+  <g transform="translate(710, 1075)">
+    <use href="#autumnLeaf" x="0" y="0" transform="scale(1.1)" />
+    <text x="15" y="45" font-family="'Arial Black', sans-serif" font-size="12" fill="#78350f">CHILL</text>
+  </g>
+
+  <!-- Bottom Center Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-240" y="-22" width="480" height="44" rx="22" fill="#ffffff" opacity="0.95" stroke="#92400e" stroke-width="2.5" />
+    <text x="0" y="6" font-family="'Comic Sans MS', cursive" font-size="18" font-weight="bold" fill="#78350f" text-anchor="middle">
+      ☕ JUST A CHILL GUY WHO LOWKEY DOESN'T CARE 🍂✨
+    </text>
+  </g>
+</svg>

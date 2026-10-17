@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <!-- Tropical Ocean Gradient -->
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="40%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#7dd3fc" />
+    </linearGradient>
+
+    <!-- Hibiscus Flower -->
+    <g id="hibiscus" transform="scale(0.85)">
+      <!-- Petals -->
+      <path d="M 0 0 C -25 -40, -45 -20, -20 0 Z" fill="#f43f5e" />
+      <path d="M 0 0 C -40 -15, -40 25, -15 20 Z" fill="#fb7185" />
+      <path d="M 0 0 C -15 35, 25 35, 15 15 Z" fill="#f43f5e" />
+      <path d="M 0 0 C 35 25, 45 -10, 20 -10 Z" fill="#fb7185" />
+      <path d="M 0 0 C 25 -35, -10 -45, 0 -20 Z" fill="#f43f5e" />
+      <!-- Center pistil -->
+      <path d="M 0 0 Q 15 -35 25 -40" stroke="#fef08a" stroke-width="3" fill="none" />
+      <circle cx="25" cy="-40" r="4" fill="#eab308" />
+      <circle cx="21" cy="-35" r="2.5" fill="#facc15" />
+      <circle cx="0" cy="0" r="7" fill="#be123c" />
+    </g>
+
+    <!-- Monstera Palm Leaf -->
+    <g id="monsteraLeaf" transform="scale(0.75)" fill="#15803d" opacity="0.8">
+      <path d="M 0 0 C -30 -30, -50 -10, -40 30 C -30 60, 0 80, 20 80 C 40 70, 50 40, 40 10 C 30 -20, 15 -10, 0 0 Z" />
+      <path d="M -15 20 L -35 25 M -10 40 L -30 50 M 10 30 L 28 35 M 10 50 L 25 60" stroke="#86efac" stroke-width="2" />
+    </g>
+
+    <!-- Stitch Cute Paw Print -->
+    <g id="stitchPaw" fill="#1e3a8a" opacity="0.5" transform="scale(0.8)">
+      <ellipse cx="20" cy="25" rx="14" ry="11" />
+      <ellipse cx="6" cy="10" rx="4" ry="6" transform="rotate(-20 6 10)" />
+      <ellipse cx="16" cy="7" rx="4" ry="6" />
+      <ellipse cx="26" cy="7" rx="4" ry="6" />
+      <ellipse cx="36" cy="11" rx="4" ry="6" transform="rotate(20 36 11)" />
+    </g>
+  </defs>
+
+  <!-- Ocean Background -->
+  <rect width="800" height="1200" fill="url(#oceanGrad)" />
+
+  <!-- Tropical Water Ripples & Hibiscus Prints -->
+  <use href="#stitchPaw" x="30" y="280" />
+  <use href="#stitchPaw" x="720" y="340" transform="rotate(35 720 340)" />
+  <use href="#stitchPaw" x="25" y="620" transform="rotate(-15 25 620)" />
+  <use href="#stitchPaw" x="730" y="690" />
+
+  <!-- Palm Leaves on Borders -->
+  <use href="#monsteraLeaf" x="15" y="150" />
+  <use href="#monsteraLeaf" x="720" y="190" transform="scale(-1, 1) translate(-50, 0)" />
+  <use href="#monsteraLeaf" x="15" y="800" />
+  <use href="#monsteraLeaf" x="720" y="840" transform="scale(-1, 1) translate(-50, 0)" />
+
+  <!-- Tropical Flower Border -->
+  <rect x="18" y="18" width="764" height="1164" rx="22" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.8" />
+  <rect x="26" y="26" width="748" height="1148" rx="16" fill="none" stroke="#f43f5e" stroke-width="2" stroke-dasharray="12 8" />
+
+  <!-- Top Left: Stitch Peeking Ears & Face -->
+  <g transform="translate(30, 20)">
+    <!-- Left Big Alien Ear -->
+    <path d="M 10 50 C -30 20, -40 -20, 15 -10 C 25 10, 25 35, 10 50 Z" fill="#2563eb" stroke="#1d4ed8" stroke-width="2.5" />
+    <path d="M 5 40 C -20 20, -25 -5, 12 0 Z" fill="#f472b6" opacity="0.8" />
+    <!-- Right Ear -->
+    <path d="M 70 50 C 110 20, 120 -20, 65 -10 C 55 10, 55 35, 70 50 Z" fill="#2563eb" stroke="#1d4ed8" stroke-width="2.5" />
+    <path d="M 75 40 C 100 20, 105 -5, 68 0 Z" fill="#f472b6" opacity="0.8" />
+    <!-- Head Peeking -->
+    <ellipse cx="40" cy="55" rx="35" ry="24" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2.5" />
+    <!-- Dark Blue Eyes -->
+    <ellipse cx="26" cy="52" rx="7" ry="10" fill="#0f172a" />
+    <circle cx="24" cy="48" r="2.5" fill="#ffffff" />
+    <ellipse cx="54" cy="52" rx="7" ry="10" fill="#0f172a" />
+    <circle cx="52" cy="48" r="2.5" fill="#ffffff" />
+    <!-- Big Blue Nose -->
+    <ellipse cx="40" cy="62" rx="9" ry="5" fill="#1e3a8a" />
+  </g>
+
+  <!-- Top Right: Big Hibiscus Flower -->
+  <use href="#hibiscus" x="720" y="60" />
+
+  <!-- Tropical Flowers Along Frame -->
+  <use href="#hibiscus" x="65" y="1100" transform="scale(0.8)" />
+  <use href="#hibiscus" x="735" y="1090" transform="scale(0.85)" />
+
+  <!-- Bottom Center Ribbon & Typography -->
+  <g transform="translate(400, 1150)">
+    <rect x="-220" y="-22" width="440" height="44" rx="22" fill="#ffffff" opacity="0.95" stroke="#f43f5e" stroke-width="2.5" />
+    <text x="0" y="6" font-family="'Pacifico', 'Comic Sans MS', cursive" font-size="20" font-weight="bold" fill="#0369a1" text-anchor="middle">
+      🌺 Ohana Means Family 💙
+    </text>
+  </g>
+</svg>

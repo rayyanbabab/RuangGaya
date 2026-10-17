@@ -1,6 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { Template, Frame, FilterType, TimerOption, FontOption, TextPosition, FONTS, FONT_SIZES, FACE_FILTERS, type FaceFilterId } from '@/lib/config';
+import { useState, useEffect, useMemo } from 'react';
+import {
+  Template, Frame, FilterType, TimerOption, FontOption, TextPosition,
+  FONTS, FONT_SIZES, FACE_FILTERS, FILTER_METAS, type FaceFilterId
+} from '@/lib/config';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
@@ -30,6 +33,8 @@ interface SidebarProps {
   onTimerChange: (t: TimerOption) => void;
   onAutoShootToggle: () => void;
   addSticker: (src: string) => void;
+  stickerCount?: number;
+  onClearStickers?: () => void;
   faceFilter: FaceFilterId;
   onFaceFilterChange: (id: FaceFilterId) => void;
 }
@@ -45,6 +50,12 @@ const TABS = [
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
 
+interface StickerItemMeta {
+  src: string;
+  name: string;
+  category: string;
+}
+
 export default function Sidebar({
   templates, frames, filters,
   activeTemplate, activeFrame, activeFilter,
@@ -56,18 +67,65 @@ export default function Sidebar({
   onStripTextFontChange, onStripTextSizeChange, onStripTextPositionChange,
   onFaceFilterChange,
   onTimerChange, addSticker,
+  stickerCount = 0, onClearStickers,
 }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabId>('frame');
-  const [availableStickers, setAvailableStickers] = useState<string[]>([]);
+  const [stickersList, setStickersList] = useState<StickerItemMeta[]>([]);
+  const [stickerCategory, setStickerCategory] = useState<string>('all');
+  const [stickerQuery, setStickerQuery] = useState<string>('');
+  const [frameCategory, setFrameCategory] = useState<'all' | 'cartoon' | 'meme' | 'aesthetic' | 'solid'>('all');
+
+  const filteredFrames = useMemo(() => {
+    if (frameCategory === 'cartoon') {
+      return frames.filter((f) => f.id.includes('pixar') || f.id.includes('disney') || f.id.includes('monsters') || f.id.includes('stitch'));
+    }
+    if (frameCategory === 'meme') {
+      return frames.filter((f) => f.id.includes('meme'));
+    }
+    if (frameCategory === 'solid') {
+      return frames.filter((f) => !f.bgImage);
+    }
+    if (frameCategory === 'aesthetic') {
+      return frames.filter(
+        (f) =>
+          f.bgImage &&
+          !f.id.includes('pixar') &&
+          !f.id.includes('disney') &&
+          !f.id.includes('monsters') &&
+          !f.id.includes('stitch') &&
+          !f.id.includes('meme')
+      );
+    }
+    return frames;
+  }, [frames, frameCategory]);
 
   useEffect(() => {
     fetch('/api/stickers')
       .then(res => res.json())
       .then(data => {
-        if (data.stickers) setAvailableStickers(data.stickers);
+        if (data.items && Array.isArray(data.items) && data.items.length > 0) {
+          setStickersList(data.items);
+        } else if (data.stickers && Array.isArray(data.stickers)) {
+          setStickersList(data.stickers.map((src: string) => {
+            const slug = src.split('/').pop()?.split('.')[0] || 'Stiker';
+            return {
+              src,
+              name: slug.replace(/[-_]/g, ' '),
+              category: 'y2k',
+            };
+          }));
+        }
       })
       .catch(err => console.error('Failed to load stickers', err));
   }, []);
+
+  const filteredStickers = useMemo(() => {
+    return stickersList.filter((item) => {
+      const matchCat = stickerCategory === 'all' || item.category === stickerCategory;
+      const matchQuery = !stickerQuery.trim() || item.name.toLowerCase().includes(stickerQuery.toLowerCase());
+      return matchCat && matchQuery;
+    });
+  }, [stickersList, stickerCategory, stickerQuery]);
 
   const visibleTabs = isReviewMode
     ? TABS
@@ -97,8 +155,39 @@ export default function Sidebar({
         {/* FRAME */}
         {activeTab === 'frame' && (
           <Section title="Background">
+            {/* Quick Category Filter Chips */}
+            <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '6px', marginBottom: '8px' }}>
+              {[
+                { id: 'all', label: 'Semua' },
+                { id: 'cartoon', label: 'Kartun' },
+                { id: 'meme', label: 'Meme' },
+                { id: 'aesthetic', label: 'Desain' },
+                { id: 'solid', label: 'Polos' },
+              ].map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setFrameCategory(cat.id as any)}
+                  style={{
+                    padding: '5px 10px',
+                    fontSize: '0.72rem',
+                    fontWeight: 600,
+                    borderRadius: '6px',
+                    border: frameCategory === cat.id ? '1px solid var(--rg-purple)' : '1px solid var(--rg-border)',
+                    background: frameCategory === cat.id ? 'var(--rg-purple)' : '#ffffff',
+                    color: frameCategory === cat.id ? '#ffffff' : 'var(--rg-muted)',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
             <div className={styles.frameGrid}>
-              {frames.map((f) => (
+              {filteredFrames.map((f) => (
                 <button
                   key={f.id}
                   id={`frame-${f.id}`}
@@ -158,15 +247,25 @@ export default function Sidebar({
         {/* FILTER */}
         {activeTab === 'filter' && (
           <Section title="Filter Foto">
-            <div className={styles.filterGrid}>
-              {filters.map((f) => (
+            <div className={styles.filterCardGrid}>
+              {FILTER_METAS.map((f) => (
                 <button
-                  key={f}
-                  id={`filter-${f.toLowerCase().replace(/[^a-z]/g, '')}`}
-                  className={`${styles.filterBtn} ${activeFilter === f ? styles.active : ''}`}
-                  onClick={() => onFilterChange(f)}
+                  key={f.id}
+                  id={`filter-${f.id.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
+                  className={`${styles.filterCard} ${activeFilter === f.id ? styles.filterCardActive : ''}`}
+                  onClick={() => onFilterChange(f.id)}
+                  title={f.description}
                 >
-                  {f}
+                  <div
+                    className={styles.filterPreviewSwatch}
+                    style={{ background: f.previewBg }}
+                  >
+                    <span className={styles.filterIcon}>{f.icon}</span>
+                  </div>
+                  <div className={styles.filterCardInfo}>
+                    <span className={styles.filterCardLabel}>{f.label}</span>
+                    <span className={styles.filterCardDesc}>{f.description}</span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -177,7 +276,7 @@ export default function Sidebar({
         {activeTab === 'face' && (
           <Section title="Filter Wajah (AR)">
             <p className={styles.hint} style={{ marginBottom: '10px' }}>
-              Pilih filter — AI akan mendeteksi wajah otomatis.
+              Filter wajah AR melacak posisi otomatis dan mengikuti gerakan kepala.
             </p>
             <div className={styles.faceFilterGrid}>
               {FACE_FILTERS.map((f) => (
@@ -194,43 +293,108 @@ export default function Sidebar({
               ))}
             </div>
             {faceFilter !== 'none' && (
-              <p className={styles.hint} style={{ marginTop: '10px', color: 'var(--rg-accent)' }}>
-                ✨ {FACE_FILTERS.find(f => f.id === faceFilter)?.description}
-              </p>
+              <div className={styles.activeFaceBadge}>
+                {FACE_FILTERS.find(f => f.id === faceFilter)?.description}
+              </div>
             )}
           </Section>
         )}
 
         {/* OVERLAY / STIKER */}
         {activeTab === 'sticker' && (
-
-          <Section title="Pilih Stiker">
-            <div className={styles.frameGrid}>
-              {availableStickers.length === 0 && (
-                <p style={{ gridColumn: '1 / -1', textAlign: 'center', fontSize: '0.9rem', color: '#666' }}>
-                  Memuat stiker...<br />
-                  <span style={{ fontSize: '0.75rem' }}>(Taruh file gambar di folder public/overlays/)</span>
-                </p>
+          <Section title="Stiker Photobooth">
+            {/* Header info & clear button */}
+            <div className={styles.stickerHeaderRow}>
+              <span className={styles.stickerCountBadge}>
+                {stickersList.length} Stiker
+                {stickerCount > 0 ? ` • ${stickerCount} di kanvas` : ''}
+              </span>
+              {stickerCount > 0 && onClearStickers && (
+                <button
+                  type="button"
+                  className={styles.stickerClearBtn}
+                  onClick={onClearStickers}
+                  title="Hapus semua stiker yang ada di strip foto"
+                >
+                  Bersihkan Kanvas
+                </button>
               )}
-              {availableStickers.map((src, i) => {
-                const name = src.split('/').pop()?.split('.')[0] || `Stiker ${i + 1}`;
-                return (
-                  <button
-                    key={src}
-                    className={styles.frameBtn}
-                    onClick={() => addSticker(src)}
-                    title={name}
-                  >
-                    <div className={styles.frameOverlayThumb} style={{ background: '#FFF0F5' }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={src} alt={name} className={styles.frameOverlayImg} />
-                    </div>
-                    <span className={styles.frameLabel}>{name}</span>
-                  </button>
-                );
-              })}
             </div>
-            <p className={styles.hint} style={{ marginTop: '1rem', textAlign: 'center' }}>Klik stiker untuk menambahkannya ke foto. Kamu bisa menggeser dan memutarnya!</p>
+
+            {/* Category Pills */}
+            <div className={styles.categoryPills}>
+              {[
+                { id: 'all', label: 'Semua 🌟' },
+                { id: 'korean', label: 'Korean 🎀' },
+                { id: 'animals', label: 'Hewan 🐾' },
+                { id: 'memes', label: 'Meme 😹' },
+                { id: 'y2k', label: 'Y2K ✨' },
+                { id: 'emoji', label: 'Emoji 😎' },
+              ].map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={`${styles.categoryPill} ${stickerCategory === cat.id ? styles.categoryPillActive : ''}`}
+                  onClick={() => setStickerCategory(cat.id)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Search Input */}
+            <div className={styles.stickerSearchBox}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+              </svg>
+              <input
+                type="text"
+                placeholder="Cari stiker (misal: bow, shiba, doge, flame)..."
+                value={stickerQuery}
+                onChange={(e) => setStickerQuery(e.target.value)}
+                className={styles.stickerSearchInput}
+              />
+              {stickerQuery && (
+                <button
+                  type="button"
+                  className={styles.clearSearchBtn}
+                  onClick={() => setStickerQuery('')}
+                >
+                  ×
+                </button>
+              )}
+            </div>
+
+            {/* Sticker Grid */}
+            <div className={styles.stickerGrid}>
+              {filteredStickers.length === 0 ? (
+                <p className={styles.emptyStickerMsg}>
+                  Tidak ada stiker yang cocok.
+                </p>
+              ) : (
+                filteredStickers.map((item) => (
+                  <button
+                    key={item.src}
+                    type="button"
+                    className={styles.stickerBtn}
+                    onClick={() => addSticker(item.src)}
+                    title={`Tambah ${item.name}`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={item.src} alt={item.name} className={styles.stickerThumb} />
+                    <span className={styles.stickerItemLabel}>{item.name}</span>
+                  </button>
+                ))
+              )}
+            </div>
+            <p className={styles.hint} style={{ marginTop: '0.8rem', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+              <span>Klik stiker untuk menaruh di foto. Geser, cubit, atau putar sesukamu!</span>
+            </p>
           </Section>
         )}
 
@@ -412,21 +576,21 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function TemplateIcon({ cols, rows }: { cols: number; rows: number }) {
-  const slotW = cols === 1 ? 40 : 17;
-  const slotH = rows <= 2 ? Math.floor(28 / rows) - 2 : Math.floor(28 / rows) - 1;
-  const gapX = cols === 1 ? 0 : 4;
-  const gapY = rows === 1 ? 0 : 3;
+  const gapX = cols > 1 ? 3 : 0;
+  const slotW = Math.max(8, Math.floor((40 - (cols - 1) * gapX) / cols));
+  const gapY = rows > 1 ? 2 : 0;
+  const slotH = Math.max(5, Math.floor((28 - (rows - 1) * gapY) / rows));
   return (
     <svg width="46" height="34" viewBox="0 0 46 34" aria-hidden style={{ display: 'block' }}>
       {Array.from({ length: rows }).map((_, r) =>
         Array.from({ length: cols }).map((_, c) => (
           <rect
             key={`${r}-${c}`}
-            x={2 + c * (slotW + gapX)}
+            x={3 + c * (slotW + gapX)}
             y={3 + r * (slotH + gapY)}
             width={slotW}
             height={slotH}
-            rx="2"
+            rx="1.5"
             fill="currentColor"
           />
         ))
@@ -438,18 +602,17 @@ function TemplateIcon({ cols, rows }: { cols: number; rows: number }) {
 // ─── Tab Icons (SVG) ──────────────────────────────────────────
 function FaceTabIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <circle cx="12" cy="8" r="5" />
-      <path d="M9 8.5c.5.5 1 .8 1.5.8s1-.3 1.5-.8" />
-      <circle cx="10" cy="7" r="0.8" fill="currentColor" />
-      <circle cx="14" cy="7" r="0.8" fill="currentColor" />
-      <path d="M3 20c0-3.3 4-6 9-6s9 2.7 9 6" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+      <line x1="9" y1="9" x2="9.01" y2="9" />
+      <line x1="15" y1="9" x2="15.01" y2="9" />
     </svg>
   );
 }
 function FrameTabIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="3" />
       <rect x="7" y="7" width="10" height="10" rx="1" />
     </svg>
@@ -457,23 +620,24 @@ function FrameTabIcon() {
 }
 function FilterTabIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <circle cx="12" cy="12" r="4" />
-      <path d="M1.05 12H3m18 0h1.95M12 1.05V3m0 18v1.95M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3a9 9 0 0 1 0 18v-18z" />
     </svg>
   );
 }
 function StickerTabIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10A10 10 0 0 1 2 12C2 6.48 6.48 2 12 2z" />
-      <path d="M12 8v4m0 4h.01" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3z"/>
+      <path d="M15 3v6h6"/>
+      <circle cx="10" cy="14" r="2"/>
     </svg>
   );
 }
 function TextTabIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="4 7 4 4 20 4 20 7" />
       <line x1="9" y1="20" x2="15" y2="20" />
       <line x1="12" y1="4" x2="12" y2="20" />
@@ -482,9 +646,9 @@ function TextTabIcon() {
 }
 function LayoutTabIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
-      <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>
     </svg>
   );
 }
